@@ -1,0 +1,18 @@
+---
+os: linux
+dist: xenial
+
+language: python
+python:
+  - "3.6"
+  - "3.7"
+
+install:
+  - |
+    pip3 install -r requirements.txt && \
+    pip3 install -r test_requirements.txt
+script:
+  - |
+    python3 -m pytest -sv --cov=roborxn_controller --cov-fail-under=60 \
+    && \
+    python3 -m flake8 --disable-noqa .
