@@ -12,6 +12,6 @@ setup(
     version=__version__,
     author='IBM RXN team',
     packages=[
-        'core'
+        'rxn_utilities'
     ]
 )
