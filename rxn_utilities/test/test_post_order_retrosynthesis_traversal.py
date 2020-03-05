@@ -1,4 +1,4 @@
-from core.post_order_retrosynthesis_traversal import (
+from rxn_utilities.post_order_retrosynthesis_traversal import (
     post_order_retrosynthesis_traversal
 )
 
