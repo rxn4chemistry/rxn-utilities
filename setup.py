@@ -2,6 +2,7 @@ import io
 import re
 
 from setuptools import setup
+
 __version__ = re.search(
     r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
     io.open('__init__.py', encoding='utf_8_sig').read()
@@ -13,5 +14,8 @@ setup(
     author='IBM RXN team',
     packages=[
         'rxn_utilities'
-    ]
+    ],
+    package_data={
+        'rxn_utilities': ['py.typed']
+    }
 )

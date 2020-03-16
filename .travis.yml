@@ -12,7 +12,6 @@ install:
     pip3 install -r requirements.txt && \
     pip3 install -r test_requirements.txt
 script:
-  - |
-    python3 -m pytest -sv --cov=rxn_utilities --cov-fail-under=60 \
-    && \
-    python3 -m flake8 --disable-noqa .
+  - python3 -m pytest -sv --cov=rxn_utilities --cov-fail-under=60
+  - python3 -m flake8 --disable-noqa .
+  - mypy rxn_utilities
