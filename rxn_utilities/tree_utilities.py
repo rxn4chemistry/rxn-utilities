@@ -14,7 +14,7 @@ def has_children(node: Dict) -> bool:
     """
 
     result = False
-    if 'children' in node and len(node['children'])>0:
+    if 'children' in node and len(node['children']) > 0:
         for child in node['children']:
             if child:
                 result = True
