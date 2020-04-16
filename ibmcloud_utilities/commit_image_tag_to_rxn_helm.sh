@@ -2,7 +2,6 @@
 
 # Required env variables:
 # GHE_TOKEN
-# RXN_CLUSTER_NAME
 # RXN_FID_EMAIL
 
 git clone https://${GHE_TOKEN}@github.ibm.com/rxn/rxn-helm.git \
@@ -10,10 +9,16 @@ git clone https://${GHE_TOKEN}@github.ibm.com/rxn/rxn-helm.git \
 
 cd ${TMPDIR}/rxn-helm/charts/
 
-VALUES_FILENAME="values_${RXN_CLUSTER_NAME}.yaml"
-VALUES_FILES="$(find . -name ${VALUES_FILENAME} | grep ${IMAGE_NAME})"
+VALUES_FILENAME="values_${GIT_BRANCH}.yaml"
+VALUES_FILES="$(find . -name ${VALUES_FILENAME} | grep ${IMAGE_NAME})" || /bin/true
 
-echo "Deploying to: ${RXN_CLUSTER_NAME}"
+if [[ -z ${VALUES_FILES} ]]
+then
+  echo "No files found matching ${VALUES_FILENAME} for ${IMAGE_NAME}"
+  /bin/false
+fi
+
+echo "Deploying to: ${GIT_BRANCH}"
 echo "Found the corresponding files to edit:"
 echo "${VALUES_FILES[@]}"
 
