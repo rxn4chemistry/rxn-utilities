@@ -4,6 +4,11 @@
 # GHE_TOKEN
 # RXN_FID_EMAIL
 
+echo "GIT_BRANCH=${GIT_BRANCH}"
+echo "GIT_COMMIT=${GIT_COMMIT}"
+echo "IMAGE_NAME=${IMAGE_NAME}"
+echo "IMAGE_TAG=${IMAGE_TAG}"
+
 git clone https://${GHE_TOKEN}@github.ibm.com/rxn/rxn-helm.git \
           ${TMPDIR}/rxn-helm
 
