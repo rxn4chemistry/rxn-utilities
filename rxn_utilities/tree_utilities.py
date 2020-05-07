@@ -36,15 +36,21 @@ def post_order_traversal(tree: Dict) -> List:
             tree = {
                 "children": [
                     {
-                        "children": [...]
-                        "action_sequence": [...]
+                        "children": [...],
+                        "configuration":
+                            {
+                                "action_sequence": [...]
+                            }
                     },
                     {
                         ...
                     },
                     ...
-                ]
-                "action_sequence": [...]
+                ],
+                "configuration":
+                    {
+                        "action_sequence": [...]
+                    }
             }
 
     Returns:
