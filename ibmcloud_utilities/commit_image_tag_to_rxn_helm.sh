@@ -34,7 +34,7 @@ do
 done
 
 echo "Committing changes and pushing to rxn-helm"
-git config user.email "${RXN_FID_EMAIL}"
+git config user.email "${GHE_USER_EMAIL}"
 git config user.name "RXN Functional ID"
 git commit -m "IBM cloud delivery pipeline ${IDS_PROJECT_NAME}: Updated image tag to ${IMAGE_TAG} in ${VALUES_FILES[@]}"
 git pull --rebase
