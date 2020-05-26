@@ -18,15 +18,25 @@ def get_variables(cls: Type) -> List[str]:
     return [attribute.name for attribute in get_class_attributes(cls)]
 
 
-def get_variables_and_types(cls: Type) -> List[Tuple[str, str]]:
+def get_variables_and_types(cls: Type) -> List[Tuple[str, Type]]:
     """
     Return the names of the variables and corresponding types for a class
     declared with the attrs library.
     """
     result = []
     for attribute in get_class_attributes(cls):
-        # If the attribute __name__ exists, take this (human-friendly), else
-        # take the type directly
-        t = getattr(attribute.type, "__name__", str(attribute.type))
+        t = attribute.type
+        assert t is not None
         result.append((attribute.name, t))
     return result
+
+
+def get_variables_and_type_names(cls: Type) -> List[Tuple[str, str]]:
+    """
+    Return the names of the variables and corresponding type names for a class
+    declared with the attrs library.
+    """
+    # If the attribute __name__ exists, take this (human-friendly), else
+    # take the type directly
+    return [(variable, getattr(t, "__name__", str(t)))
+            for variable, t in get_variables_and_types(cls)]
