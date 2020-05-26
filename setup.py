@@ -17,5 +17,8 @@ setup(
     ],
     package_data={
         'rxn_utilities': ['py.typed']
-    }
+    },
+    install_requires=[
+        'attrs>=19.1.0',
+    ],
 )
