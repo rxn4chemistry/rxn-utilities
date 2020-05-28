@@ -2,7 +2,7 @@
 
 # Required env variables:
 # GHE_TOKEN
-# RXN_FID_EMAIL
+# GHE_USER_EMAIL
 
 echo "GIT_BRANCH=${GIT_BRANCH}"
 echo "GIT_COMMIT=${GIT_COMMIT}"

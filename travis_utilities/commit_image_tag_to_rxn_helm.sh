@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Required env variables:
-# GHE_TOKEN
-# RXN_FID_EMAIL
-
 echo "GIT_BRANCH=${GIT_BRANCH}"
 echo "GIT_COMMIT=${GIT_COMMIT}"
 echo "IMAGE_NAME=${IMAGE_NAME}"
