@@ -3,7 +3,7 @@
 get_namespace() {
     environment=$1
     if [[ "${environment}" == "roborxn_dev" ]]; then
-    echo "roborxn-dev"
+    echo "roborxn"
     elif [[ "${environment}" == "test" ]]; then
     echo "rxn-test"
     elif [[ "${environment}" == "production" ]]; then
