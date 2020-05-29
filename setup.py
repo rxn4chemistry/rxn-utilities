@@ -5,7 +5,7 @@ from setuptools import setup
 
 __version__ = re.search(
     r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
-    io.open('__init__.py', encoding='utf_8_sig').read()
+    io.open('rxn_utilities/__init__.py', encoding='utf_8_sig').read()
 ).group(1)
 
 setup(
