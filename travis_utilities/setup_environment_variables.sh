@@ -12,7 +12,7 @@
 # travis login -I -e https://travis.ibm.com/api --github-token ${TRAVIS_CLI_TOKEN}
 # travis endpoint --set-default -e https://travis.ibm.com/api
 
-repos='roborxn-worker rxn-retro-worker rxn-report-filter-worker rxn-prediction-worker rxn-api rdkit-api paragraph2actions-worker smiles2actions-worker'
+repos='roborxn-worker rxn-retro-worker rxn-report-filter-worker rxn-prediction-worker rxn-api rdkit-api paragraph2actions-worker smiles2actions-worker rxn-helm'
 
 for repo in ${repos}
 do
