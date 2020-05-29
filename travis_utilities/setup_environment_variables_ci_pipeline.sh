@@ -25,4 +25,3 @@ do
     travis env set REGISTRY_URL ${REGISTRY_URL} --private --repo rxn/${repo}
     travis env set IMAGE_NAME ${repo} --private --repo rxn/${repo}
 done
-
