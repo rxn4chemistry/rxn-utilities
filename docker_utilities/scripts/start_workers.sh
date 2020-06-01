@@ -7,6 +7,8 @@
 #  - CELERY_CONCURRENCY
 #  - CELERY_MAX_TASKS_PER_CHILD
 
+set -Eeuo pipefail
+
 mkdir -p celery
 
 queue=${CELERY_QUEUE:?CELERY_QUEUE is not set.}

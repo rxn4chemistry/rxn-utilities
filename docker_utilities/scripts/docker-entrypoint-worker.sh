@@ -5,7 +5,6 @@ set -Eeuo pipefail
 current_user=$(whoami)
 echo "Entering docker-entrypoint.sh as user:${current_user}..."
 
-BACKEND_HOST=${BACKEND_HOST:-localhost}
 app_user=rxn
 
 # check if use is root
@@ -16,4 +15,4 @@ if [[ "$(id -u)" = '0' ]]; then
 fi
 
 echo "Running app as user:${current_user}..."
-start_workers.sh && tail -f /dev/null
+./start_workers.sh && tail -f /dev/null
