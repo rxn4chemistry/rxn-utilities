@@ -1,0 +1,88 @@
+FROM ibmcom/powerai:1.7.0-pytorch-cpu-ubuntu18.04-py37 as base
+
+SHELL ["/bin/bash", "-c"]
+
+ENV ANACONDA_PATH=/opt/anaconda/envs/wmlce/
+ENV PATH=/opt/anaconda/condabin:${ANACONDA_PATH}/bin:${PATH} \
+  LD_RUN_PATH=${ANACONDA_PATH}/lib:${LD_RUN_PATH} \
+  D_LIBRARY_PATH=${ANACONDA_PATH}/lib:${LD_LIBRARY_PATH} \
+  LIBRARY_PATH=${ANACONDA_PATH}/lib:${LIBRARY_PATH} \
+  C_INCLUDE_PATH=${ANACONDA_PATH}/include:${C_INCLUDE_PATH} \
+  CPATH=${ANACONDA_PATH}/include:${CPATH} \
+  CMAKE_LIBRARY_PATH=${ANACONDA_PATH}/lib:${CMAKE_LIBRARY_PATH} \
+  CMAKE_INCLUDE_PATH=${ANACONDA_PATH}/include:${CMAKE_INCLUDE_PATH}
+
+RUN conda update conda
+RUN conda install -y -n wmlce numpy matplotlib
+RUN conda install -y -n wmlce cmake cairo pillow eigen pkg-config
+RUN conda install -y -n wmlce boost-cpp boost py-boost
+
+ENV RDK_INSTALL_PATH=/home/pwrai/rdkit/
+
+#
+# builder image
+#
+
+FROM base as builder
+
+RUN sudo apt-get update && \
+  sudo apt-get upgrade -y && \
+  sudo apt-get install -y \
+    software-properties-common \
+    build-essential \
+    pkg-config \
+    autoconf \
+    libtool \
+    wget \
+    curl \
+    git \
+    subversion \
+    sqlite3 \
+    libsqlite3-dev \
+    swig \
+    zip && \
+  sudo apt-get upgrade -y &&\
+  sudo apt-get clean -y
+
+ENV RDKIT_BRANCH=Release_2020_03
+RUN git clone -b $RDKIT_BRANCH --single-branch https://github.com/rdkit/rdkit.git /tmp/rdkit/
+
+RUN mkdir /tmp/rdkit/build
+WORKDIR /tmp/rdkit/build
+
+RUN cmake -Wno-dev \
+    -DBOOST_ROOT=$ANACONDA_PATH \
+    -DBoost_INCLUDE_DIRS=$ANACONDA_PATH/include/ \
+    -DBoost_LIBRARY_DIR_RELEASE=$ANACONDA_PATH/lib \
+    -DBoost_NO_SYSTEM_PATHS=ON \
+    -DRDK_INSTALL_INTREE=OFF \
+    -DCMAKE_INSTALL_PREFIX=${RDK_INSTALL_PATH} \
+    -DRDK_INSTALL_STATIC_LIBS=ON \
+    -DPy_ENABLE_SHARED=1 \
+    -DRDK_BUILD_INCHI_SUPPORT=ON \
+    -DRDK_BUILD_AVALON_SUPPORT=ON \
+    -DRDK_BUILD_PYTHON_WRAPPERS=ON \
+    -DRDK_BUILD_RPATH_SUPPORT=ON \
+    -DRDK_BUILD_CPP_TESTS=ON \
+    -DRDK_USE_FLEXBISON=OFF \
+    -DRDK_BUILD_THREADSAFE_SSS=ON \
+    -DRDK_OPTIMIZE_POPCNT=OFF \ \
+    -DPYTHON_EXECUTABLE=$ANACONDA_PATH/bin/python3.7 \
+    -DPYTHON_INCLUDE_DIR=$ANACONDA_PATH/include/python3.7m \
+    -DPYTHON_NUMPY_INCLUDE_PATH="$ANACONDA_PATH/lib/python3.7/site-packages/numpy/core/include" \
+    -DCMAKE_PREFIX_PATH=$ANACONDA_PATH  \
+    -DCMAKE_BUILD_TYPE=Release \
+    .. &&\
+  make -j 8 &&\
+  make install
+
+#
+# Main image
+#
+
+FROM base as main
+
+COPY --from=builder $RDK_INSTALL_PATH $RDK_INSTALL_PATH
+
+ENV PYTHONPATH=$RDK_INSTALL_PATH/lib/python3.7/site-packages:$PYTHONPATH
+ENV RDBASE=$PYTHONPATH:$RDK_INSTALL_PATH/
