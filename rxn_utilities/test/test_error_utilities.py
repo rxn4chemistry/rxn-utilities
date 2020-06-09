@@ -11,4 +11,4 @@ def test_handle_exception():
         assert handled_exception['title'] == '{}: RuntimeError'.format(
             handling_message
         )
-        assert handled_exception['details'] == str(exception)
+        assert handled_exception['detail'] == str(exception)

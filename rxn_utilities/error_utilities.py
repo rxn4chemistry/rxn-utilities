@@ -12,7 +12,7 @@ def handle_exception(message: str) -> Dict:
         message (str): error message to print.
 
     Returns:
-        Dict: dictionart containing: tile, details and tracback.
+        Dict: dictionary containing: tile, detail and tracback.
     """
     exc_type, exc_value, exc_traceback = sys.exc_info()
     return {
@@ -20,5 +20,5 @@ def handle_exception(message: str) -> Dict:
         'traceback': traceback.format_exception(
             exc_type, exc_value, exc_traceback
         ),
-        'details': str(exc_value)
+        'detail': str(exc_value)
     }
