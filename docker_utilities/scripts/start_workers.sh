@@ -14,7 +14,7 @@ mkdir -p celery
 queue=${CELERY_QUEUE:?CELERY_QUEUE is not set.}
 
 worker_hash=$(python3 -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)')
-worker_name="worker_$worker_hash"
+worker_name="worker_${queue}-${worker_hash}"
 
 celery worker -E \
   --concurrency ${CELERY_CONCURRENCY:-1} \
