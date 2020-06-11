@@ -20,5 +20,6 @@ setup(
     },
     install_requires=[
         'attrs>=19.1.0',
-    ],
+        'requests>=2.23.0'
+    ]
 )
