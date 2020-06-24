@@ -90,6 +90,9 @@ tree_with_synthesis = {
             },
             "children": [{
                 "id": 8,
+                "configuration": {
+                    "action_sequence": []
+                },
                 "children": [{
                     "id": 9
                 }]
