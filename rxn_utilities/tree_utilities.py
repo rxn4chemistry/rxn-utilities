@@ -22,6 +22,29 @@ def has_children(node: Dict) -> bool:
     return result
 
 
+def has_children_with_synthesis(node: Dict) -> bool:
+    """
+    Check if the input node has children that contain an action sequence.
+
+    Args:
+        node(Dict): Dictionary representing a node
+            in the retrosynthesis tree
+    Returns:
+        bool: whether the node has children with syntheses or not
+    """
+
+    result = False
+    if 'children' in node and len(node['children']) > 0:
+        for child in node['children']:
+            try:
+                if child['configuration']['action_sequence']:
+                    result = True
+            except Exception:
+                pass
+
+    return result
+
+
 def post_order_traversal(tree: Dict) -> List:
     """
     Given a retrosynthesis tree it returns a post-order traversal
