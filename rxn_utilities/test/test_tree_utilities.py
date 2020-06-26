@@ -59,49 +59,58 @@ tree_with_synthesis = {
     "configuration": {
         "action_sequence": [dummy_action]
     },
-    "children": [
-        {
-            "id":
-                2,
-            "configuration": {
-                "action_sequence": [dummy_action]
-            },
-            "children": [
-                {
-                    "id": 3,
-                    "children": [{}]
-                }, {
-                    "id": 4,
-                    "configuration": {
-                        "action_sequence": [dummy_action]
-                    },
-                    "children": [{
-                        "id": 5
-                    }]
-                }, {
-                    "id": 6,
-                    "children": [{}]
-                }
-            ]
-        }, {
-            "id": 7,
-            "configuration": {
-                "action_sequence": [dummy_action]
-            },
-            "children": [{
-                "id": 8,
+    "children":
+        [
+            {
+                "id":
+                    2,
                 "configuration": {
-                    "action_sequence": []
+                    "action_sequence": [dummy_action]
                 },
-                "children": [{
-                    "id": 9
-                }]
-            }, {
-                "id": 10,
-                "children": [{}]
-            }]
-        }
-    ]
+                "children":
+                    [
+                        {
+                            "id": 3,
+                            "children": [{}]
+                        },
+                        {
+                            "id": 4,
+                            "configuration": {
+                                "action_sequence": [dummy_action]
+                            },
+                            "children": [{
+                                "id": 5
+                            }]
+                        },
+                        {
+                            "id": 6,
+                            "children": [{}]
+                        },
+                    ]
+            },
+            {
+                "id":
+                    7,
+                "configuration": {
+                    "action_sequence": [dummy_action]
+                },
+                "children":
+                    [
+                        {
+                            "id": 8,
+                            "configuration": {
+                                "action_sequence": []
+                            },
+                            "children": [{
+                                "id": 9
+                            }]
+                        }, {
+                            "id": 10,
+                            "children": [{}]
+                        }
+                    ]
+            },
+        ]
 }
 
 

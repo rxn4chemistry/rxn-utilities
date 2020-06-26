@@ -27,13 +27,10 @@ def get_chemical_properties(chemical_name: str) -> Dict:
     """
     try:
         response_text = requests.get(
-            CHEMICAL_NAME_TO_PROPERTIES.format(
-                chemical_name=chemical_name
-            )
+            CHEMICAL_NAME_TO_PROPERTIES.format(chemical_name=chemical_name)
         ).text
         properties = [
-            a_property.strip('"')
-            for a_property in response_text.split('\n')[1].split(',')
+            a_property.strip('"') for a_property in response_text.split('\n')[1].split(',')
         ]
         return {
             'cid': properties[0],

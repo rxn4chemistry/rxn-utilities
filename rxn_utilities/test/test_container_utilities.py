@@ -21,7 +21,9 @@ def test_remove_duplicates():
 
 
 def test_remove_duplicates_with_key():
+
     class DummyStruct:
+
         def __init__(self, a, b):
             self.a = a
             self.b = b

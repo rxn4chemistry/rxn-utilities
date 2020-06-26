@@ -3,7 +3,7 @@ from typing import Optional
 import attr
 
 from rxn_utilities.attrs_utilities import (
-    get_variables, get_variables_and_types, get_variables_and_type_names,
+    get_variables, get_variables_and_types, get_variables_and_type_names
 )
 
 

@@ -1,7 +1,7 @@
 import re
 
 from rxn_utilities.regex import (
-    real_number_regex, capturing, alternation, optional, integer_number_regex,
+    real_number_regex, capturing, alternation, optional, integer_number_regex
 )
 
 

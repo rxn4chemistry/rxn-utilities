@@ -12,14 +12,7 @@ setup(
     name='rxn_utilities',
     version=__version__,
     author='IBM RXN team',
-    packages=[
-        'rxn_utilities'
-    ],
-    package_data={
-        'rxn_utilities': ['py.typed']
-    },
-    install_requires=[
-        'attrs>=19.1.0',
-        'requests>=2.23.0'
-    ]
+    packages=['rxn_utilities'],
+    package_data={'rxn_utilities': ['py.typed']},
+    install_requires=['attrs>=19.1.0', 'requests>=2.23.0']
 )

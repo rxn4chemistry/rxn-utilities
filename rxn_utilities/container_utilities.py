@@ -6,8 +6,7 @@ def all_identical(sequence: Sequence[Any]) -> bool:
     return all(s == sequence[0] for s in sequence)
 
 
-def remove_duplicates(seq: Iterable[Any],
-                      key: Optional[Callable[[Any], Any]] = None) -> list:
+def remove_duplicates(seq: Iterable[Any], key: Optional[Callable[[Any], Any]] = None) -> list:
     """Remove duplicates and preserve order.
 
     Adapted from https://stackoverflow.com/a/480227
@@ -18,8 +17,10 @@ def remove_duplicates(seq: Iterable[Any],
             Defaults to the elements of seq.
     """
     if key is None:
+
         def key(x):
             return x
+
     assert key is not None  # Necessary for mypy
 
     seen: Set[Any] = set()
