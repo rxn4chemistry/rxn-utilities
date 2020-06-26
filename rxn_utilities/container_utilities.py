@@ -1,4 +1,5 @@
-from typing import Sequence, Any, Iterable, Optional, Callable, Set
+import itertools
+from typing import Sequence, Any, Iterable, Optional, Callable, Set, List, Iterator, Tuple
 
 
 def all_identical(sequence: Sequence[Any]) -> bool:
@@ -26,3 +27,17 @@ def remove_duplicates(seq: Iterable[Any], key: Optional[Callable[[Any], Any]] = 
     seen: Set[Any] = set()
     seen_add = seen.add
     return [x for x in seq if not (key(x) in seen or seen_add(key(x)))]
+
+
+def pairwise(s: List[Any]) -> Iterator[Tuple[Any, Any]]:
+    """
+    Iterates over neighbors in a list.
+
+    s -> (s0,s1), (s1,s2), (s2, s3), ...
+
+    From https://stackoverflow.com/a/5434936
+    """
+
+    a, b = itertools.tee(s)
+    next(b, None)
+    return zip(a, b)

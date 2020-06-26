@@ -1,4 +1,4 @@
-from rxn_utilities.container_utilities import all_identical, remove_duplicates
+from rxn_utilities.container_utilities import all_identical, remove_duplicates, pairwise
 
 
 def test_all_identical():
@@ -40,3 +40,11 @@ def test_remove_duplicates_with_key():
     li = [a1, a2, a3, a4, a5, a6]
 
     assert remove_duplicates(li, key=lambda x: x.b) == [a1, a2, a3, a6]
+
+
+def test_pairwise():
+    some_list = [1, 2, '3', 4, '5', 'end']
+
+    expected = [(1, 2), (2, '3'), ('3', 4), (4, '5'), ('5', 'end')]
+
+    assert list(pairwise(some_list)) == expected
