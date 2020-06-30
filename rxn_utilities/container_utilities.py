@@ -1,5 +1,8 @@
 import itertools
-from typing import Sequence, Any, Iterable, Optional, Callable, Set, List, Iterator, Tuple
+from typing import Sequence, Any, Iterable, Optional, Callable, Set, List, Iterator, Tuple, TypeVar
+
+T = TypeVar('T')
+V = TypeVar('V')
 
 
 def all_identical(sequence: Sequence[Any]) -> bool:
@@ -7,7 +10,7 @@ def all_identical(sequence: Sequence[Any]) -> bool:
     return all(s == sequence[0] for s in sequence)
 
 
-def remove_duplicates(seq: Iterable[Any], key: Optional[Callable[[Any], Any]] = None) -> list:
+def remove_duplicates(seq: Iterable[T], key: Optional[Callable[[T], V]] = None) -> List[T]:
     """Remove duplicates and preserve order.
 
     Adapted from https://stackoverflow.com/a/480227
@@ -19,17 +22,17 @@ def remove_duplicates(seq: Iterable[Any], key: Optional[Callable[[Any], Any]] = 
     """
     if key is None:
 
-        def key(x):
-            return x
+        def key(x: T) -> V:
+            return x  # type: ignore
 
     assert key is not None  # Necessary for mypy
 
-    seen: Set[Any] = set()
+    seen: Set[V] = set()
     seen_add = seen.add
     return [x for x in seq if not (key(x) in seen or seen_add(key(x)))]
 
 
-def pairwise(s: List[Any]) -> Iterator[Tuple[Any, Any]]:
+def pairwise(s: List[T]) -> Iterator[Tuple[T, T]]:
     """
     Iterates over neighbors in a list.
 
