@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Callable
 
 
 def has_children(node: Dict) -> bool:
@@ -7,7 +7,7 @@ def has_children(node: Dict) -> bool:
     true if it does or false if it is a leaf
 
     Args:
-        node(Dict): Dictionary representing a node
+        node (Dict): Dictionary representing a node
             in the retrosynthesis tree
     Returns:
         bool: whether the node has children or not
@@ -27,7 +27,7 @@ def has_children_with_synthesis(node: Dict) -> bool:
     Check if the input node has children that contain an action sequence.
 
     Args:
-        node(Dict): Dictionary representing a node
+        node (Dict): Dictionary representing a node
             in the retrosynthesis tree
     Returns:
         bool: whether the node has children with syntheses or not
@@ -54,7 +54,7 @@ def post_order_traversal(tree: Dict) -> List:
     https://en.wikipedia.org/wiki/Tree_traversal
 
     Args:
-        tree(Dict): Dictionary representing a retrosynthesis tree
+        tree (Dict): Dictionary representing a retrosynthesis tree
             Example form:
             tree = {
                 "children": [
@@ -85,9 +85,56 @@ def post_order_traversal(tree: Dict) -> List:
     result = []
 
     if 'children' in tree:
-        for c in tree['children']:
-            result.extend(post_order_traversal(c))
+        for child in tree['children']:
+            result.extend(post_order_traversal(child))
     if tree:
         result.append(tree)
 
     return result
+
+
+def get_nodes(tree: Dict, condition: Callable[[Dict], bool]) -> List:
+    """
+    Given a retrosynthesis tree it returns the nodes matching a condition over
+    a traversal.
+    For more details on tree traversals:
+    https://en.wikipedia.org/wiki/Tree_traversal
+
+    Args:
+        tree (Dict): Dictionary representing a retrosynthesis tree
+            Example form:
+            tree = {
+                "children": [
+                    {
+                        "children": [...],
+                        "configuration":
+                            {
+                                "action_sequence": [...]
+                            }
+                    },
+                    {
+                        ...
+                    },
+                    ...
+                ],
+                "configuration":
+                    {
+                        "action_sequence": [...]
+                    }
+            }
+        condition (Callable[[Dict], bool]): a function that is used to select nodes.
+
+    Returns:
+        List: List with references to the nodes evaluated as true by the condition.
+
+    """
+
+    nodes = []
+
+    if 'children' in tree:
+        for child in tree['children']:
+            nodes.extend(get_nodes(child, condition))
+    if condition(tree):
+        nodes.append(tree)
+
+    return nodes

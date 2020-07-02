@@ -1,5 +1,5 @@
 from rxn_utilities.tree_utilities import (
-    post_order_traversal, has_children, has_children_with_synthesis
+    post_order_traversal, has_children, has_children_with_synthesis, get_nodes
 )
 
 tree = {
@@ -141,6 +141,14 @@ def test_has_children_with_synthesis():
 def test_post_order_traversal():
     expected_order = [3, 5, 4, 6, 2, 9, 8, 10, 7, 1]
     ordered_nodes = post_order_traversal(tree)
-    result_order = [n["id"] for n in ordered_nodes]
+    result_order = [node['id'] for node in ordered_nodes]
 
     assert expected_order == result_order
+
+
+def test_get_nodes():
+    for identifier in range(1, 11):
+        nodes = get_nodes(tree, lambda node: node.get('id', '') == identifier)
+        assert len(nodes) == 1
+    nodes = get_nodes(tree, lambda node: node.get('id', '') == 1 or node.get('id', '') == 2)
+    assert sorted(list([node['id'] for node in nodes])) == [1, 2]
