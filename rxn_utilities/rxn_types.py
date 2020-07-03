@@ -1,5 +1,8 @@
 """Custom types used in RXN projects."""
 from enum import Enum
+from typing import TypeVar, Type
+
+T = TypeVar('T', bound='RxnEnum')
 
 
 class RxnEnum(Enum):
@@ -19,7 +22,7 @@ class RxnEnum(Enum):
         return self.name.lower()
 
     @classmethod
-    def from_string(cls, value: str) -> 'RxnEnum':
+    def from_string(cls: Type[T], value: str) -> T:
         """
         Construct the enum from a string, i.e. from the the strings of its
         possible values.
@@ -43,7 +46,7 @@ class RxnEnum(Enum):
             ) from e
 
     @classmethod
-    def _missing_(cls, value) -> 'RxnEnum':
+    def _missing_(cls: Type[T], value) -> T:
         """
         Overriden to allow instantiation from both string and enum value.
         """
