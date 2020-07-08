@@ -19,7 +19,7 @@ worker_name="worker_${queue}-${worker_hash}"
 celery worker -E \
   --concurrency ${CELERY_CONCURRENCY:-1} \
   -A tasks \
-  -l debug \
+  -l ${RXN_LOG_LEVEL:-debug} \
   --without-gossip \
   --without-mingle \
   --without-heartbeat \
