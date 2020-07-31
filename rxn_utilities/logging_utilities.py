@@ -1,4 +1,5 @@
 import logging
+from typing import Union
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -7,7 +8,7 @@ logger.addHandler(logging.NullHandler())
 def setup_celery_logger(
     main_log_file: str = 'worker.log',
     celery_log_file: str = 'celery.log',
-    log_level: str = 'INFO'
+    log_level: Union[int, str] = 'INFO'
 ) -> None:
     """
     Setup logging for celery workers.
@@ -23,7 +24,8 @@ def setup_celery_logger(
     Args:
         main_log_file: where the logs (except celery-related) will be written.
         celery_log_file: where the celery-related logs will be written.
-        log_level: logging level for main_log_file
+        log_level: logging level for main_log_file. Can be given either as a string
+            ('INFO') or as one of the integers defined in logging (logging.INFO).
     """
     rxn_format = '%(asctime)s %(levelname)-8s [%(filename)s:%(funcName)s:%(lineno)d] %(message)s'
 
