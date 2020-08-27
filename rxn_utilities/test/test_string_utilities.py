@@ -1,4 +1,4 @@
-from rxn_utilities.string_utiltities import remove_prefix, remove_postfix
+from rxn_utilities.string_utiltities import remove_prefix, remove_postfix, escape_latex
 
 
 def test_remove_prefix():
@@ -15,3 +15,7 @@ def test_remove_postfix():
     assert remove_postfix(s, ' four') == 'one two three'
     assert remove_postfix(s, 'Four') == s
     assert remove_postfix(s, 'two') == s
+
+
+def test_tex_escape():
+    assert escape_latex('30%') == r'30\%'
