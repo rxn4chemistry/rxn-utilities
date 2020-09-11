@@ -3,10 +3,13 @@ import re
 
 from setuptools import setup
 
-__version__ = re.search(
+match = re.search(
     r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
     io.open('rxn_utilities/__init__.py', encoding='utf_8_sig').read()
-).group(1)
+)
+if match is None:
+    raise SystemExit('Error when getting the version from rxn_utilities/__init__.py')
+__version__ = match.group(1)
 
 setup(
     name='rxn_utilities',
