@@ -16,3 +16,7 @@ def dump_list_to_file(values: Iterable[str], filename: Union[Path, str]) -> None
     with open(str(filename), 'wt') as f:
         for v in values:
             f.write(f'{v}\n')
+
+
+def count_lines(filename: Union[Path, str]) -> int:
+    return sum(1 for _ in open(str(filename)))
