@@ -1,17 +1,18 @@
-from typing import List, Generator, Iterable
+from pathlib import Path
+from typing import List, Generator, Iterable, Union
 
 
-def load_list_from_file(filename: str) -> List[str]:
+def load_list_from_file(filename: Union[Path, str]) -> List[str]:
     return list(iterate_lines_from_file(filename))
 
 
-def iterate_lines_from_file(filename: str) -> Generator[str, None, None]:
-    with open(filename, 'rt') as f:
+def iterate_lines_from_file(filename: Union[Path, str]) -> Generator[str, None, None]:
+    with open(str(filename), 'rt') as f:
         for line in f:
             yield line.strip()
 
 
-def dump_list_to_file(values: Iterable[str], filename: str) -> None:
-    with open(filename, 'wt') as f:
+def dump_list_to_file(values: Iterable[str], filename: Union[Path, str]) -> None:
+    with open(str(filename), 'wt') as f:
         for v in values:
             f.write(f'{v}\n')
