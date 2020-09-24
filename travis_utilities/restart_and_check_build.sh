@@ -21,5 +21,6 @@ do
     [[ ${build_status} == "failed" ]] && exit 1
     [[ ${build_status} == "canceled" ]] && exit 1
     [[ ${build_status} == "errored" ]] && exit 1
+    sleep 1
 done
 
