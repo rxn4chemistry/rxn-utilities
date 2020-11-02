@@ -1,4 +1,21 @@
-from rxn_utilities.string_utiltities import remove_prefix, remove_postfix, escape_latex
+from rxn_utilities.string_utiltities import (
+    remove_prefix, remove_postfix, escape_latex, dash_characters
+)
+
+
+def test_dash_characters():
+    # dash-minus
+    assert '\u002d' in dash_characters
+    # en-dash
+    assert '\u2013' in dash_characters
+    # em-dash
+    assert '\u2014' in dash_characters
+
+    # assert that they are all different
+    assert len(dash_characters) == len(set(dash_characters))
+
+    # assert that they all have length one
+    assert all(len(c) == 1 for c in dash_characters)
 
 
 def test_remove_prefix():

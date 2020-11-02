@@ -1,5 +1,13 @@
 import re
 
+dash_characters = [
+    '-',  # hyphen-minus
+    '–',  # en dash
+    '—',  # em dash
+    '−',  # minus sign
+    '­',  # soft hyphen
+]
+
 
 def remove_prefix(text: str, prefix: str) -> str:
     """Removes a prefix from a string, if present at its beginning.
