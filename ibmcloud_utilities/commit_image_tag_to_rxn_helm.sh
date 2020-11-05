@@ -11,6 +11,7 @@ echo "IMAGE_TAG=${IMAGE_TAG}"
 
 git clone https://${GHE_TOKEN}@github.ibm.com/rxn/rxn-helm.git \
           ${TMPDIR}/rxn-helm
+pip install git+https://${GHE_TOKEN}@github.ibm.com/rxn/rxn_utilities
 
 cd ${TMPDIR}/rxn-helm/charts/
 
@@ -29,7 +30,7 @@ echo "${VALUES_FILES[@]}"
 
 for VFILE in ${VALUES_FILES[@]};
 do
-  sed -i "s/tag:.*/tag: ${IMAGE_TAG}/g" ${VFILE}
+  update-image-tag ${IMAGE_TAG} ${VFILE}
   git add ${VFILE}
 done
 
