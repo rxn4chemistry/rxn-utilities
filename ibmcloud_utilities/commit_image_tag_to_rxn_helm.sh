@@ -11,7 +11,8 @@ echo "IMAGE_TAG=${IMAGE_TAG}"
 
 git clone https://${GHE_TOKEN}@github.ibm.com/rxn/rxn-helm.git \
           ${TMPDIR}/rxn-helm
-pip install git+https://${GHE_TOKEN}@github.ibm.com/rxn/rxn_utilities
+# NOTE: using develop branch
+pip install git+https://${GHE_TOKEN}@github.ibm.com/rxn/rxn_utilities@develop
 
 cd ${TMPDIR}/rxn-helm/charts/
 
