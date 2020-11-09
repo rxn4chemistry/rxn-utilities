@@ -81,13 +81,13 @@ class RXNS3Client:
         model_files = self.list_object_names(
             bucket=bucket, prefix='{}/{}/'.format(model_type, tag)
         )
-        if not self.model_exists(path=path, model_type=model_type, tag=tag):
+        if not self.model_exists(path=path, tag=tag):
             logger.info(
                 'Model {}/{} does not exist in {}. Downloading.'.format(model_type, tag, path)
             )
             for model_file in model_files:
                 object_name = os.path.join(model_type, tag, model_file)
-                file_path = os.path.join(path, model_type, tag, model_file)
+                file_path = os.path.join(path, tag, model_file)
                 logger.info('Downloading file {} in {}'.format(object_name, file_path))
                 self.client.fget_object(
                     bucket_name=bucket, object_name=object_name, file_path=file_path
@@ -95,14 +95,13 @@ class RXNS3Client:
         else:
             logger.info('Model {}/{} already exists in {}'.format(model_type, tag, path))
 
-    def model_exists(self, path: str, model_type: str, tag: str) -> bool:
+    def model_exists(self, path: str, tag: str) -> bool:
         """
         Check if the model already exists in the disk and return True or
         False if it doesnt exist
 
         Args:
             path (str): path to store the model at
-            model_type (str): model type
             tag (str): model tag to download
         """
-        return os.path.exists(os.path.join(path, model_type, tag))
+        return os.path.exists(os.path.join(path, tag))
