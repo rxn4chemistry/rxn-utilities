@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Required env variables:
+# GHE_TOKEN
+# GHE_USER_EMAIL
+
 echo "GIT_BRANCH=${GIT_BRANCH}"
 echo "GIT_COMMIT=${GIT_COMMIT}"
 echo "IMAGE_NAME=${IMAGE_NAME}"
@@ -7,6 +11,8 @@ echo "IMAGE_TAG=${IMAGE_TAG}"
 
 git clone https://${GHE_TOKEN}@github.ibm.com/rxn/rxn-helm.git \
           ${TMPDIR}/rxn-helm
+# NOTE: using develop branch
+pip install git+https://${GHE_TOKEN}@github.ibm.com/rxn/rxn_utilities@develop
 
 cd ${TMPDIR}/rxn-helm/charts/
 
@@ -25,13 +31,13 @@ echo "${VALUES_FILES[@]}"
 
 for VFILE in ${VALUES_FILES[@]};
 do
-  sed -i "s/tag:.*/tag: ${IMAGE_TAG}/g" ${VFILE}
+  update-image-tag ${IMAGE_TAG} ${VFILE}
   git add ${VFILE}
 done
 
 echo "Committing changes and pushing to rxn-helm"
 git config user.email "${GHE_USER_EMAIL}"
 git config user.name "RXN Functional ID"
-git commit -m "Travis CI pipeline: Updated image tag to ${IMAGE_TAG} in ${VALUES_FILES[@]}"
+git commit -m "IBM cloud delivery pipeline ${IDS_PROJECT_NAME}: Updated image tag to ${IMAGE_TAG} in ${VALUES_FILES[@]}"
 git pull --rebase
 git push
