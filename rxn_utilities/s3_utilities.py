@@ -35,7 +35,7 @@ class RXNS3Client:
 
     def list_object_names(self, bucket: str, prefix: str) -> List[str]:
         """
-        List all available objects in the given bucket based on the given prefix
+        List all available objects (recursive) in the given bucket based on the given prefix
 
         Args:
             bucket (str): bucket name to search for objects
@@ -44,69 +44,102 @@ class RXNS3Client:
             List[str]: list with bucket names
         """
         return [
-            os.path.basename(s3_object.object_name)
-            for s3_object in self.client.list_objects(bucket_name=bucket, prefix=prefix)
+            os.path.basename(s3_object.object_name) for s3_object in
+            self.client.list_objects(bucket_name=bucket, prefix=prefix, recursive=True)
         ]
 
-    def get_models_by_model_type(self, bucket: str, model_type: str) -> List[str]:
+
+class RXNS3ModelClient(RXNS3Client):
+
+    def __init__(self, host: str, access_key: str, secret_key: str, bucket: str) -> None:
+
+        self.bucket = bucket
+        super().__init__(host=host, access_key=access_key, secret_key=secret_key)
+
+    def get_models_by_model_type(self, model_type: str) -> List[str]:
         """
-        Get models associated to a type.
+        Get models (tags) associated to the model type.
 
         Args:
-            bucket (str): s3 bucket to query
-            model_type (str): model type to query
-
+            model_type (str): type of model
         Returns:
             List[str]: list with all the model tags for the given type
         """
-        s3_entries_per_model_type = (
-            entry for entry in self.client.list_objects(bucket, prefix=model_type, recursive=True)
+        object_names = (
+            entry for entry in self.list_object_names(bucket=self.bucket, prefix=model_type)
         )
-        metadata_entries = (
-            entry for entry in s3_entries_per_model_type if 'metadata.json' in entry.object_name
-        )
+        metadata_entries = (entry for entry in object_names if 'metadata.json' in entry)
         model_names = [
             # NOTE: use as model name the folder name containing the metadata.json
-            os.path.split(os.path.dirname(entry.object_name))[-1] for entry in metadata_entries
+            os.path.split(os.path.dirname(entry))[-1] for entry in metadata_entries
         ]
         return model_names
 
-    def download_model(self, path: str, bucket: str, model_type: str, tag: str) -> None:
+    def download_model(self, path: str, model_type: str, model_tag: str) -> None:
         """
         download a model given a type and a tag and store it in the given path in disk
 
         Args:
             path (str): path to store the model at
-            bucket (str): s3 bucket to search for models
-            model_type (str): model type
-            tag (str): model tag to download
+            model_type (str): type of model
+            model_tag (str): model tag to download
         """
+
+        self.validate_tag(model_type=model_type, model_tag=model_tag)
+
         model_files = self.list_object_names(
-            bucket=bucket, prefix='{}/{}/'.format(model_type, tag)
+            bucket=self.bucket, prefix='{}/{}/'.format(model_type, model_tag)
         )
-        if not self.model_exists(path=path, tag=tag):
+        if not self.model_exists(path=path, model_tag=model_tag):
             logger.info(
-                'Model {}/{} does not exist in {}. Downloading.'.format(model_type, tag, path)
+                'Model {}/{} does not exist in {}. Downloading.'.format(
+                    model_type, model_tag, path
+                )
             )
             for model_file in model_files:
-                object_name = os.path.join(model_type, tag, model_file)
-                file_path = os.path.join(path, tag, model_file)
+                object_name = os.path.join(model_type, model_tag, model_file)
+                file_path = os.path.join(path, model_tag, model_file)
                 logger.info('Downloading file {} in {}'.format(object_name, file_path))
                 self.client.fget_object(
-                    bucket_name=bucket, object_name=object_name, file_path=file_path
+                    bucket_name=self.bucket, object_name=object_name, file_path=file_path
                 )
         else:
-            logger.info('Model {}/{} already exists in {}'.format(model_type, tag, path))
+            logger.info('Model {}/{} already exists in {}'.format(model_type, model_tag, path))
 
-    def model_exists(self, path: str, tag: str) -> bool:
+    def model_exists(self, path: str, model_tag: str) -> bool:
         """
         Check if the model already exists in the disk and return True or
         False if it doesnt exist
 
         Args:
             path (str): path to store the model at
-            tag (str): model tag to download
+            model_tag (str): model tag to download
         Returns:
             bool: whether the model already exists in disk or not
         """
-        return os.path.exists(os.path.join(path, tag))
+        return os.path.exists(os.path.join(path, model_tag))
+
+    def validate_tag(self, model_type: str, model_tag: str) -> None:
+        """
+        Raises an error if the model tag is not valid.
+
+        Args:
+            model_type (str): type of model
+            model_tag (str): model tag to validate
+
+        Raises:
+            RuntimeError: if the given tag is not in the supported tag list
+
+        """
+        if model_tag not in self.get_models_by_model_type(model_type=model_type):
+            error_message = 'Model tag {} is invalid for model type {} in bucket {}'.format(
+                model_tag, model_type, self.bucket
+            )
+            logger.error(error_message)
+            raise RuntimeError(error_message)
+        logger.info(
+            'Success! Model tag {} is valid for model type {} in bucket {}'.format(
+                model_tag, model_type, self.bucket
+            )
+        )
+        return
