@@ -52,23 +52,22 @@ class RXNS3Client:
 
 class RXNS3ModelClient(RXNS3Client):
 
-    def __init__(
-        self, host: str, access_key: str, secret_key: str, bucket: str, model_type: str, path: str
-    ) -> None:
+    def __init__(self, host: str, access_key: str, secret_key: str, bucket: str) -> None:
 
         self.bucket = bucket
-        self.model_type = model_type
         super().__init__(host=host, access_key=access_key, secret_key=secret_key)
 
-    def get_models_by_model_type(self) -> List[str]:
+    def get_models_by_model_type(self, model_type: str) -> List[str]:
         """
         Get models (tags) associated to the model type.
 
+        Args:
+            model_type (str): type of model
         Returns:
             List[str]: list with all the model tags for the given type
         """
         object_names = (
-            entry for entry in self.list_object_names(bucket=self.bucket, prefix=self.model_type)
+            entry for entry in self.list_object_names(bucket=self.bucket, prefix=model_type)
         )
         metadata_entries = (entry for entry in object_names if 'metadata.json' in entry)
         model_names = [
@@ -77,69 +76,71 @@ class RXNS3ModelClient(RXNS3Client):
         ]
         return model_names
 
-    def download_model(self, path: str, tag: str) -> None:
+    def download_model(self, path: str, model_type: str, model_tag: str) -> None:
         """
         download a model given a type and a tag and store it in the given path in disk
 
         Args:
             path (str): path to store the model at
-            tag (str): model tag to download
+            model_type (str): type of model
+            model_tag (str): model tag to download
         """
 
-        self.validate_tag(model_tag=tag)
+        self.validate_tag(model_tag=model_tag)
 
         model_files = self.list_object_names(
-            bucket=self.bucket, prefix='{}/{}/'.format(self.model_type, tag)
+            bucket=self.bucket, prefix='{}/{}/'.format(model_type, model_tag)
         )
-        if not self.model_exists(path=path, tag=tag):
+        if not self.model_exists(path=path, model_tag=model_tag):
             logger.info(
                 'Model {}/{} does not exist in {}. Downloading.'.format(
-                    self.model_type, tag, path
+                    model_type, model_tag, path
                 )
             )
             for model_file in model_files:
-                object_name = os.path.join(self.model_type, tag, model_file)
-                file_path = os.path.join(path, tag, model_file)
+                object_name = os.path.join(model_type, model_tag, model_file)
+                file_path = os.path.join(path, model_tag, model_file)
                 logger.info('Downloading file {} in {}'.format(object_name, file_path))
                 self.client.fget_object(
                     bucket_name=self.bucket, object_name=object_name, file_path=file_path
                 )
         else:
-            logger.info('Model {}/{} already exists in {}'.format(self.model_type, tag, path))
+            logger.info('Model {}/{} already exists in {}'.format(model_type, model_tag, path))
 
-    def model_exists(self, path: str, tag: str) -> bool:
+    def model_exists(self, path: str, model_tag: str) -> bool:
         """
         Check if the model already exists in the disk and return True or
         False if it doesnt exist
 
         Args:
             path (str): path to store the model at
-            tag (str): model tag to download
+            model_tag (str): model tag to download
         Returns:
             bool: whether the model already exists in disk or not
         """
-        return os.path.exists(os.path.join(path, tag))
+        return os.path.exists(os.path.join(path, model_tag))
 
-    def validate_tag(self, model_tag: str) -> None:
+    def validate_tag(self, model_type: str, model_tag: str) -> None:
         """
         Raises an error if the model tag is not valid.
 
         Args:
+            model_type (str): type of model
             model_tag (str): model tag to validate
 
         Raises:
             RuntimeError: if the given tag is not in the supported tag list
 
         """
-        if model_tag not in self.get_models_by_model_type():
+        if model_tag not in self.get_models_by_model_type(model_type=model_type):
             error_message = 'Model tag {} is invalid for model type {} in bucket {}'.format(
-                model_tag, self.model_type, self.bucket
+                model_tag, model_type, self.bucket
             )
             logger.error(error_message)
             raise RuntimeError(error_message)
         logger.info(
             'Success! Model tag {} is valid for model type {} in bucket {}'.format(
-                model_tag, self.model_type, self.bucket
+                model_tag, model_type, self.bucket
             )
         )
         return
