@@ -85,7 +85,7 @@ class RXNS3ModelClient(RXNS3Client):
             model_tag (str): model tag to download
         """
 
-        self.validate_tag(model_tag=model_tag)
+        self.validate_tag(model_type=model_type, model_tag=model_tag)
 
         model_files = self.list_object_names(
             bucket=self.bucket, prefix='{}/{}/'.format(model_type, model_tag)
