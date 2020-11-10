@@ -9,7 +9,7 @@ logger.addHandler(logging.NullHandler())
 
 class RXNS3Client:
 
-    def __init__(self, host: str, access_key: str, secret_key: str):
+    def __init__(self, host: str, access_key: str, secret_key: str) -> None:
         """
         Construct an S3 client.
 
@@ -55,6 +55,9 @@ class RXNS3Client:
         Args:
             bucket (str): s3 bucket to query
             model_type (str): model type to query
+
+        Returns:
+            List[str]: list with all the model tags for the given type
         """
         s3_entries_per_model_type = (
             entry for entry in self.client.list_objects(bucket, prefix=model_type, recursive=True)
@@ -68,7 +71,7 @@ class RXNS3Client:
         ]
         return model_names
 
-    def download_model(self, path: str, bucket: str, model_type: str, tag: str):
+    def download_model(self, path: str, bucket: str, model_type: str, tag: str) -> None:
         """
         download a model given a type and a tag and store it in the given path in disk
 
@@ -103,5 +106,7 @@ class RXNS3Client:
         Args:
             path (str): path to store the model at
             tag (str): model tag to download
+        Returns:
+            bool: whether the model already exists in disk or not
         """
         return os.path.exists(os.path.join(path, tag))
