@@ -85,24 +85,37 @@ class RXNS3ModelClient(RXNS3Client):
             model_tag (str): model tag to download
         """
 
-        self.validate_tag(model_type=model_type, model_tag=model_tag)
-
         model_files = self.list_object_names(
             bucket=self.bucket, prefix='{}/{}/'.format(model_type, model_tag)
         )
+        for model_file in model_files:
+            object_name = os.path.join(model_type, model_tag, model_file)
+            file_path = os.path.join(path, model_tag, model_file)
+            logger.info('Downloading file {} in {}'.format(object_name, file_path))
+            self.client.fget_object(
+                bucket_name=self.bucket, object_name=object_name, file_path=file_path
+            )
+
+    def ensure_model(self, path: str, model_type: str, model_tag: str) -> None:
+        """
+        Checks if the model tag is valid, and ensures that the model is present
+        on disk. If not, it is downloaded.
+
+        Args:
+            path (str): path to store the model at
+            model_type (str): type of model
+            model_tag (str): model tag to download
+        """
+
+        self.validate_tag(model_type=model_type, model_tag=model_tag)
+
         if not self.model_exists(path=path, model_tag=model_tag):
             logger.info(
                 'Model {}/{} does not exist in {}. Downloading.'.format(
                     model_type, model_tag, path
                 )
             )
-            for model_file in model_files:
-                object_name = os.path.join(model_type, model_tag, model_file)
-                file_path = os.path.join(path, model_tag, model_file)
-                logger.info('Downloading file {} in {}'.format(object_name, file_path))
-                self.client.fget_object(
-                    bucket_name=self.bucket, object_name=object_name, file_path=file_path
-                )
+            self.download_model(path=path, model_type=model_type, model_tag=model_tag)
         else:
             logger.info('Model {}/{} already exists in {}'.format(model_type, model_tag, path))
 
