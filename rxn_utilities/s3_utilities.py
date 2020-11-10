@@ -1,7 +1,9 @@
+import json
 import os
-from typing import List
+from typing import List, Dict, Any, Tuple
 from minio import Minio
 import logging
+import lru_cache
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -110,3 +112,35 @@ class RXNS3Client:
             bool: whether the model already exists in disk or not
         """
         return os.path.exists(os.path.join(path, tag))
+
+    def model_configuration_from_tag(
+        self, bucket: str, path: str, model_type: str, model_tag: str
+    ) -> Dict[str, Any]:
+        """
+        Get the model configuration from the tag.
+
+        Args:
+            bucket (str): bucket to search for models.
+            path (str): path on disk where models are saved.
+            model_type (str): type of model to search.
+            model_tag (str): tag describing the model. Defaults to '2020-08-10'.
+        Returns:
+            Dict[str, Any]: model configuration with resolved filepath.
+        """
+        supported_tags = self.get_models_by_model_type(bucket=bucket, model_type=model_type)
+        if model_tag not in supported_tags:
+            raise RuntimeError(
+                'model_tag={} not supported! Select from: {}.'.format(
+                    model_tag, ','.join(sorted(supported_tags))
+                )
+            )
+        model_tag_path = os.path.join(path, model_tag)
+        logger.info('Loading model configuration from {}'.format(model_tag_path))
+        with open(os.path.join(model_tag_path, 'metadata.json'), mode='rt') as fp:
+            # load the needed configuration
+            model_configuration = json.load(fp)['forward_model']
+        # path resolution
+        model_configuration['filepath'] = os.path.join(
+            model_tag_path, model_configuration['filepath']
+        )
+        return model_configuration
