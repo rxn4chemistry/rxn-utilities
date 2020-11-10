@@ -120,31 +120,6 @@ class RXNS3ModelClient(RXNS3Client):
         """
         return os.path.exists(os.path.join(path, tag))
 
-    def model_configuration_from_tag(self, path: str, model_tag: str) -> Dict[str, Any]:
-        """
-        Get the model configuration from the tag.
-
-        Args:
-            path (str): path on disk where models are saved.
-            model_tag (str): tag describing the model. Defaults to '2020-08-10'.
-
-        Returns:
-            Dict[str, Any]: model configuration with resolved filepath.
-        """
-
-        self.download_model(path=path, tag=model_tag)
-
-        model_tag_path = os.path.join(path, model_tag)
-        logger.info('Loading model configuration from {}'.format(model_tag_path))
-        with open(os.path.join(model_tag_path, 'metadata.json'), mode='rt') as fp:
-            # load the needed configuration
-            model_configuration = json.load(fp)['forward_model']
-        # path resolution
-        model_configuration['filepath'] = os.path.join(
-            model_tag_path, model_configuration['filepath']
-        )
-        return model_configuration
-
     def validate_tag(self, model_tag: str) -> None:
         """
         Raises an error if the model tag is not valid.
