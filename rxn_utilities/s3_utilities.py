@@ -44,7 +44,7 @@ class RXNS3Client:
             List[str]: list with bucket names
         """
         return [
-            os.path.basename(s3_object.object_name) for s3_object in
+            s3_object.object_name for s3_object in
             self.client.list_objects(bucket_name=bucket, prefix=prefix, recursive=True)
         ]
 
@@ -65,9 +65,7 @@ class RXNS3ModelClient(RXNS3Client):
         Returns:
             List[str]: list with all the model tags for the given type
         """
-        object_names = (
-            entry for entry in self.list_object_names(bucket=self.bucket, prefix=model_type)
-        )
+        object_names = self.list_object_names(bucket=self.bucket, prefix=model_type)
         metadata_entries = (entry for entry in object_names if 'metadata.json' in entry)
         model_names = [
             # NOTE: use as model name the folder name containing the metadata.json
@@ -85,12 +83,12 @@ class RXNS3ModelClient(RXNS3Client):
             model_tag (str): model tag to download
         """
 
-        model_files = self.list_object_names(
+        object_names = self.list_object_names(
             bucket=self.bucket, prefix='{}/{}/'.format(model_type, model_tag)
         )
-        for model_file in model_files:
-            object_name = os.path.join(model_type, model_tag, model_file)
-            file_path = os.path.join(path, model_tag, model_file)
+        os.makedirs(os.path.join(path, model_tag))
+        for object_name in object_names:
+            file_path = os.path.join(path, model_tag, os.path.basename(object_name))
             logger.info('Downloading file {} in {}'.format(object_name, file_path))
             self.client.fget_object(
                 bucket_name=self.bucket, object_name=object_name, file_path=file_path
