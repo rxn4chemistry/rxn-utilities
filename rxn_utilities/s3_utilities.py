@@ -61,6 +61,9 @@ class RXNS3Client:
         Returns:
             List[str]: list with bucket names
         """
+        if not os.path.exists(path):
+            logger.warning('Path {} does not exist. Creating.')
+            os.makedirs(path)
         object_names = self.list_object_names(bucket=bucket, prefix=prefix)
         file_paths = [object_name.replace(prefix, path) for object_name in object_names]
         for object_name, file_path in zip(object_names, file_paths):
