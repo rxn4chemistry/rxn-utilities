@@ -48,6 +48,36 @@ class RXNS3Client:
             self.client.list_objects(bucket_name=bucket, prefix=prefix, recursive=True)
         ]
 
+    def sync_folder(self, bucket: str, path: str, prefix: str) -> None:
+        """
+        Sync an entire folder from s3 recursively and save it under the given path.
+        Every file under prefix/ in s3 will be saver under path/ in disk (i.e.
+        prefix/ is replaced by path/)
+
+        Args:
+            bucket (str): bucket name to search for objects
+            path (str): path to save the objects in disk
+            prefix (str): prefix for objects in the bucket
+        Returns:
+            List[str]: list with bucket names
+        """
+        if not os.path.exists(path):
+            logger.warning('Path {} does not exist. Creating.'.format(path))
+            os.makedirs(path)
+        object_names = self.list_object_names(bucket=bucket, prefix=prefix)
+        object_names_stripped_prefix = [
+            os.path.relpath(object_name, prefix) for object_name in object_names
+        ]
+        file_paths = [
+            os.path.join(path, object_name_stripped_prefix)
+            for object_name_stripped_prefix in object_names_stripped_prefix
+        ]
+        for object_name, file_path in zip(object_names, file_paths):
+            logger.info('Downloading file {} in {}'.format(object_name, file_path))
+            self.client.fget_object(
+                bucket_name=bucket, object_name=object_name, file_path=file_path
+            )
+
 
 class RXNS3ModelClient(RXNS3Client):
 
