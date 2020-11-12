@@ -56,17 +56,17 @@ class RXNS3Client:
 
         Args:
             bucket (str): bucket name to search for objects
-            path (str): prefix for objects in the bucket
+            path (str): path to save the objects in disk
             prefix (str): prefix for objects in the bucket
         Returns:
             List[str]: list with bucket names
         """
         if not os.path.exists(path):
-            logger.warning('Path {} does not exist. Creating.')
+            logger.warning('Path {} does not exist. Creating.'.format(path))
             os.makedirs(path)
         object_names = self.list_object_names(bucket=bucket, prefix=prefix)
         object_names_stripped_prefix = [
-            object_name.replace(prefix, '') for object_name in object_names
+            os.path.relpath(object_name, prefix) for object_name in object_names
         ]
         file_paths = [
             os.path.join(path, object_name_stripped_prefix)
