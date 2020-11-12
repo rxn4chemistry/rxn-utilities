@@ -65,7 +65,13 @@ class RXNS3Client:
             logger.warning('Path {} does not exist. Creating.')
             os.makedirs(path)
         object_names = self.list_object_names(bucket=bucket, prefix=prefix)
-        file_paths = [object_name.replace(prefix, path) for object_name in object_names]
+        object_names_stripped_prefix = [
+            object_name.replace(prefix, '') for object_name in object_names
+        ]
+        file_paths = [
+            os.path.join(path, object_name_stripped_prefix)
+            for object_name_stripped_prefix in object_names_stripped_prefix
+        ]
         for object_name, file_path in zip(object_names, file_paths):
             logger.info('Downloading file {} in {}'.format(object_name, file_path))
             self.client.fget_object(
