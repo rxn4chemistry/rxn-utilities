@@ -1,5 +1,7 @@
 import itertools
-from typing import Sequence, Any, Iterable, Optional, Callable, Set, List, Iterator, Tuple, TypeVar
+from typing import (
+    Sequence, Any, Iterable, Optional, Callable, Set, List, Iterator, Tuple, TypeVar, cast
+)
 
 T = TypeVar('T')
 V = TypeVar('V')
@@ -25,7 +27,7 @@ def remove_duplicates(seq: Iterable[T], key: Optional[Callable[[T], V]] = None) 
         def key(x: T) -> V:
             return x  # type: ignore
 
-    assert key is not None  # Necessary for mypy
+    key = cast(Callable[[T], V], key)  # necessary for mypy
 
     seen: Set[V] = set()
     seen_add = seen.add
