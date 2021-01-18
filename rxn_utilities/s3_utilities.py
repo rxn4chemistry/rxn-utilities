@@ -9,7 +9,7 @@ logger.addHandler(logging.NullHandler())
 
 class RXNS3Client:
 
-    def __init__(self, host: str, access_key: str, secret_key: str) -> None:
+    def __init__(self, host: str, access_key: str, secret_key: str, secure: bool = True) -> None:
         """
         Construct an S3 client.
 
@@ -17,12 +17,17 @@ class RXNS3Client:
             host (str): s3 host address
             access_key (str): s3 access key
             secret_key (str): s3 secret key
+            secure (bool, optional): whether the connection is secure or not. Defaults
+                to True.
         """
 
         self.host = host
         self.access_key = access_key
         self.secret_key = secret_key
-        self.client = Minio(host, access_key=access_key, secret_key=secret_key)
+        self.secure = secure
+        self.client = Minio(
+            self.host, access_key=self.access_key, secret_key=self.secret_key, secure=self.secure
+        )
 
     def list_bucket_names(self) -> List[str]:
         """
@@ -81,10 +86,17 @@ class RXNS3Client:
 
 class RXNS3ModelClient(RXNS3Client):
 
-    def __init__(self, host: str, access_key: str, secret_key: str, bucket: str) -> None:
+    def __init__(
+        self,
+        host: str,
+        access_key: str,
+        secret_key: str,
+        bucket: str,
+        secure: bool = True
+    ) -> None:
 
         self.bucket = bucket
-        super().__init__(host=host, access_key=access_key, secret_key=secret_key)
+        super().__init__(host=host, access_key=access_key, secret_key=secret_key, secure=secure)
 
     def get_models_by_model_type(self, model_type: str) -> List[str]:
         """
