@@ -1,3 +1,8 @@
+# LICENSED INTERNAL CODE. PROPERTY OF IBM.
+# IBM Research Zurich Licensed Internal Code
+# (C) Copyright IBM Corp. 2021
+# ALL RIGHTS RESERVED
+
 from rxn_utilities.tree_utilities import (
     post_order_traversal, has_children, has_children_with_synthesis, get_nodes
 )

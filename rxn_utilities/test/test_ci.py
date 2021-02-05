@@ -1,3 +1,8 @@
+# LICENSED INTERNAL CODE. PROPERTY OF IBM.
+# IBM Research Zurich Licensed Internal Code
+# (C) Copyright IBM Corp. 2021
+# ALL RIGHTS RESERVED
+
 import yaml
 from rxn_utilities.test.utils import FileFromContent
 from rxn_utilities.ci import update_image_tag
