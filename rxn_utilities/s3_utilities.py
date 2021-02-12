@@ -4,7 +4,6 @@
 # ALL RIGHTS RESERVED
 
 import os
-import boto
 import tempfile
 import logging
 from typing import List, Dict, Any
@@ -31,26 +30,32 @@ def maybe_download_model_from_s3(model_uri: str) -> str:
             parsed_uri = urlparse(model_uri)
             # parse bucket and path
             _, bucket, *path = parsed_uri.path.split('/')
+            # prefix
+            prefix = '/'.join(path)
             # parsing credentials and host
             credentials, host = parsed_uri.netloc.split('@')
             # getting keys
             access, secret = credentials.split(':')
             # parse host for potential port
             kwargs: Dict[str, Any] = dict(zip(['host', 'port'], host.split(':')))
+            secure = True
             if 'port' in kwargs:
-                kwargs['port'] = int(kwargs['port'])
+                if int(kwargs['port']) != 443:
+                    secure = False
             # establish connection
-            connection = boto.connect_s3(
-                aws_access_key_id=access, aws_secret_access_key=secret, **kwargs
-            )
+            connection = Minio(endpoint=host, access_key=access, secret_key=secret, secure=secure)
             # get the object key assuming uniqueness
-            object_key = list(connection.get_bucket(bucket).list(prefix='/'.join(path)))[0]
+            object_name = list(
+                connection.list_objects(bucket_name=bucket, prefix=prefix, recursive=True)
+            )[0].object_name
             # create a file handle for storing the model locally
             a_file = tempfile.NamedTemporaryFile(delete=False)
             # make sure we close the file
             a_file.close()
             # download the model
-            object_key.get_contents_to_filename(a_file.name)
+            connection.fget_object(
+                bucket_name=bucket, object_name=object_name, file_path=a_file.name
+            )
             return a_file.name
         except Exception:
             message = (
