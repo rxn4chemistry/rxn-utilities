@@ -7,7 +7,7 @@ import os
 import boto
 import tempfile
 import logging
-from typing import List
+from typing import List, Dict, Any
 from minio import Minio
 from urllib.parse import urlparse
 
@@ -36,7 +36,7 @@ def maybe_download_model_from_s3(model_uri: str) -> str:
             # getting keys
             access, secret = credentials.split(':')
             # parse host for potential port
-            kwargs = dict(zip(['host', 'port'], host.split(':')))
+            kwargs: Dict[str, Any] = dict(zip(['host', 'port'], host.split(':')))
             if 'port' in kwargs:
                 kwargs['port'] = int(kwargs['port'])
             # establish connection
