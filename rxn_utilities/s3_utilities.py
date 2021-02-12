@@ -4,12 +4,64 @@
 # ALL RIGHTS RESERVED
 
 import os
+import boto
+import tempfile
+import logging
 from typing import List
 from minio import Minio
-import logging
+from urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
+
+
+def maybe_download_model_from_s3(model_uri: str) -> str:
+    """
+    Get a model on the local storage.
+
+    In case the model_uri provided is a S3 URI, dowloads the
+    model and return the local path.
+    Args:
+        model_uri (str): a uri, either filesystem or S3.
+    Returns:
+        str: the path to the model on the local filesystem.
+    """
+    if model_uri.startswith('s3://'):
+        try:
+            parsed_uri = urlparse(model_uri)
+            # parse bucket and path
+            _, bucket, *path = parsed_uri.path.split('/')
+            # parsing credentials and host
+            credentials, host = parsed_uri.netloc.split('@')
+            # getting keys
+            access, secret = credentials.split(':')
+            # parse host for potential port
+            kwargs = dict(zip(['host', 'port'], host.split(':')))
+            # establish connection
+            connection = boto.connect_s3(
+                aws_access_key_id=access, aws_secret_access_key=secret, **kwargs
+            )
+            # get the object key assuming uniqueness
+            object_key = list(connection.get_bucket(bucket).list(prefix='/'.join(path)))[0]
+            # create a file handle for storing the model locally
+            a_file = tempfile.NamedTemporaryFile(delete=False)
+            # make sure we close the file
+            a_file.close()
+            # download the model
+            object_key.get_contents_to_filename(a_file.name)
+            return a_file.name
+        except Exception:
+            message = (
+                'Getting model from COS failed '
+                'for the provided URI: {}'.format(model_uri)
+            )
+            raise RuntimeError(message)
+    else:
+        if os.path.exists(model_uri):
+            return model_uri
+        else:
+            message = 'Model not found on local filesystem.'
+            raise RuntimeError(message)
 
 
 class RXNS3Client:
