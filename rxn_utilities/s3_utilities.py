@@ -37,6 +37,8 @@ def maybe_download_model_from_s3(model_uri: str) -> str:
             access, secret = credentials.split(':')
             # parse host for potential port
             kwargs = dict(zip(['host', 'port'], host.split(':')))
+            if 'port' in kwargs:
+                kwargs['port'] = int(kwargs['port'])
             # establish connection
             connection = boto.connect_s3(
                 aws_access_key_id=access, aws_secret_access_key=secret, **kwargs
