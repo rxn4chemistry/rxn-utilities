@@ -7,7 +7,7 @@ import requests
 from typing import Dict
 
 CHEMICAL_NAME_TO_PROPERTIES = (
-    'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{chemical_name}/property/MolecularFormula,CanonicalSMILES/CSV'
+    'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{chemical_name}/property/MolecularFormula,CanonicalSMILES,IsomericSMILES/CSV'
 )
 
 
@@ -40,6 +40,7 @@ def get_chemical_properties(chemical_name: str) -> Dict:
             'cid': properties[0],
             'chemical_formula': properties[1],
             'smiles': properties[2],
+            'isomeric_smiles': properties[3]
         }
     except Exception:
         raise ChemicalPropertiesRetrievalError(
