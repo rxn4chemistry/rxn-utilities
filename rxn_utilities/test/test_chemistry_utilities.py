@@ -22,7 +22,7 @@ def test_get_chemical_properties():
         'cid': '80102',
         'chemical_formula': 'C16H19P',
         'smiles': 'CC(C)(C)P(C1=CC=CC=C1)C2=CC=CC=C2',
-        'ismoeric_smiles': 'CC(C)(C)P(C1=CC=CC=C1)C2=CC=CC=C2'
+        'isomeric_smiles': 'CC(C)(C)P(C1=CC=CC=C1)C2=CC=CC=C2'
     }
     assert groundtruth == get_chemical_properties(chemical_name=chemical_name)
     with pytest.raises(ChemicalPropertiesRetrievalError):
