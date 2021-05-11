@@ -4,9 +4,10 @@
 # ALL RIGHTS RESERVED
 
 import os
+import json
 import tempfile
 import logging
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Callable
 from minio import Minio
 from urllib.parse import urlparse
 
@@ -148,6 +149,39 @@ class RXNS3Client:
             )
 
 
+def post_process_model_information_for_name(model_information: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Post-process model information to extract the name of the model.
+
+    Args:
+        model_information (Dict[str, Any]): model information.
+
+    Returns:
+        Dict[str, Any]: a dictionaty containing the model name.
+    """
+    return {'name': model_information['name']}
+
+
+def post_process_model_information_for_retrosynthesis(
+    model_information: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Post-process model information to extract the name of the model and whether
+    it is enzymatic.
+
+    Args:
+        model_information (Dict[str, Any]): model information.
+
+    Returns:
+        Dict[str, Any]: a dictionaty containing the model name and whether the
+            retrosynthesis supports enzymatic reactions.
+    """
+    return {
+        'name': model_information['name'],
+        'is_enzymatic': model_information['backward_model'].get('is_enzymatic', False)
+    }
+
+
 class RXNS3ModelClient(RXNS3Client):
 
     def __init__(
@@ -162,22 +196,49 @@ class RXNS3ModelClient(RXNS3Client):
         self.bucket = bucket
         super().__init__(host=host, access_key=access_key, secret_key=secret_key, secure=secure)
 
-    def get_models_by_model_type(self, model_type: str) -> List[str]:
+    def process_model_metadata_entry(self, metadata_entry: str) -> Dict[str, Any]:
+        """
+        Process a model metadata entry to extract information about the model.
+
+        Args:
+            metadata_entry (str): metdata entry in S3.
+
+        Returns:
+            Dict[str, Any]: a dictionary describing model metadata.
+        """
+        model_name = os.path.split(os.path.dirname(metadata_entry))[-1]
+        model_information = {'name': model_name}
+        try:
+            response = self.client.get_object(bucket_name=self.bucket, object_name=metadata_entry)
+            model_information.update(json.loads(response.read().decode()))
+        finally:
+            response.close()
+            response.release_conn()
+        return model_information
+
+    def get_models_by_model_type(
+        self,
+        model_type: str,
+        post_process_model_fn: Callable = post_process_model_information_for_name
+    ) -> List[Dict[str, Any]]:
         """
         Get models (tags) associated to the model type.
 
         Args:
-            model_type (str): type of model
+            model_type (str): type of model.
+            post_process_model_fn (Callable): function for model information postprocessing.
+                Defaults to extract only the model name.
+
         Returns:
-            List[str]: list with all the model tags for the given type
+            List[Dict[str, Any]]: list with all the model tags for the given type
         """
         object_names = self.list_object_names(bucket=self.bucket, prefix=model_type)
         metadata_entries = (entry for entry in object_names if 'metadata.json' in entry)
-        model_names = [
-            # NOTE: use as model name the folder name containing the metadata.json
-            os.path.split(os.path.dirname(entry))[-1] for entry in metadata_entries
+        models_information = [
+            post_process_model_fn(self.process_model_metadata_entry(entry))
+            for entry in metadata_entries
         ]
-        return model_names
+        return models_information
 
     def download_model(self, path: str, model_type: str, model_tag: str) -> None:
         """
