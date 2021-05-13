@@ -309,7 +309,12 @@ class RXNS3ModelClient(RXNS3Client):
             RuntimeError: if the given tag is not in the supported tag list
 
         """
-        if model_tag not in self.get_models_by_model_type(model_type=model_type):
+        if model_tag not in set(
+            [
+                model_information['name']
+                for model_information in self.get_models_by_model_type(model_type=model_type)
+            ]
+        ):
             error_message = 'Model tag {} is invalid for model type {} in bucket {}'.format(
                 model_tag, model_type, self.bucket
             )
