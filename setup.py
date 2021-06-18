@@ -23,5 +23,18 @@ setup(
     scripts=['bin/update-image-tag'],
     packages=['rxn_utilities'],
     package_data={'rxn_utilities': ['py.typed']},
-    install_requires=['attrs>=19.1.0', 'requests>=2.23.0', 'pyyaml>=5.3.1', 'minio>=6.0.0']
+    install_requires=['attrs>=19.1.0', 'requests>=2.23.0', 'pyyaml>=5.3.1', 'minio>=6.0.0'],
+    extras_require={
+        'dev':
+            [
+                'flake8>=3.7.9',
+                'mark>=0.2',
+                'mypy>=0.761',
+                'pytest>=5.3.4',
+                'pytest-cov>=2.8.1',
+                'types-pyYAML>=5.4.3',
+                'types-requests>=0.1.12',
+                'yapf>=0.30.0',
+            ],
+    },
 )

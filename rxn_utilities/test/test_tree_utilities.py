@@ -2,12 +2,13 @@
 # IBM Research Zurich Licensed Internal Code
 # (C) Copyright IBM Corp. 2021
 # ALL RIGHTS RESERVED
+from typing import Any, Dict
 
 from rxn_utilities.tree_utilities import (
     post_order_traversal, has_children, has_children_with_synthesis, get_nodes
 )
 
-tree = {
+tree: Dict[str, Any] = {
     "id":
         1,
     "children":
@@ -58,7 +59,7 @@ dummy_action = {
     "content": {}
 }
 
-tree_with_synthesis = {
+tree_with_synthesis: Dict[str, Any] = {
     "id":
         1,
     "configuration": {

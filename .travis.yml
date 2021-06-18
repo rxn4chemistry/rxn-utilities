@@ -8,9 +8,7 @@ python:
   - "3.7"
 
 install:
-  - |
-    pip3 install -r requirements.txt && \
-    pip3 install -r test_requirements.txt
+  - pip install -e .[dev]
 script:
   - |
     yapf --quiet --style "{based_on_style: pep8, blank_line_before_nested_class_or_def: true, indent_dictionary_value: true, dedent_closing_brackets: true, column_limit: 99}" --recursive .

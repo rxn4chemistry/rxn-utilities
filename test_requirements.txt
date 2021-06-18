@@ -1,6 +1,0 @@
-flake8==3.7.9
-mark==0.2
-mypy==0.761
-pytest==5.3.4
-pytest-cov==2.8.1
-yapf==0.30.0
