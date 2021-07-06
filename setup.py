@@ -29,12 +29,12 @@ setup(
             [
                 'flake8>=3.7.9',
                 'mark>=0.2',
-                'mypy>=0.761',
+                'mypy>=0.910',
                 'pytest>=5.3.4',
                 'pytest-cov>=2.8.1',
                 'types-pyYAML>=5.4.3',
                 'types-requests>=0.1.12',
-                'yapf>=0.30.0',
+                'yapf>=0.31.0',
             ],
     },
 )
