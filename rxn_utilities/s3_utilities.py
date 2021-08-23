@@ -255,7 +255,12 @@ class RXNS3ModelClient(RXNS3Client):
         )
         os.makedirs(os.path.join(path, model_tag))
         for object_name in object_names:
-            file_path = os.path.join(path, model_tag, os.path.basename(object_name))
+            object_basename = os.path.basename(object_name)
+            if not object_basename:
+                # basename is '' for the directory - no need to copy
+                continue
+
+            file_path = os.path.join(path, model_tag, object_basename)
             logger.info('Downloading file {} in {}'.format(object_name, file_path))
             self.client.fget_object(
                 bucket_name=self.bucket, object_name=object_name, file_path=file_path
