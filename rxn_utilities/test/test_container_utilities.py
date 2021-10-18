@@ -3,7 +3,7 @@
 # (C) Copyright IBM Corp. 2021
 # ALL RIGHTS RESERVED
 
-from rxn_utilities.container_utilities import all_identical, remove_duplicates, pairwise
+from rxn_utilities.container_utilities import all_identical, remove_duplicates, pairwise, chunker
 
 
 def test_all_identical():
@@ -53,3 +53,36 @@ def test_pairwise():
     expected = [(1, 2), (2, '3'), ('3', 4), (4, '5'), ('5', 'end')]
 
     assert list(pairwise(some_list)) == expected
+
+
+def test_chunker():
+    some_list = list(range(1, 10))  # Numbers 1 to 9
+
+    # Default fill value is None
+    assert list(chunker(some_list, 4)) == [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, None, None, None],
+    ]
+
+    # custom fill value
+    assert list(chunker(some_list, 4, fill_value=-1)) == [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, -1, -1, -1],
+    ]
+
+    # Filter out the None values
+    assert list(chunker(some_list, 4, filter_out_none=True)) == [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9],
+    ]
+
+    # NB: filtering out the None values also removes what was present in initial list
+    other_list = [1, 2, None, None, None, None, 7, 8, 9]
+    assert list(chunker(other_list, 4, filter_out_none=True)) == [
+        [1, 2],
+        [7, 8],
+        [9],
+    ]

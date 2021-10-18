@@ -5,7 +5,8 @@
 
 import itertools
 from typing import (
-    Sequence, Any, Iterable, Optional, Callable, Set, List, Iterator, Tuple, TypeVar, cast
+    Sequence, Any, Iterable, Optional, Callable, Set, List, Iterator, Tuple, TypeVar, cast,
+    Generator
 )
 
 T = TypeVar('T')
@@ -51,3 +52,39 @@ def pairwise(s: List[T]) -> Iterator[Tuple[T, T]]:
     a, b = itertools.tee(s)
     next(b, None)
     return zip(a, b)
+
+
+def chunker(
+    iterable: Iterable[T],
+    chunk_size: int,
+    fill_value: Optional[T] = None,
+    filter_out_none: bool = False
+) -> Generator[List[T], None, None]:
+    """
+    Iterate through an iterable in chunks of given size.
+
+    Adapted from "grouper" function in the itertools documentation:
+    https://docs.python.org/3/library/itertools.html#itertools-recipes
+
+    Args:
+        iterable: some iterable to create chunks from.
+        chunk_size: size of the chunks.
+        fill_value: value to fill in if the last chunk is too small.
+        filter_out_none: whether to remove from the chunks, especially in order
+            to not fill the last chunk if it is too small.
+
+    Returns:
+        Iterator over lists representing the chunks.
+    """
+
+    # These two lines: same as the "grouper" function in the itertools doc.
+    args = [iter(iterable)] * chunk_size
+    tuple_iterable = itertools.zip_longest(*args, fillvalue=fill_value)
+
+    # convert to lists instead of tuples
+    list_iterable = (list(chunk) for chunk in tuple_iterable)
+
+    if filter_out_none:
+        yield from ([item for item in chunk if item is not None] for chunk in list_iterable)
+
+    yield from list_iterable
