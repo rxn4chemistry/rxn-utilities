@@ -182,6 +182,30 @@ def post_process_model_information_for_retrosynthesis(
     }
 
 
+def post_process_model_information_for_forward(
+    model_information: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Post-process model information to extract the name of the model and whether
+    light/heat tokens are supported.
+
+    Args:
+        model_information (Dict[str, Any]): model information.
+
+    Returns:
+        Dict[str, Any]: a dictionaty containing the model name and whether the
+            forward supports photochemical or thermal reactions.
+    """
+    return {
+        'name':
+            model_information['name'],
+        'has_support_for_light':
+            model_information['forward_model'].get('has_support_for_light', False),
+        'has_support_for_heat':
+            model_information['forward_model'].get('has_support_for_heat', False)
+    }
+
+
 class RXNS3ModelClient(RXNS3Client):
 
     def __init__(
