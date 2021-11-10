@@ -19,5 +19,7 @@ deploy:
   provider: pypi
   server: https://eu.artifactory.swg-devops.com/artifactory/api/pypi/res-accelerated-discovery-team-rxn-private-pypi-local
   distributions: "sdist bdist_wheel"
+  username: $PYPI_USERNAME
+  password: $PYPI_PASSWORD
   on:
     tags: true
