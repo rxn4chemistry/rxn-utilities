@@ -14,3 +14,10 @@ script:
   - python3 -m pytest -sv --cov=rxn_utilities --cov-fail-under=60
   - python3 -m flake8 --disable-noqa .
   - mypy rxn_utilities
+
+deploy:
+  provider: pypi
+  server: https://eu.artifactory.swg-devops.com/artifactory/api/pypi/res-accelerated-discovery-team-rxn-private-pypi-local
+  distributions: "sdist bdist_wheel"
+  on:
+    tags: true
