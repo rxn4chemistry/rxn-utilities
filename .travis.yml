@@ -17,9 +17,9 @@ script:
 
 deploy:
   provider: pypi
-  server: https://eu.artifactory.swg-devops.com/artifactory/api/pypi/res-accelerated-discovery-team-rxn-private-pypi-local
+  server: https://${PYPI_SERVER}
   distributions: "sdist bdist_wheel"
-  username: $PYPI_USERNAME
-  password: $PYPI_PASSWORD
+  username: ${PYPI_USERNAME}
+  password: ${PYPI_PASSWORD}
   on:
     tags: true
