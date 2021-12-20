@@ -7,6 +7,7 @@ from typing import Iterable
 
 integer_number_regex = r'[+-]?[0-9]+'
 real_number_regex = r'[+-]?[0-9]+(?:\.[0-9]+)?'
+scientific_number_regex = real_number_regex + r'([eE][-+]?[0-9]+)?'
 
 
 def capturing(initial_regex: str) -> str:

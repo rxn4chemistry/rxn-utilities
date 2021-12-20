@@ -6,7 +6,8 @@
 import re
 
 from rxn_utilities.regex import (
-    real_number_regex, capturing, alternation, optional, integer_number_regex
+    real_number_regex, capturing, alternation, optional, integer_number_regex,
+    scientific_number_regex
 )
 
 
@@ -47,6 +48,20 @@ def test_real_number():
     assert not full_match(real_number_regex, '~1')
     assert not full_match(real_number_regex, '-')
     assert not full_match(real_number_regex, '+')
+
+
+def test_scientific_number():
+    assert full_match(scientific_number_regex, '2')
+    assert full_match(scientific_number_regex, '+10.9')
+    assert full_match(scientific_number_regex, '2E3')
+    assert full_match(scientific_number_regex, '2.333E+3')
+    assert full_match(scientific_number_regex, '2.333E-3')
+    assert full_match(scientific_number_regex, '-2.333e-3')
+
+    assert not full_match(scientific_number_regex, '.1')
+    assert not full_match(scientific_number_regex, '-2e-3e')
+    assert not full_match(scientific_number_regex, '-2ee-3')
+    assert not full_match(scientific_number_regex, '-2F-3')
 
 
 def test_capturing():
