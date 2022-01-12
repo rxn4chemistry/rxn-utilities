@@ -14,27 +14,43 @@ dash_characters = [
 ]
 
 
-def remove_prefix(text: str, prefix: str) -> str:
+def remove_prefix(text: str, prefix: str, raise_if_missing: bool = False) -> str:
     """Removes a prefix from a string, if present at its beginning.
 
     Args:
         text: string potentially containing a prefix.
         prefix: string to remove at the beginning of text.
+        raise_if_missing: whether to raise a ValueError if the prefix is not found.
+
+    Raises:
+        ValueError: if the prefix is not found and raise_if_missing is True.
     """
     if text.startswith(prefix):
         return text[len(prefix):]
+
+    if raise_if_missing:
+        raise ValueError(f'Prefix "{prefix}" not found in "{text}".')
+
     return text
 
 
-def remove_postfix(text: str, postfix: str) -> str:
+def remove_postfix(text: str, postfix: str, raise_if_missing: bool = False) -> str:
     """Removes a postfix from a string, if present at its end.
 
     Args:
         text: string potentially containing a postfix.
         postfix: string to remove at the end of text.
+        raise_if_missing: whether to raise a ValueError if the postfix is not found.
+
+    Raises:
+        ValueError: if the postfix is not found and raise_if_missing is True.
     """
     if text.endswith(postfix):
         return text[:-len(postfix)]
+
+    if raise_if_missing:
+        raise ValueError(f'Postfix "{postfix}" not found in "{text}".')
+
     return text
 
 
