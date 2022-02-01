@@ -5,6 +5,8 @@
 # or if you have another existing entrypoint, use:
 #   ENTRYPOINT ["/path/to/legal_notice.sh", "<other entrypoint here>"]
 
+set -Eeuo pipefail
+
 echo "
 # Please treat all code provided in the folder ${IBM_CODE_PATH} as IBM Confidential information.
 # The non-open source IBM code in the folder ${IBM_CODE_PATH} comes with the following license:

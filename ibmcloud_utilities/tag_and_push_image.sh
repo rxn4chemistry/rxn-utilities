@@ -4,6 +4,7 @@
 # (C) Copyright IBM Corp. 2021
 # ALL RIGHTS RESERVED
 
+set -Eeuxo pipefail
 
 get_namespace() {
     environment=$1

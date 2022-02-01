@@ -4,6 +4,7 @@
 # (C) Copyright IBM Corp. 2021
 # ALL RIGHTS RESERVED
 
+set -Eeuxo pipefail
 
 # Required env variables:
 # GHE_TOKEN
