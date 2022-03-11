@@ -20,7 +20,7 @@ git clone https://${GHE_TOKEN}@github.ibm.com/rxn/rxn-helm.git \
 # NOTE: using main branch
 pip install git+https://${GHE_TOKEN}@github.ibm.com/rxn/rxn_utilities@main
 
-cd ${TMPDIR}/rxn-helm/charts/
+cd ${TMPDIR}/rxn-helm/helm-charts/
 
 VALUES_FILENAME="values_${GIT_BRANCH}.yaml"
 VALUES_FILES="$(find . -name ${VALUES_FILENAME} | grep ${IMAGE_NAME})" || /bin/true
@@ -37,7 +37,7 @@ echo "${VALUES_FILES[@]}"
 
 for VFILE in ${VALUES_FILES[@]};
 do
-  update-image-tag ${IMAGE_TAG} ${VFILE}
+  update-image-tag ${IMAGE_TAG} ${VFILE} --image_name ${IMAGE_NAME}
   git add ${VFILE}
 done
 

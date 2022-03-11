@@ -11,9 +11,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('tag', help='new tag of the image', type=str)
     parser.add_argument('file', help='path to yaml the file', type=str)
+    parser.add_argument(
+        "-i",
+        "--image_name",
+        type=str,
+        default=None,
+        help="image name to update. Defaults to None, a.k.a., no image name."
+    )
     args = parser.parse_args()
 
     tag = args.tag
     filename = args.file
+    image_name = args.image_name
 
-    update_image_tag(values_yaml_filepath=filename, image_tag=tag)
+    update_image_tag(values_yaml_filepath=filename, image_tag=tag, image_name=image_name)
