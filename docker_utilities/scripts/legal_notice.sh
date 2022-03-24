@@ -12,7 +12,7 @@ echo "
 # The non-open source IBM code in the folder ${IBM_CODE_PATH} comes with the following license:
 #   LICENSED INTERNAL CODE. PROPERTY OF IBM.
 #   IBM Research Zurich Licensed Internal Code
-#   (C) Copyright IBM Corp. 2020
+#   (C) Copyright IBM Corp. 2022
 #   ALL RIGHTS RESERVED
 "
 
