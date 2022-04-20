@@ -6,33 +6,36 @@
 import errno
 import os
 import sys
-from pathlib import Path
 from typing import List, Generator, Iterable, Union
+
+from typing_extensions import TypeAlias
 
 ERROR_INVALID_NAME = 123
 
+PathLike: TypeAlias = Union[str, bytes, os.PathLike]
 
-def load_list_from_file(filename: Union[Path, str]) -> List[str]:
+
+def load_list_from_file(filename: PathLike) -> List[str]:
     return list(iterate_lines_from_file(filename))
 
 
-def iterate_lines_from_file(filename: Union[Path, str]) -> Generator[str, None, None]:
+def iterate_lines_from_file(filename: PathLike) -> Generator[str, None, None]:
     with open(str(filename), 'rt') as f:
         for line in f:
             yield line.strip()
 
 
-def dump_list_to_file(values: Iterable[str], filename: Union[Path, str]) -> None:
+def dump_list_to_file(values: Iterable[str], filename: PathLike) -> None:
     with open(str(filename), 'wt') as f:
         for v in values:
             f.write(f'{v}\n')
 
 
-def count_lines(filename: Union[Path, str]) -> int:
+def count_lines(filename: PathLike) -> int:
     return sum(1 for _ in open(str(filename)))
 
 
-def is_pathname_valid(pathname: Union[Path, str]) -> bool:
+def is_pathname_valid(pathname: PathLike) -> bool:
     """
     `True` if the passed pathname is a valid pathname for the current OS;
     `False` otherwise.
@@ -67,7 +70,7 @@ def is_pathname_valid(pathname: Union[Path, str]) -> bool:
         return True
 
 
-def is_path_creatable(pathname: Union[Path, str]) -> bool:
+def is_path_creatable(pathname: PathLike) -> bool:
     """
     `True` if the current user has sufficient permissions to create the passed
     pathname; `False` otherwise.
@@ -79,7 +82,7 @@ def is_path_creatable(pathname: Union[Path, str]) -> bool:
     return os.access(dirname, os.W_OK)
 
 
-def is_path_exists_or_creatable(pathname: Union[Path, str]) -> bool:
+def is_path_exists_or_creatable(pathname: PathLike) -> bool:
     """
     `True` if the passed pathname is a valid pathname for the current OS _and_
     either currently exists or is hypothetically creatable; `False` otherwise.
