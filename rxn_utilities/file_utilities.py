@@ -12,7 +12,7 @@ from typing_extensions import TypeAlias
 
 ERROR_INVALID_NAME = 123
 
-PathLike: TypeAlias = Union[str, bytes, os.PathLike]
+PathLike: TypeAlias = Union[str, os.PathLike]
 
 
 def load_list_from_file(filename: PathLike) -> List[str]:
