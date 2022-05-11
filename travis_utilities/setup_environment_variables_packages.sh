@@ -4,6 +4,7 @@
 # (C) Copyright IBM Corp. 2021
 # ALL RIGHTS RESERVED
 
+set -eEuxo pipefail
 
 # assuming all the environments variables need are set:
 # export GHE_TOKEN=...

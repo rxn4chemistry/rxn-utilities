@@ -1,6 +1,7 @@
 Intended to run locally for managing dedicated sets of travis repo settings.
-- `setup_environment_variables_packages.sh`  
-- `setup_environment_variables_ci_pipeline.sh`  
+- `setup_environment_variables_packages.sh` for repos that release pypi packages
+- `setup_environment_variables_extra_index.sh` for repos that depend on pypi packages
+- `setup_environment_variables_ci_pipeline.sh` for repos that access ibmcloud container registry (docker images)
 
 Also the following scripts might be useful to run locally once in a while
 - `travis_login.sh`
