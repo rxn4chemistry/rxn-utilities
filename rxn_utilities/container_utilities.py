@@ -54,11 +54,14 @@ def pairwise(s: List[T]) -> Iterator[Tuple[T, T]]:
     return zip(a, b)
 
 
+# Make it possible to test whether a value was provided at all (See Python Cookbook 7.5).
+_no_value: T = object()  # type: ignore
+
+
 def chunker(
     iterable: Iterable[T],
     chunk_size: int,
-    fill_value: Optional[T] = None,
-    filter_out_none: bool = False
+    fill_value: T = _no_value,
 ) -> Generator[List[T], None, None]:
     """
     Iterate through an iterable in chunks of given size.
@@ -69,22 +72,27 @@ def chunker(
     Args:
         iterable: some iterable to create chunks from.
         chunk_size: size of the chunks.
-        fill_value: value to fill in if the last chunk is too small.
-        filter_out_none: whether to remove from the chunks, especially in order
-            to not fill the last chunk if it is too small.
+        fill_value: value to fill in if the last chunk is too small. If nothing
+            is specified, the last chunk may be smaller.
 
     Returns:
         Iterator over lists representing the chunks.
     """
 
     # These two lines: same as the "grouper" function in the itertools doc.
+    # In zip_longest, we do not give the user-provided fill value, which
+    # would make it complicated to differentiate with the case where nothing
+    # was given further below.
     args = [iter(iterable)] * chunk_size
-    tuple_iterable = itertools.zip_longest(*args, fillvalue=fill_value)
+    tuple_iterable = itertools.zip_longest(*args, fillvalue=_no_value)
 
-    # convert to lists instead of tuples
-    list_iterable = (list(chunk) for chunk in tuple_iterable)
+    for chunk_tuple in tuple_iterable:
+        # convert to list instead of tuples, remove the fill value
+        chunk = [value for value in chunk_tuple if value is not _no_value]
 
-    if filter_out_none:
-        yield from ([item for item in chunk if item is not None] for chunk in list_iterable)
+        # If the user provided a fill value, add it.
+        if len(chunk) != chunk_size and fill_value is not _no_value:
+            n_missing = chunk_size - len(chunk)
+            chunk += [fill_value] * n_missing
 
-    yield from list_iterable
+        yield chunk

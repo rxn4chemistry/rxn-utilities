@@ -2,6 +2,7 @@
 # IBM Research Zurich Licensed Internal Code
 # (C) Copyright IBM Corp. 2021
 # ALL RIGHTS RESERVED
+from typing import Iterable, Optional
 
 from rxn_utilities.container_utilities import all_identical, remove_duplicates, pairwise, chunker
 
@@ -56,13 +57,13 @@ def test_pairwise():
 
 
 def test_chunker():
-    some_list = list(range(1, 10))  # Numbers 1 to 9
+    some_list: Iterable[Optional[int]] = range(1, 10)  # Numbers 1 to 9
 
-    # Default fill value is None
+    # By default, nothing is filled
     assert list(chunker(some_list, 4)) == [
         [1, 2, 3, 4],
         [5, 6, 7, 8],
-        [9, None, None, None],
+        [9],
     ]
 
     # custom fill value
@@ -71,18 +72,15 @@ def test_chunker():
         [5, 6, 7, 8],
         [9, -1, -1, -1],
     ]
-
-    # Filter out the None values
-    assert list(chunker(some_list, 4, filter_out_none=True)) == [
+    assert list(chunker(some_list, 4, fill_value=None)) == [
         [1, 2, 3, 4],
         [5, 6, 7, 8],
-        [9],
+        [9, None, None, None],
     ]
 
-    # NB: filtering out the None values also removes what was present in initial list
-    other_list = [1, 2, None, None, None, None, 7, 8, 9]
-    assert list(chunker(other_list, 4, filter_out_none=True)) == [
-        [1, 2],
-        [7, 8],
-        [9],
+    # When the size is an exact multiple, no need to fill
+    assert list(chunker(some_list, 3, fill_value=-1)) == [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
     ]
