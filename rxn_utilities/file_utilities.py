@@ -20,19 +20,19 @@ def load_list_from_file(filename: PathLike) -> List[str]:
 
 
 def iterate_lines_from_file(filename: PathLike) -> Generator[str, None, None]:
-    with open(str(filename), 'rt') as f:
+    with open(filename, 'rt') as f:
         for line in f:
             yield line.strip()
 
 
 def dump_list_to_file(values: Iterable[str], filename: PathLike) -> None:
-    with open(str(filename), 'wt') as f:
+    with open(filename, 'wt') as f:
         for v in values:
             f.write(f'{v}\n')
 
 
 def count_lines(filename: PathLike) -> int:
-    return sum(1 for _ in open(str(filename)))
+    return sum(1 for _ in open(filename))
 
 
 def is_pathname_valid(pathname: PathLike) -> bool:

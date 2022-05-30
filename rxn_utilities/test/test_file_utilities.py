@@ -4,6 +4,7 @@
 # ALL RIGHTS RESERVED
 
 import tempfile
+from pathlib import Path
 
 from rxn_utilities.file_utilities import dump_list_to_file, load_list_from_file, count_lines
 
@@ -22,4 +23,7 @@ def test_count_lines():
     lines = ['dummy', 'dumm', 'dum']
     with tempfile.NamedTemporaryFile() as tmp_file:
         dump_list_to_file(lines, tmp_file.name)
+
+        # Test with argument given as str and Path
         assert count_lines(tmp_file.name) == len(lines)
+        assert count_lines(Path(tmp_file.name)) == len(lines)
