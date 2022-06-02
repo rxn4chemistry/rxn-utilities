@@ -16,7 +16,7 @@ set -eEuxo pipefail
 
 # CI/CD pipelines using bump2version to commit and push version tags to github,
 # then build and release a package distribution to a pypi index server
-repos='rxn-nightly-tests OpenNMT-py action_sequences roborxn_action_mapper roborxn_actions roborxn_controller roborxn_ms roborxn_orm roborxn_supply_state rxn_actions rxn_chemutils rxn_onmt_utils rxn_pistachio rxn_properties rxn_reaction_preprocessing rxn_units rxn_utilities retro-depict rxn-synthesis-pathways'
+repos='rxn-nightly-tests OpenNMT-py action_sequences roborxn_action_mapper roborxn_actions roborxn_controller roborxn_ms roborxn_orm roborxn_supply_state rxn_actions rxn_chemutils rxn_onmt_utils rxn_pistachio rxn_properties rxn_reaction_preprocessing rxn_units rxn_utilities retro-depict rxn-synthesis-pathways hgpy'
 
 PYPI_SERVER=${PYPI_SERVER:-"eu.artifactory.swg-devops.com/artifactory/api/pypi/res-accelerated-discovery-team-rxn-public-pypi-local"}
 PYPI_USERNAME=${PYPI_USERNAME:-"rxnid@zurich.ibm.com"}
