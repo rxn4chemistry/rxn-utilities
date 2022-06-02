@@ -13,7 +13,8 @@ set -eEuxo pipefail
 # travis login -I -e https://travis.ibm.com/api --github-token ${GHE_TOKEN}
 # travis endpoint --set-default -e https://travis.ibm.com/api
 
-# These need to access packages as dependencies/requirements from an pypi extra-index-url
+# These need to access packages as dependencies/requirements from an pypi index server,
+# e.g. via --extra-index-url
 repos='roborxn-worker rxn-celery-cronjob-worker roboconfig-from-paragraph-worker rxn-api paragraph2actions-worker rxn-retro-worker rxn-prediction-worker smiles2actions-worker tunerxn-interface-api rxnfp-api roborxn-mssql rxn-report-filter-worker rxn-model-tuner-onmt'
 
 PYPI_USERNAME=${PYPI_USERNAME:-"rxnid@zurich.ibm.com"}
