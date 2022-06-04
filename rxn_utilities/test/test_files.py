@@ -6,11 +6,7 @@
 import tempfile
 from pathlib import Path
 
-from rxn_utilities.file_utilities import (
-    count_lines,
-    dump_list_to_file,
-    load_list_from_file,
-)
+from rxn_utilities.files import count_lines, dump_list_to_file, load_list_from_file
 
 
 def test_dump_and_load_list():

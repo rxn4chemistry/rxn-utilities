@@ -2,7 +2,7 @@ import random
 
 import click
 
-from rxn_utilities.file_utilities import dump_list_to_file, load_list_from_file
+from rxn_utilities.files import dump_list_to_file, load_list_from_file
 
 
 @click.command()
