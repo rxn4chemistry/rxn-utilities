@@ -7,10 +7,14 @@ language: python
 install:
   - pip install -e .[dev]
 script:
-  - yapf --diff --recursive .
+  # Style enforcement
+  - python -m black --check --diff --color .
+  - python -m isort --check --diff .
+  - python -m flake8 .
+  # Static typing
+  - python -m mypy .
+  # Test suite
   - python3 -m pytest -sv --cov=rxn_utilities --cov-fail-under=60
-  - python3 -m flake8 --disable-noqa .
-  - mypy rxn_utilities
 
 jobs:
   include:

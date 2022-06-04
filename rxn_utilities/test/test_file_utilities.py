@@ -6,11 +6,15 @@
 import tempfile
 from pathlib import Path
 
-from rxn_utilities.file_utilities import dump_list_to_file, load_list_from_file, count_lines
+from rxn_utilities.file_utilities import (
+    count_lines,
+    dump_list_to_file,
+    load_list_from_file,
+)
 
 
 def test_dump_and_load_list():
-    original_list = ['some', 'random', 'words']
+    original_list = ["some", "random", "words"]
 
     with tempfile.NamedTemporaryFile() as tmp_file:
         dump_list_to_file(original_list, tmp_file.name)
@@ -20,7 +24,7 @@ def test_dump_and_load_list():
 
 
 def test_count_lines():
-    lines = ['dummy', 'dumm', 'dum']
+    lines = ["dummy", "dumm", "dum"]
     with tempfile.NamedTemporaryFile() as tmp_file:
         dump_list_to_file(lines, tmp_file.name)
 

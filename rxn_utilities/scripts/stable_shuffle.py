@@ -2,13 +2,13 @@ import random
 
 import click
 
-from rxn_utilities.file_utilities import load_list_from_file, dump_list_to_file
+from rxn_utilities.file_utilities import dump_list_to_file, load_list_from_file
 
 
 @click.command()
-@click.argument('input_file', type=str, required=True)
-@click.argument('output_file', type=str, required=True)
-@click.option('--seed', type=int, default=42, help='Random seed')
+@click.argument("input_file", type=str, required=True)
+@click.argument("output_file", type=str, required=True)
+@click.option("--seed", type=int, default=42, help="Random seed")
 def main(input_file: str, output_file: str, seed: int):
     """Shuffle a file in a deterministic order (the same seed always reorders
     files of the same number of lines identically).
@@ -22,5 +22,5 @@ def main(input_file: str, output_file: str, seed: int):
     dump_list_to_file(lines, output_file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -30,7 +30,9 @@ def cached_on_disk(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        logger.debug(f'Cache miss: function {func.__name__}, args: {args}, kwargs: {kwargs}.')
+        logger.debug(
+            f"Cache miss: function {func.__name__}, args: {args}, kwargs: {kwargs}."
+        )
 
         return func(*args, **kwargs)
 

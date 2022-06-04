@@ -2,7 +2,6 @@ from rxn_utilities.caching import cached_on_disk
 
 
 def test_cached_on_disk():
-
     @cached_on_disk
     def f(a: str) -> None:
         """Dummy function doc."""
@@ -14,25 +13,25 @@ def test_cached_on_disk():
     f.counter = 0
 
     # Docstring is preserved
-    assert 'Dummy function doc.' in f.__doc__
+    assert "Dummy function doc." in f.__doc__
 
     # Calling the first time increases the counter.
-    f('dummy 1')
+    f("dummy 1")
     assert f.counter == 1
 
     # Calling a second time with the same argument does not increase it.
-    f('dummy 1')
+    f("dummy 1")
     assert f.counter == 1
 
     # Calling by kwarg makes a difference.
     # NB: this is not ideal, but diskcache has no mechanism to do better.
-    f(a='dummy 1')
+    f(a="dummy 1")
     assert f.counter == 2
 
     # Calling a second time by kwarg keeps the same count.
-    f(a='dummy 1')
+    f(a="dummy 1")
     assert f.counter == 2
 
     # Calling with another value increases the counter
-    f('dummy 2')
+    f("dummy 2")
     assert f.counter == 3

@@ -4,9 +4,9 @@
 # ALL RIGHTS RESERVED
 """Custom types used in RXN projects."""
 from enum import Enum
-from typing import TypeVar, Type
+from typing import Type, TypeVar
 
-T = TypeVar('T', bound='RxnEnum')
+T = TypeVar("T", bound="RxnEnum")
 
 
 class RxnEnum(Enum):

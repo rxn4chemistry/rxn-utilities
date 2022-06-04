@@ -3,7 +3,7 @@
 # (C) Copyright IBM Corp. 2021
 # ALL RIGHTS RESERVED
 
-from typing import Dict, List, Callable
+from typing import Callable, Dict, List
 
 
 def has_children(node: Dict) -> bool:
@@ -19,8 +19,8 @@ def has_children(node: Dict) -> bool:
     """
 
     result = False
-    if 'children' in node and len(node['children']) > 0:
-        for child in node['children']:
+    if "children" in node and len(node["children"]) > 0:
+        for child in node["children"]:
             if child:
                 result = True
 
@@ -39,10 +39,10 @@ def has_children_with_synthesis(node: Dict) -> bool:
     """
 
     result = False
-    if 'children' in node and len(node['children']) > 0:
-        for child in node['children']:
+    if "children" in node and len(node["children"]) > 0:
+        for child in node["children"]:
             try:
-                if child['configuration']['action_sequence']:
+                if child["configuration"]["action_sequence"]:
                     result = True
             except Exception:
                 pass
@@ -89,8 +89,8 @@ def post_order_traversal(tree: Dict) -> List:
 
     result = []
 
-    if 'children' in tree:
-        for child in tree['children']:
+    if "children" in tree:
+        for child in tree["children"]:
             result.extend(post_order_traversal(child))
     if tree:
         result.append(tree)
@@ -136,8 +136,8 @@ def get_nodes(tree: Dict, condition: Callable[[Dict], bool]) -> List:
 
     nodes = []
 
-    if 'children' in tree:
-        for child in tree['children']:
+    if "children" in tree:
+        for child in tree["children"]:
             nodes.extend(get_nodes(child, condition))
     if condition(tree):
         nodes.append(tree)

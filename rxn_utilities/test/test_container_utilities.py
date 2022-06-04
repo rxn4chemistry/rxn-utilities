@@ -4,7 +4,12 @@
 # ALL RIGHTS RESERVED
 from typing import Iterable, Optional
 
-from rxn_utilities.container_utilities import all_identical, remove_duplicates, pairwise, chunker
+from rxn_utilities.container_utilities import (
+    all_identical,
+    chunker,
+    pairwise,
+    remove_duplicates,
+)
 
 
 def test_all_identical():
@@ -12,24 +17,22 @@ def test_all_identical():
     assert all_identical([1])
     assert all_identical([1, 1, 1])
     assert not all_identical([1, 2])
-    assert not all_identical([1, '1'])
+    assert not all_identical([1, "1"])
 
 
 def test_remove_duplicates():
     l_int = [2, 2, 5, 2, 6]
     assert remove_duplicates(l_int) == [2, 5, 6]
 
-    l_str = ['1', 'a', 'word', 'a', 'wor', 'w', '1']
-    assert remove_duplicates(l_str) == ['1', 'a', 'word', 'wor', 'w']
+    l_str = ["1", "a", "word", "a", "wor", "w", "1"]
+    assert remove_duplicates(l_str) == ["1", "a", "word", "wor", "w"]
 
     l_tuples = [(3, 3), (3, 2), (2, 2), (3, 3), (1, 1), (3, 3)]
     assert remove_duplicates(l_tuples) == [(3, 3), (3, 2), (2, 2), (1, 1)]
 
 
 def test_remove_duplicates_with_key():
-
     class DummyStruct:
-
         def __init__(self, a, b):
             self.a = a
             self.b = b
@@ -49,9 +52,9 @@ def test_remove_duplicates_with_key():
 
 
 def test_pairwise():
-    some_list = [1, 2, '3', 4, '5', 'end']
+    some_list = [1, 2, "3", 4, "5", "end"]
 
-    expected = [(1, 2), (2, '3'), ('3', 4), (4, '5'), ('5', 'end')]
+    expected = [(1, 2), (2, "3"), ("3", 4), (4, "5"), ("5", "end")]
 
     assert list(pairwise(some_list)) == expected
 

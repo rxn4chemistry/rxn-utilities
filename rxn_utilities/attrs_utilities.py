@@ -3,7 +3,7 @@
 # (C) Copyright IBM Corp. 2021
 # ALL RIGHTS RESERVED
 
-from typing import Type, Iterable, List, Tuple
+from typing import Iterable, List, Tuple, Type
 
 from attr import Attribute
 
@@ -44,5 +44,6 @@ def get_variables_and_type_names(cls: Type) -> List[Tuple[str, str]]:
     # If the attribute __name__ exists, take this (human-friendly), else
     # take the type directly
     return [
-        (variable, getattr(t, "__name__", str(t))) for variable, t in get_variables_and_types(cls)
+        (variable, getattr(t, "__name__", str(t)))
+        for variable, t in get_variables_and_types(cls)
     ]

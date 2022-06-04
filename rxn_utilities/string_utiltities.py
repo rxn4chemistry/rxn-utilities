@@ -6,11 +6,11 @@
 import re
 
 dash_characters = [
-    '-',  # hyphen-minus
-    '–',  # en dash
-    '—',  # em dash
-    '−',  # minus sign
-    '­',  # soft hyphen
+    "-",  # hyphen-minus
+    "–",  # en dash
+    "—",  # em dash
+    "−",  # minus sign
+    "­",  # soft hyphen
 ]
 
 
@@ -26,7 +26,7 @@ def remove_prefix(text: str, prefix: str, raise_if_missing: bool = False) -> str
         ValueError: if the prefix is not found and raise_if_missing is True.
     """
     if text.startswith(prefix):
-        return text[len(prefix):]
+        return text[len(prefix) :]
 
     if raise_if_missing:
         raise ValueError(f'Prefix "{prefix}" not found in "{text}".')
@@ -46,7 +46,7 @@ def remove_postfix(text: str, postfix: str, raise_if_missing: bool = False) -> s
         ValueError: if the postfix is not found and raise_if_missing is True.
     """
     if text.endswith(postfix):
-        return text[:-len(postfix)]
+        return text[: -len(postfix)]
 
     if raise_if_missing:
         raise ValueError(f'Postfix "{postfix}" not found in "{text}".')
@@ -69,20 +69,23 @@ def escape_latex(text: str) -> str:
         The message escaped to appear correctly in LaTeX.
     """
     conv = {
-        '&': r'\&',
-        '%': r'\%',
-        '$': r'\$',
-        '#': r'\#',
-        '_': r'\_',
-        '{': r'\{',
-        '}': r'\}',
-        '~': r'\textasciitilde{}',
-        '^': r'\^{}',
-        '\\': r'\textbackslash{}',
-        '<': r'\textless{}',
-        '>': r'\textgreater{}',
+        "&": r"\&",
+        "%": r"\%",
+        "$": r"\$",
+        "#": r"\#",
+        "_": r"\_",
+        "{": r"\{",
+        "}": r"\}",
+        "~": r"\textasciitilde{}",
+        "^": r"\^{}",
+        "\\": r"\textbackslash{}",
+        "<": r"\textless{}",
+        ">": r"\textgreater{}",
     }
     regex = re.compile(
-        '|'.join(re.escape(str(key)) for key in sorted(conv.keys(), key=lambda item: -len(item)))
+        "|".join(
+            re.escape(str(key))
+            for key in sorted(conv.keys(), key=lambda item: -len(item))
+        )
     )
     return regex.sub(lambda match: conv[match.group()], text)

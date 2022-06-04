@@ -5,12 +5,22 @@
 
 import itertools
 from typing import (
-    Sequence, Any, Iterable, Optional, Callable, Set, List, Iterator, Tuple, TypeVar, cast,
-    Generator
+    Any,
+    Callable,
+    Generator,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    Sequence,
+    Set,
+    Tuple,
+    TypeVar,
+    cast,
 )
 
-T = TypeVar('T')
-V = TypeVar('V')
+T = TypeVar("T")
+V = TypeVar("V")
 
 
 def all_identical(sequence: Sequence[Any]) -> bool:
@@ -18,7 +28,9 @@ def all_identical(sequence: Sequence[Any]) -> bool:
     return all(s == sequence[0] for s in sequence)
 
 
-def remove_duplicates(seq: Iterable[T], key: Optional[Callable[[T], V]] = None) -> List[T]:
+def remove_duplicates(
+    seq: Iterable[T], key: Optional[Callable[[T], V]] = None
+) -> List[T]:
     """Remove duplicates and preserve order.
 
     Adapted from https://stackoverflow.com/a/480227
