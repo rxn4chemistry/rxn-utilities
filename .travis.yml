@@ -12,9 +12,10 @@ script:
   - python -m isort --check --diff .
   - python -m flake8 .
   # Static typing
-  - python -m mypy .
+  - python -m mypy --namespace-packages -p rxn.utilities
+  - python -m mypy tests
   # Test suite
-  - python3 -m pytest -sv --cov=rxn_utilities --cov-fail-under=60
+  - python3 -m pytest -sv --cov=rxn.utilities --cov-fail-under=60
 
 jobs:
   include:

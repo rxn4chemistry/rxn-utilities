@@ -7,7 +7,7 @@ from enum import auto
 
 import pytest
 
-from rxn_utilities.types import RxnEnum
+from rxn.utilities.types import RxnEnum
 
 
 class DummyEnum(RxnEnum):

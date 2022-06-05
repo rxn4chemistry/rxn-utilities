@@ -1,4 +1,4 @@
-from rxn_utilities.caching import cached_on_disk
+from rxn.utilities.caching import cached_on_disk
 
 
 def test_cached_on_disk():

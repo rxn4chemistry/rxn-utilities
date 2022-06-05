@@ -7,7 +7,7 @@ import logging
 from enum import Enum
 from typing import Iterable, Union
 
-from rxn_utilities.files import PathLike
+from rxn.utilities.files import PathLike
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -108,7 +108,7 @@ def setup_celery_logger(
 
     It should be used in `tasks.py` in the following manner:
         >>> from celery.signals import setup_logging
-        ... from rxn_utilities.logging_utilities import setup_celery_logger
+        ... from rxn.utilities.logging_utilities import setup_celery_logger
         ...
         ... @setup_logging.connect
         ... def setup_logger(**kwargs):

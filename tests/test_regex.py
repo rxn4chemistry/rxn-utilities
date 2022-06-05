@@ -5,7 +5,7 @@
 
 import re
 
-from rxn_utilities.regex import (
+from rxn.utilities.regex import (
     alternation,
     capturing,
     integer_number_regex,

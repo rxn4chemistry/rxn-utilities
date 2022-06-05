@@ -4,7 +4,7 @@
 # ALL RIGHTS RESERVED
 from typing import Iterable, Optional
 
-from rxn_utilities.containers import all_identical, chunker, pairwise, remove_duplicates
+from rxn.utilities.containers import all_identical, chunker, pairwise, remove_duplicates
 
 
 def test_all_identical():

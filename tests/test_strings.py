@@ -4,7 +4,7 @@
 # ALL RIGHTS RESERVED
 import pytest
 
-from rxn_utilities.strings import (
+from rxn.utilities.strings import (
     dash_characters,
     escape_latex,
     remove_postfix,
