@@ -1,7 +1,3 @@
-# LICENSED INTERNAL CODE. PROPERTY OF IBM.
-# IBM Research Zurich Licensed Internal Code
-# (C) Copyright IBM Corp. 2021
-# ALL RIGHTS RESERVED
 """Custom types used in RXN projects."""
 from enum import Enum
 from typing import Type, TypeVar
