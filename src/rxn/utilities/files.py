@@ -5,8 +5,6 @@ from typing import Generator, Iterable, List, Union
 
 from typing_extensions import TypeAlias
 
-ERROR_INVALID_NAME = 123
-
 PathLike: TypeAlias = Union[str, os.PathLike]
 
 
@@ -58,7 +56,8 @@ def is_pathname_valid(pathname: PathLike) -> bool:
                 os.lstat(root_dirname + pathname_part)
             except OSError as exc:
                 if hasattr(exc, "winerror"):
-                    if exc.winerror == ERROR_INVALID_NAME:  # type: ignore
+                    error_invalid_name = 123
+                    if exc.winerror == error_invalid_name:  # type: ignore
                         return False
                 elif exc.errno in {errno.ENAMETOOLONG, errno.ERANGE}:
                     return False

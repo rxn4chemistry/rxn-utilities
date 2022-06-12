@@ -1,3 +1,5 @@
+"""Functions to help build regex strings. See examples in the tests."""
+
 from typing import Iterable
 
 integer_number_regex = r"[+-]?[0-9]+"

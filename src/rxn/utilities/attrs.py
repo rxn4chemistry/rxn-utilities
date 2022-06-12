@@ -1,3 +1,5 @@
+"""Helper functions for handling classes defined with the package attrs."""
+
 from typing import Iterable, List, Tuple, Type
 
 from attr import Attribute

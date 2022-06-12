@@ -93,45 +93,6 @@ def _setup_logger_from_handlers(
     logging.basicConfig(format=format, level=level, handlers=handlers)
 
 
-def setup_celery_logger(
-    main_log_file: str = "worker.log",
-    celery_log_file: str = "celery.log",
-    log_level: Union[int, str] = "INFO",
-) -> None:
-    """
-    Setup logging for celery workers.
-
-    It should be used in `tasks.py` in the following manner:
-        >>> from celery.signals import setup_logging
-        ... from rxn.utilities.logging_utilities import setup_celery_logger
-        ...
-        ... @setup_logging.connect
-        ... def setup_logger(**kwargs):
-        ...     setup_celery_logger()
-
-    Args:
-        main_log_file: where the logs (except celery-related) will be written.
-        celery_log_file: where the celery-related logs will be written.
-        log_level: logging level for main_log_file. Can be given either as a string
-            ('INFO') or as one of the integers defined in logging (logging.INFO).
-    """
-    rxn_format = (
-        "%(asctime)s %(levelname)-8s [%(filename)s:%(funcName)s:%(lineno)d] %(message)s"
-    )
-
-    # Logs from the following packages are redirected to their own log file.
-    for package in ["celery", "amqp", "kombu"]:
-        package_logger = logging.getLogger(package)
-        package_logger.propagate = False
-        package_logger.setLevel(logging.DEBUG)
-        handler = logging.FileHandler(celery_log_file)
-        handler.setFormatter(logging.Formatter(rxn_format))
-        package_logger.addHandler(handler)
-
-    # The main logger will write logs to a file
-    logging.basicConfig(filename=main_log_file, level=log_level, format=rxn_format)
-
-
 def log_debug(message: str) -> None:
     """
     Utility function to log a message with DEBUG level.
