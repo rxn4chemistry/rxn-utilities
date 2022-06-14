@@ -1,5 +1,7 @@
 # RXN utilities package
 
+[![Actions tests](https://github.com/rxn4chemistry/rxn-utilities/actions/workflows/tests.yaml/badge.svg)](https://github.com/rxn4chemistry/rxn-utilities/actions)
+
 This repository contains general Python utilities commonly used in the RXN universe.
 For utilities related to chemistry, see our other repository [`rxn-chemutils`](https://github.com/rxn4chemistry/rxn-chemutils).
 
