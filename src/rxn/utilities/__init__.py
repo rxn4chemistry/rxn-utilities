@@ -1,1 +1,1 @@
-__version__ = "0.8.13.rc0"  # managed by bump2version
+__version__ = "0.9.0"  # managed by bump2version
