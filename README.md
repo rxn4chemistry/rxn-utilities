@@ -5,6 +5,9 @@
 This repository contains general Python utilities commonly used in the RXN universe.
 For utilities related to chemistry, see our other repository [`rxn-chemutils`](https://github.com/rxn4chemistry/rxn-chemutils).
 
+The documentation can be found [here](rxn4chemistry.github.io/rxn-utilities/).
+
+
 ## System Requirements
 
 This package is supported on all operating systems. 
