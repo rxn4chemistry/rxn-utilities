@@ -1,0 +1,6 @@
+rxn.utilities.logging.setup\_file\_logger
+=========================================
+
+.. currentmodule:: rxn.utilities.logging
+
+.. autofunction:: setup_file_logger

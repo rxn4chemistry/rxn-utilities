@@ -1,0 +1,33 @@
+rxn.utilities.containers
+========================
+
+.. automodule:: rxn.utilities.containers
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      all_identical
+      chunker
+      pairwise
+      remove_duplicates
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

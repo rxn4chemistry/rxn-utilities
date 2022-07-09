@@ -1,0 +1,6 @@
+rxn.utilities.files.count\_lines
+================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: count_lines

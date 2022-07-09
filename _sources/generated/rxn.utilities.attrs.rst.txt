@@ -1,0 +1,33 @@
+rxn.utilities.attrs
+===================
+
+.. automodule:: rxn.utilities.attrs
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      get_class_attributes
+      get_variables
+      get_variables_and_type_names
+      get_variables_and_types
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

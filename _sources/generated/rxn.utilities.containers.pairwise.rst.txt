@@ -1,0 +1,6 @@
+rxn.utilities.containers.pairwise
+=================================
+
+.. currentmodule:: rxn.utilities.containers
+
+.. autofunction:: pairwise

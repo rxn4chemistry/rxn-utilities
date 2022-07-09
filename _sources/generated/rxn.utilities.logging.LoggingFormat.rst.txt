@@ -1,0 +1,26 @@
+rxn.utilities.logging.LoggingFormat
+===================================
+
+.. currentmodule:: rxn.utilities.logging
+
+.. autoclass:: LoggingFormat
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+   
+   .. automethod:: __init__
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LoggingFormat.BASIC
+      ~LoggingFormat.DETAILED
+   
+   

@@ -1,0 +1,6 @@
+rxn.utilities.logging.log\_error
+================================
+
+.. currentmodule:: rxn.utilities.logging
+
+.. autofunction:: log_error

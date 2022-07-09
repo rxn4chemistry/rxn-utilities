@@ -1,0 +1,6 @@
+rxn.utilities.regex.alternation
+===============================
+
+.. currentmodule:: rxn.utilities.regex
+
+.. autofunction:: alternation

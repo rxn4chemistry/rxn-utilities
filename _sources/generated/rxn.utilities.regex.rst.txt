@@ -1,0 +1,32 @@
+rxn.utilities.regex
+===================
+
+.. automodule:: rxn.utilities.regex
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      alternation
+      capturing
+      optional
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

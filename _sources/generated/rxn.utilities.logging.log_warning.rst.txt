@@ -1,0 +1,6 @@
+rxn.utilities.logging.log\_warning
+==================================
+
+.. currentmodule:: rxn.utilities.logging
+
+.. autofunction:: log_warning

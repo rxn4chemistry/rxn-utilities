@@ -1,0 +1,6 @@
+rxn.utilities.attrs.get\_class\_attributes
+==========================================
+
+.. currentmodule:: rxn.utilities.attrs
+
+.. autofunction:: get_class_attributes

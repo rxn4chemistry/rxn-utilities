@@ -1,0 +1,6 @@
+rxn.utilities.logging.setup\_console\_logger
+============================================
+
+.. currentmodule:: rxn.utilities.logging
+
+.. autofunction:: setup_console_logger

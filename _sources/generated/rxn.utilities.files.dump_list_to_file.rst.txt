@@ -1,0 +1,6 @@
+rxn.utilities.files.dump\_list\_to\_file
+========================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: dump_list_to_file

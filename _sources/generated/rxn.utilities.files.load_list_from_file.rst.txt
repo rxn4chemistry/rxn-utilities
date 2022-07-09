@@ -1,0 +1,6 @@
+rxn.utilities.files.load\_list\_from\_file
+==========================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: load_list_from_file

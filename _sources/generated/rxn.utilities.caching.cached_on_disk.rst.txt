@@ -1,0 +1,6 @@
+rxn.utilities.caching.cached\_on\_disk
+======================================
+
+.. currentmodule:: rxn.utilities.caching
+
+.. autofunction:: cached_on_disk

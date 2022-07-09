@@ -1,0 +1,6 @@
+rxn.utilities.files.iterate\_lines\_from\_file
+==============================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: iterate_lines_from_file

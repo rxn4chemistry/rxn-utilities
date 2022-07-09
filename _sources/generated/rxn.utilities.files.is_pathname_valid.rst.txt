@@ -1,0 +1,6 @@
+rxn.utilities.files.is\_pathname\_valid
+=======================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: is_pathname_valid

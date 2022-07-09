@@ -1,0 +1,6 @@
+rxn.utilities.basic.identity
+============================
+
+.. currentmodule:: rxn.utilities.basic
+
+.. autofunction:: identity

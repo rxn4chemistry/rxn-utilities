@@ -1,0 +1,6 @@
+rxn.utilities.strings.remove\_prefix
+====================================
+
+.. currentmodule:: rxn.utilities.strings
+
+.. autofunction:: remove_prefix

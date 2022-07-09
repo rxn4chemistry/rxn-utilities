@@ -1,0 +1,6 @@
+rxn.utilities.strings.escape\_latex
+===================================
+
+.. currentmodule:: rxn.utilities.strings
+
+.. autofunction:: escape_latex

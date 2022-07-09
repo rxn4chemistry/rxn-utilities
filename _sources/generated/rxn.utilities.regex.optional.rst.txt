@@ -1,0 +1,6 @@
+rxn.utilities.regex.optional
+============================
+
+.. currentmodule:: rxn.utilities.regex
+
+.. autofunction:: optional

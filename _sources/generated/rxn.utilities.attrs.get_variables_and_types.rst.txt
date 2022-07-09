@@ -1,0 +1,6 @@
+rxn.utilities.attrs.get\_variables\_and\_types
+==============================================
+
+.. currentmodule:: rxn.utilities.attrs
+
+.. autofunction:: get_variables_and_types

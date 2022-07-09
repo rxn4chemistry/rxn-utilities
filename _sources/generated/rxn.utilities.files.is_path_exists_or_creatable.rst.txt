@@ -1,0 +1,6 @@
+rxn.utilities.files.is\_path\_exists\_or\_creatable
+===================================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: is_path_exists_or_creatable

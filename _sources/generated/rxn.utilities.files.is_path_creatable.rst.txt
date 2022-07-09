@@ -1,0 +1,6 @@
+rxn.utilities.files.is\_path\_creatable
+=======================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: is_path_creatable
