@@ -10,7 +10,7 @@ jobs:
     - name: Build HTML
       uses: ammaraskar/sphinx-action@0.4
       with:
-        pre-build-command: "pip install -e . --no-deps"
+        pre-build-command: "pip install -e ."
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
