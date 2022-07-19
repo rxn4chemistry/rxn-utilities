@@ -7,12 +7,13 @@ For utilities related to chemistry, see our other repository [`rxn-chemutils`](h
 
 The documentation can be found [here](https://rxn4chemistry.github.io/rxn-utilities/).
 
-
 ## System Requirements
 
-This package is supported on all operating systems. 
+This package is supported on all operating systems.
 It has been tested on the following systems:
+
 + macOS: Big Sur (11.1)
+
 + Linux: Ubuntu 18.04.4
 
 A Python version of 3.6 or greater is recommended.
@@ -20,11 +21,13 @@ A Python version of 3.6 or greater is recommended.
 ## Installation guide
 
 The package can be installed from Pypi:
+
 ```bash
 pip install rxn-utils
 ```
 
 For local development, the package can be installed with:
+
 ```bash
-pip install -e .[dev]
+pip install -e ".[dev]"
 ```
