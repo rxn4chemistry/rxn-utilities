@@ -32,6 +32,7 @@
    rxn.utilities.basic
    rxn.utilities.caching
    rxn.utilities.containers
+   rxn.utilities.databases
    rxn.utilities.files
    rxn.utilities.logging
    rxn.utilities.regex

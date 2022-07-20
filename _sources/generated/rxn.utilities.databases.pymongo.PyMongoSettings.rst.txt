@@ -1,0 +1,45 @@
+rxn.utilities.databases.pymongo.PyMongoSettings
+===============================================
+
+.. currentmodule:: rxn.utilities.databases.pymongo
+
+.. autoclass:: PyMongoSettings
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PyMongoSettings.__init__
+      ~PyMongoSettings.construct
+      ~PyMongoSettings.copy
+      ~PyMongoSettings.dict
+      ~PyMongoSettings.from_orm
+      ~PyMongoSettings.get_client
+      ~PyMongoSettings.json
+      ~PyMongoSettings.parse_file
+      ~PyMongoSettings.parse_obj
+      ~PyMongoSettings.parse_raw
+      ~PyMongoSettings.schema
+      ~PyMongoSettings.schema_json
+      ~PyMongoSettings.update_forward_refs
+      ~PyMongoSettings.validate
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PyMongoSettings.mongo_uri
+      ~PyMongoSettings.tls_ca_certificate_path
+   
+   
