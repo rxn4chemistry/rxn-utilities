@@ -10,7 +10,7 @@ from pymongo import MongoClient
 class PyMongoSettings(BaseSettings):
     """Settings for connecting to a MongoDB via pymongo."""
 
-    mongo_uri: str
+    mongo_uri: Optional[str] = None
     tls_ca_certificate_path: Optional[str] = None
 
     class Config:
@@ -23,6 +23,10 @@ class PyMongoSettings(BaseSettings):
         Returns:
             a client for MongoDB.
         """
+        if self.mongo_uri is None:
+            raise ValueError(
+                "mongo_uri is not set, define it via RXN_MONGO_URI environment variable!"
+            )
         options: Dict[str, Any] = {}
         if self.tls_ca_certificate_path and os.path.exists(
             self.tls_ca_certificate_path
@@ -34,7 +38,7 @@ class PyMongoSettings(BaseSettings):
         else:
             options["tlsAllowInvalidCertificates"] = True
             options["tlsAllowInvalidHostnames"] = True
-            options["tls"] = False
+            options["tls"] = True
         return MongoClient(self.mongo_uri, **options)
 
 
