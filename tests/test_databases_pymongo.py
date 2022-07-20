@@ -62,7 +62,7 @@ def test_get_client_with_tls_ca_cert(mock_mongo_certificate_env):
 def test_get_pymongo_settings_with_no_mongo_uri(mock_no_mongo_uri_env):
     pymongo_settings = PyMongoSettings()
     assert isinstance(pymongo_settings, PyMongoSettings)
-    assert pymongo_settings.mongo_uri == os.environ.get("RXN_MONGO_URI", None)
+    assert pymongo_settings.mongo_uri is None
 
 
 def test_get_client_with_no_mongo_uri(mock_no_mongo_uri_env):
