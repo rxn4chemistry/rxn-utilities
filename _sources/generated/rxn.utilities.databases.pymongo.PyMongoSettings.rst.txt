@@ -22,6 +22,7 @@ rxn.utilities.databases.pymongo.PyMongoSettings
       ~PyMongoSettings.dict
       ~PyMongoSettings.from_orm
       ~PyMongoSettings.get_client
+      ~PyMongoSettings.instantiate_client
       ~PyMongoSettings.json
       ~PyMongoSettings.parse_file
       ~PyMongoSettings.parse_obj

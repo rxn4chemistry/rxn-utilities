@@ -84,6 +84,31 @@
         <span class="n">env_prefix</span> <span class="o">=</span> <span class="s2">&quot;RXN_&quot;</span>  <span class="c1"># prefix for env vars to override defaults</span>
         <span class="n">extra</span> <span class="o">=</span> <span class="n">Extra</span><span class="o">.</span><span class="n">ignore</span>
 
+<div class="viewcode-block" id="PyMongoSettings.instantiate_client"><a class="viewcode-back" href="../../../../generated/rxn.utilities.databases.pymongo.PyMongoSettings.html#rxn.utilities.databases.pymongo.PyMongoSettings.instantiate_client">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">instantiate_client</span><span class="p">(</span>
+        <span class="n">mongo_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tls_ca_certificate_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MongoClient</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Instantiate a Mongo client using the provided SSL settings.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mongo_uri: connection string for Mongo.</span>
+<span class="sd">            tls_ca_certificate_path: optional path to an SSL CA certificate.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            a client for MongoDB.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">tls_ca_certificate_path</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tls_ca_certificate_path</span><span class="p">):</span>
+            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsCAFile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tls_ca_certificate_path</span>
+            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsAllowInvalidCertificates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsAllowInvalidHostnames&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tls&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsAllowInvalidCertificates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsAllowInvalidHostnames&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tls&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">MongoClient</span><span class="p">(</span><span class="n">mongo_uri</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="PyMongoSettings.get_client"><a class="viewcode-back" href="../../../../generated/rxn.utilities.databases.pymongo.PyMongoSettings.html#rxn.utilities.databases.pymongo.PyMongoSettings.get_client">[docs]</a>    <span class="k">def</span> <span class="nf">get_client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MongoClient</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Instantiate a Mongo client using the provided SSL settings.</span>
 
@@ -94,19 +119,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;mongo_uri is not set, define it via RXN_MONGO_URI environment variable!&quot;</span>
             <span class="p">)</span>
-        <span class="n">options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tls_ca_certificate_path</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tls_ca_certificate_path</span>
-        <span class="p">):</span>
-            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsCAFile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tls_ca_certificate_path</span>
-            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsAllowInvalidCertificates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsAllowInvalidHostnames&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tls&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsAllowInvalidCertificates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tlsAllowInvalidHostnames&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tls&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="n">MongoClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mongo_uri</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">instantiate_client</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mongo_uri</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tls_ca_certificate_path</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="get_pymongo_settings"><a class="viewcode-back" href="../../../../generated/rxn.utilities.databases.pymongo.get_pymongo_settings.html#rxn.utilities.databases.pymongo.get_pymongo_settings">[docs]</a><span class="nd">@lru_cache</span><span class="p">()</span>
