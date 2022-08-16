@@ -30,10 +30,6 @@ class PyMongoSettings(BaseSettings):
         Returns:
             a client for MongoDB.
         """
-        if mongo_uri is None:
-            raise ValueError(
-                "mongo_uri is not set, define it via RXN_MONGO_URI environment variable!"
-            )
         options: Dict[str, Any] = {}
         if tls_ca_certificate_path and os.path.exists(tls_ca_certificate_path):
             options["tlsCAFile"] = tls_ca_certificate_path
@@ -52,6 +48,10 @@ class PyMongoSettings(BaseSettings):
         Returns:
             a client for MongoDB.
         """
+        if self.mongo_uri is None:
+            raise ValueError(
+                "mongo_uri is not set, define it via RXN_MONGO_URI environment variable!"
+            )
         return self.instantiate_client(self.mongo_uri, self.tls_ca_certificate_path)
 
 
