@@ -7,6 +7,14 @@ from pymongo.errors import ConfigurationError
 from rxn.utilities.databases.pymongo import PyMongoSettings
 
 
+def _get_client_and_check_server_info():
+    pymongo_settings = PyMongoSettings()
+    client = pymongo_settings.get_client()
+    server_info = client.server_info()
+    assert isinstance(server_info, dict)
+    assert "version" in server_info
+
+
 def _instantiate_client_and_check_server_info():
     pymongo_settings = PyMongoSettings()
     instantiated_client = pymongo_settings.instantiate_client(
@@ -15,10 +23,6 @@ def _instantiate_client_and_check_server_info():
     instantiated_server_info = instantiated_client.server_info()
     assert isinstance(instantiated_server_info, dict)
     assert "version" in instantiated_server_info
-    client = pymongo_settings.get_client()
-    server_info = client.server_info()
-    assert isinstance(server_info, dict)
-    assert "version" in server_info
 
 
 @pytest.fixture
@@ -55,14 +59,28 @@ def test_get_pymongo_settings(mock_mongo_certificate_env):
 @pytest.mark.skipif(
     "RXN_MONGO_URI" not in os.environ, reason="environment_not_configured_for_test"
 )
-def test_instantiate_and_get_client():
+def test_get_client():
+    _get_client_and_check_server_info()
+
+
+@pytest.mark.skipif(
+    "RXN_MONGO_URI" not in os.environ, reason="environment_not_configured_for_test"
+)
+def test_get_client_with_tls_ca_cert(mock_mongo_certificate_env):
+    _get_client_and_check_server_info()
+
+
+@pytest.mark.skipif(
+    "RXN_MONGO_URI" not in os.environ, reason="environment_not_configured_for_test"
+)
+def test_instantiate_client():
     _instantiate_client_and_check_server_info()
 
 
 @pytest.mark.skipif(
     "RXN_MONGO_URI" not in os.environ, reason="environment_not_configured_for_test"
 )
-def test_instantiate_and_get_client_with_tls_ca_cert(mock_mongo_certificate_env):
+def test_instantiate_client_with_tls_ca_cert(mock_mongo_certificate_env):
     _instantiate_client_and_check_server_info()
 
 
