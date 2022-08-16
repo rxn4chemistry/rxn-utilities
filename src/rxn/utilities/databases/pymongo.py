@@ -25,7 +25,7 @@ class PyMongoSettings(BaseSettings):
 
         Args:
             mongo_uri: connection string for Mongo.
-            tls_ca_certificate_path: optional path to an SSL certificate.
+            tls_ca_certificate_path: optional path to an SSL CA certificate.
 
         Returns:
             a client for MongoDB.

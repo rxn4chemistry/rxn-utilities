@@ -8,6 +8,12 @@ from rxn.utilities.databases.pymongo import PyMongoSettings
 
 def _instantiate_client_and_check_server_info():
     pymongo_settings = PyMongoSettings()
+    instantiated_client = pymongo_settings.instantiate_client(
+        os.environ["RXN_MONGO_URI"]
+    )
+    instantiated_server_info = instantiated_client.server_info()
+    assert isinstance(instantiated_server_info, dict)
+    assert "version" in instantiated_server_info
     client = pymongo_settings.get_client()
     server_info = client.server_info()
     assert isinstance(server_info, dict)
@@ -48,14 +54,14 @@ def test_get_pymongo_settings(mock_mongo_certificate_env):
 @pytest.mark.skipif(
     "RXN_MONGO_URI" not in os.environ, reason="environment_not_configured_for_test"
 )
-def test_get_client():
+def test_instantiate_and_get_client():
     _instantiate_client_and_check_server_info()
 
 
 @pytest.mark.skipif(
     "RXN_MONGO_URI" not in os.environ, reason="environment_not_configured_for_test"
 )
-def test_get_client_with_tls_ca_cert(mock_mongo_certificate_env):
+def test_instantiate_and_get_client_with_tls_ca_cert(mock_mongo_certificate_env):
     _instantiate_client_and_check_server_info()
 
 
@@ -69,3 +75,9 @@ def test_get_client_with_no_mongo_uri(mock_no_mongo_uri_env):
     pymongo_settings = PyMongoSettings()
     with pytest.raises(ValueError):
         _ = pymongo_settings.get_client()
+
+
+def test_instantiate_client_with_no_mongo_uri(mock_no_mongo_uri_env):
+    pymongo_settings = PyMongoSettings()
+    with pytest.raises(TypeError):
+        _ = pymongo_settings.instantiate_client(os.environ["RXN_MONGO_URI"])
