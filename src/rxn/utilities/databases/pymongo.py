@@ -18,7 +18,9 @@ class PyMongoSettings(BaseSettings):
         extra = Extra.ignore
 
     @staticmethod
-    def instantiate_client(mongo_uri: str, tls_ca_certificate_path: Optional[str] = None) -> MongoClient:
+    def instantiate_client(
+        mongo_uri: str, tls_ca_certificate_path: Optional[str] = None
+    ) -> MongoClient:
         """Instantiate a Mongo client using the provided SSL settings.
 
         Args:
@@ -33,9 +35,7 @@ class PyMongoSettings(BaseSettings):
                 "mongo_uri is not set, define it via RXN_MONGO_URI environment variable!"
             )
         options: Dict[str, Any] = {}
-        if tls_ca_certificate_path and os.path.exists(
-            tls_ca_certificate_path
-        ):
+        if tls_ca_certificate_path and os.path.exists(tls_ca_certificate_path):
             options["tlsCAFile"] = tls_ca_certificate_path
             options["tlsAllowInvalidCertificates"] = False
             options["tlsAllowInvalidHostnames"] = True
