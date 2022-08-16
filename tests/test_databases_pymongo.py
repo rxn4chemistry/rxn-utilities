@@ -2,6 +2,7 @@ import os
 import tempfile
 
 import pytest
+from pymongo.errors import ConfigurationError
 
 from rxn.utilities.databases.pymongo import PyMongoSettings
 
@@ -77,7 +78,7 @@ def test_get_client_with_no_mongo_uri(mock_no_mongo_uri_env):
         _ = pymongo_settings.get_client()
 
 
-def test_instantiate_client_with_no_mongo_uri(mock_no_mongo_uri_env):
+def test_instantiate_client_with_invalid_mongo_uri(mock_no_mongo_uri_env):
     pymongo_settings = PyMongoSettings()
-    with pytest.raises(TypeError):
+    with pytest.raises(ConfigurationError):
         _ = pymongo_settings.instantiate_client(os.environ.get("RXN_MONGO_URI", ""))
