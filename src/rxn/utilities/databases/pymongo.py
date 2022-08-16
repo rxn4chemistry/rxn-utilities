@@ -17,6 +17,31 @@ class PyMongoSettings(BaseSettings):
         env_prefix = "RXN_"  # prefix for env vars to override defaults
         extra = Extra.ignore
 
+    @staticmethod
+    def instantiate_client(
+        mongo_uri: str, tls_ca_certificate_path: Optional[str] = None
+    ) -> MongoClient:
+        """Instantiate a Mongo client using the provided SSL settings.
+
+        Args:
+            mongo_uri: connection string for Mongo.
+            tls_ca_certificate_path: optional path to an SSL CA certificate.
+
+        Returns:
+            a client for MongoDB.
+        """
+        options: Dict[str, Any] = {}
+        if tls_ca_certificate_path and os.path.exists(tls_ca_certificate_path):
+            options["tlsCAFile"] = tls_ca_certificate_path
+            options["tlsAllowInvalidCertificates"] = False
+            options["tlsAllowInvalidHostnames"] = True
+            options["tls"] = True
+        else:
+            options["tlsAllowInvalidCertificates"] = True
+            options["tlsAllowInvalidHostnames"] = True
+            options["tls"] = True
+        return MongoClient(mongo_uri, **options)
+
     def get_client(self) -> MongoClient:
         """Instantiate a Mongo client using the provided SSL settings.
 
@@ -27,19 +52,7 @@ class PyMongoSettings(BaseSettings):
             raise ValueError(
                 "mongo_uri is not set, define it via RXN_MONGO_URI environment variable!"
             )
-        options: Dict[str, Any] = {}
-        if self.tls_ca_certificate_path and os.path.exists(
-            self.tls_ca_certificate_path
-        ):
-            options["tlsCAFile"] = self.tls_ca_certificate_path
-            options["tlsAllowInvalidCertificates"] = False
-            options["tlsAllowInvalidHostnames"] = True
-            options["tls"] = True
-        else:
-            options["tlsAllowInvalidCertificates"] = True
-            options["tlsAllowInvalidHostnames"] = True
-            options["tls"] = True
-        return MongoClient(self.mongo_uri, **options)
+        return self.instantiate_client(self.mongo_uri, self.tls_ca_certificate_path)
 
 
 @lru_cache()
