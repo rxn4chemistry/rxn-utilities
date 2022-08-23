@@ -3,8 +3,8 @@ import os
 from functools import lru_cache
 from typing import Any, Dict, Optional
 
+import pymongo
 from pydantic import BaseSettings, Extra
-from pymongo import MongoClient
 
 
 class PyMongoSettings(BaseSettings):
@@ -20,7 +20,7 @@ class PyMongoSettings(BaseSettings):
     @staticmethod
     def instantiate_client(
         mongo_uri: str, tls_ca_certificate_path: Optional[str] = None
-    ) -> MongoClient:
+    ) -> pymongo.MongoClient:
         """Instantiate a Mongo client using the provided SSL settings.
 
         Args:
@@ -40,9 +40,9 @@ class PyMongoSettings(BaseSettings):
             options["tlsAllowInvalidCertificates"] = True
             options["tlsAllowInvalidHostnames"] = True
             options["tls"] = True
-        return MongoClient(mongo_uri, **options)
+        return pymongo.MongoClient(mongo_uri, **options)
 
-    def get_client(self) -> MongoClient:
+    def get_client(self) -> pymongo.MongoClient:
         """Instantiate a Mongo client using the provided SSL settings.
 
         Returns:
