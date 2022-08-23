@@ -3,8 +3,8 @@ import os
 from functools import lru_cache
 from typing import Any, Dict, Optional
 
-from pydantic import BaseSettings, Extra
 import pymongo
+from pydantic import BaseSettings, Extra
 
 
 class PyMongoSettings(BaseSettings):
