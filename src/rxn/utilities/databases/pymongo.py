@@ -19,13 +19,16 @@ class PyMongoSettings(BaseSettings):
 
     @staticmethod
     def instantiate_client(
-        mongo_uri: str, tls_ca_certificate_path: Optional[str] = None
+        mongo_uri: str,
+        tls_ca_certificate_path: Optional[str] = None,
+        tz_aware: bool = False,
     ) -> pymongo.MongoClient:
         """Instantiate a Mongo client using the provided SSL settings.
 
         Args:
             mongo_uri: connection string for Mongo.
             tls_ca_certificate_path: optional path to an SSL CA certificate.
+            tz_aware: flag indicating whether datetime objects returned are timezone aware.
 
         Returns:
             a client for MongoDB.
@@ -40,10 +43,13 @@ class PyMongoSettings(BaseSettings):
             options["tlsAllowInvalidCertificates"] = True
             options["tlsAllowInvalidHostnames"] = True
             options["tls"] = True
-        return pymongo.MongoClient(mongo_uri, **options)
+        return pymongo.MongoClient(mongo_uri, tz_aware=tz_aware, **options)
 
-    def get_client(self) -> pymongo.MongoClient:
+    def get_client(self, tz_aware: bool = False) -> pymongo.MongoClient:
         """Instantiate a Mongo client using the provided SSL settings.
+
+        Args:
+            tz_aware: flag indicating whether datetime objects returned are timezone aware.
 
         Returns:
             a client for MongoDB.
@@ -52,7 +58,9 @@ class PyMongoSettings(BaseSettings):
             raise ValueError(
                 "mongo_uri is not set, define it via RXN_MONGO_URI environment variable!"
             )
-        return self.instantiate_client(self.mongo_uri, self.tls_ca_certificate_path)
+        return self.instantiate_client(
+            self.mongo_uri, self.tls_ca_certificate_path, tz_aware=tz_aware
+        )
 
 
 @lru_cache()
