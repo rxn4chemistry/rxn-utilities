@@ -89,7 +89,7 @@
         <span class="n">mongo_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">tls_ca_certificate_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tz_aware</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;Instantiate a Mongo client using the provided SSL settings.</span>
 
 <span class="sd">        Args:</span>
@@ -112,7 +112,7 @@
             <span class="n">options</span><span class="p">[</span><span class="s2">&quot;tls&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="n">mongo_uri</span><span class="p">,</span> <span class="n">tz_aware</span><span class="o">=</span><span class="n">tz_aware</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PyMongoSettings.get_client"><a class="viewcode-back" href="../../../../generated/rxn.utilities.databases.pymongo.PyMongoSettings.html#rxn.utilities.databases.pymongo.PyMongoSettings.get_client">[docs]</a>    <span class="k">def</span> <span class="nf">get_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tz_aware</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">:</span>
+<div class="viewcode-block" id="PyMongoSettings.get_client"><a class="viewcode-back" href="../../../../generated/rxn.utilities.databases.pymongo.PyMongoSettings.html#rxn.utilities.databases.pymongo.PyMongoSettings.get_client">[docs]</a>    <span class="k">def</span> <span class="nf">get_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tz_aware</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;Instantiate a Mongo client using the provided SSL settings.</span>
 
 <span class="sd">        Args:</span>

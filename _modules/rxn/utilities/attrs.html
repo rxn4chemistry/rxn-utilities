@@ -67,19 +67,21 @@
   <h1>Source code for rxn.utilities.attrs</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Helper functions for handling classes defined with the package attrs.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Type</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>  <span class="c1"># for ``Type[Any]``</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Type</span>
 
 <span class="kn">from</span> <span class="nn">attr</span> <span class="kn">import</span> <span class="n">Attribute</span>
 
 
-<div class="viewcode-block" id="get_class_attributes"><a class="viewcode-back" href="../../../generated/rxn.utilities.attrs.get_class_attributes.html#rxn.utilities.attrs.get_class_attributes">[docs]</a><span class="k">def</span> <span class="nf">get_class_attributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Attribute</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_class_attributes"><a class="viewcode-back" href="../../../generated/rxn.utilities.attrs.get_class_attributes.html#rxn.utilities.attrs.get_class_attributes">[docs]</a><span class="k">def</span> <span class="nf">get_class_attributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Attribute</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the attributes of a class declared with the attrs library.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__attrs_attrs__</span>  <span class="c1"># type: ignore</span></div>
 
 
-<div class="viewcode-block" id="get_variables"><a class="viewcode-back" href="../../../generated/rxn.utilities.attrs.get_variables.html#rxn.utilities.attrs.get_variables">[docs]</a><span class="k">def</span> <span class="nf">get_variables</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_variables"><a class="viewcode-back" href="../../../generated/rxn.utilities.attrs.get_variables.html#rxn.utilities.attrs.get_variables">[docs]</a><span class="k">def</span> <span class="nf">get_variables</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the names of the variables for a class declared with the attrs</span>
 <span class="sd">    library.</span>
@@ -87,7 +89,7 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">attribute</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">get_class_attributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">)]</span></div>
 
 
-<div class="viewcode-block" id="get_variables_and_types"><a class="viewcode-back" href="../../../generated/rxn.utilities.attrs.get_variables_and_types.html#rxn.utilities.attrs.get_variables_and_types">[docs]</a><span class="k">def</span> <span class="nf">get_variables_and_types</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">]]:</span>
+<div class="viewcode-block" id="get_variables_and_types"><a class="viewcode-back" href="../../../generated/rxn.utilities.attrs.get_variables_and_types.html#rxn.utilities.attrs.get_variables_and_types">[docs]</a><span class="k">def</span> <span class="nf">get_variables_and_types</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the names of the variables and corresponding types for a class</span>
 <span class="sd">    declared with the attrs library.</span>
@@ -100,7 +102,7 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="get_variables_and_type_names"><a class="viewcode-back" href="../../../generated/rxn.utilities.attrs.get_variables_and_type_names.html#rxn.utilities.attrs.get_variables_and_type_names">[docs]</a><span class="k">def</span> <span class="nf">get_variables_and_type_names</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<div class="viewcode-block" id="get_variables_and_type_names"><a class="viewcode-back" href="../../../generated/rxn.utilities.attrs.get_variables_and_type_names.html#rxn.utilities.attrs.get_variables_and_type_names">[docs]</a><span class="k">def</span> <span class="nf">get_variables_and_type_names</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the names of the variables and corresponding type names for a class</span>
 <span class="sd">    declared with the attrs library.</span>
