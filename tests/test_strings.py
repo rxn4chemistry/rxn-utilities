@@ -8,7 +8,7 @@ from rxn.utilities.strings import (
 )
 
 
-def test_dash_characters():
+def test_dash_characters() -> None:
     # dash-minus
     assert "\u002d" in dash_characters
     # en-dash
@@ -23,7 +23,7 @@ def test_dash_characters():
     assert all(len(c) == 1 for c in dash_characters)
 
 
-def test_remove_prefix():
+def test_remove_prefix() -> None:
     s = "one two three four"
 
     assert remove_prefix(s, "one ") == "two three four"
@@ -34,7 +34,7 @@ def test_remove_prefix():
         _ = remove_prefix(s, "two", raise_if_missing=True)
 
 
-def test_remove_postfix():
+def test_remove_postfix() -> None:
     s = "one two three four"
 
     assert remove_postfix(s, " four") == "one two three"
@@ -45,5 +45,5 @@ def test_remove_postfix():
         _ = remove_postfix(s, "two", raise_if_missing=True)
 
 
-def test_tex_escape():
+def test_tex_escape() -> None:
     assert escape_latex("30%") == r"30\%"

@@ -22,7 +22,7 @@ class PyMongoSettings(BaseSettings):
         mongo_uri: str,
         tls_ca_certificate_path: Optional[str] = None,
         tz_aware: bool = False,
-    ) -> pymongo.MongoClient:
+    ) -> pymongo.MongoClient[Dict[str, Any]]:
         """Instantiate a Mongo client using the provided SSL settings.
 
         Args:
@@ -45,7 +45,7 @@ class PyMongoSettings(BaseSettings):
             options["tls"] = True
         return pymongo.MongoClient(mongo_uri, tz_aware=tz_aware, **options)
 
-    def get_client(self, tz_aware: bool = False) -> pymongo.MongoClient:
+    def get_client(self, tz_aware: bool = False) -> pymongo.MongoClient[Dict[str, Any]]:
         """Instantiate a Mongo client using the provided SSL settings.
 
         Args:

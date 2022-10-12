@@ -1,7 +1,10 @@
+import typing
+
 from rxn.utilities.caching import cached_on_disk
 
 
-def test_cached_on_disk():
+@typing.no_type_check  # Note: no type checking because the "f.counter" syntax is hacky.
+def test_cached_on_disk() -> None:
     @cached_on_disk
     def f(a: str) -> None:
         """Dummy function doc."""

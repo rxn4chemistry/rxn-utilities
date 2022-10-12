@@ -4,7 +4,7 @@ from pathlib import Path
 from rxn.utilities.files import count_lines, dump_list_to_file, load_list_from_file
 
 
-def test_dump_and_load_list():
+def test_dump_and_load_list() -> None:
     original_list = ["some", "random", "words"]
 
     with tempfile.NamedTemporaryFile() as tmp_file:
@@ -14,7 +14,7 @@ def test_dump_and_load_list():
     assert loaded_list == original_list
 
 
-def test_count_lines():
+def test_count_lines() -> None:
     lines = ["dummy", "dumm", "dum"]
     with tempfile.NamedTemporaryFile() as tmp_file:
         dump_list_to_file(lines, tmp_file.name)
