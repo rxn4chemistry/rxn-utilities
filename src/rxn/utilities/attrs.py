@@ -1,5 +1,7 @@
 """Helper functions for handling classes defined with the package attrs."""
 
+from __future__ import annotations  # for ``Type[Any]``
+
 from typing import Any, Iterable, List, Tuple, Type
 
 from attr import Attribute
