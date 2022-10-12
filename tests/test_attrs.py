@@ -16,7 +16,7 @@ class DummyClass:
     variable_3: Optional[int]
 
 
-def test_get_variables():
+def test_get_variables() -> None:
     assert get_variables(DummyClass) == [
         "variable_1",
         "variable_2",
@@ -24,7 +24,7 @@ def test_get_variables():
     ]
 
 
-def test_get_variables_and_types():
+def test_get_variables_and_types() -> None:
     assert get_variables_and_types(DummyClass) == [
         ("variable_1", float),
         ("variable_2", str),
@@ -32,7 +32,7 @@ def test_get_variables_and_types():
     ]
 
 
-def test_get_variables_and_type_names():
+def test_get_variables_and_type_names() -> None:
     assert get_variables_and_type_names(DummyClass) == [
         ("variable_1", "float"),
         ("variable_2", "str"),

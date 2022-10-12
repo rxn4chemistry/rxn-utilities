@@ -12,7 +12,7 @@ def capturing(initial_regex: str) -> str:
     return f"({initial_regex})"
 
 
-def alternation(choices: Iterable[str], capture_group=False) -> str:
+def alternation(choices: Iterable[str], capture_group: bool = False) -> str:
     """OR operator"""
 
     inner_string = "|".join(choices)
@@ -23,7 +23,7 @@ def alternation(choices: Iterable[str], capture_group=False) -> str:
         return f"(?:{inner_string})"
 
 
-def optional(initial_regex: str, capture_group=False) -> str:
+def optional(initial_regex: str, capture_group: bool = False) -> str:
     """Creates the regex string to make a group optional"""
     if capture_group:
         return f"({initial_regex})?"

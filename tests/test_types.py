@@ -15,7 +15,7 @@ class DummyEnum(RxnEnum):
     GERMANY = auto()
 
 
-def test_rxn_enum():
+def test_rxn_enum() -> None:
     # Instantiation from enum
     assert DummyEnum(DummyEnum.ITALY) == DummyEnum.ITALY
     assert DummyEnum(DummyEnum.GERMANY) == DummyEnum.GERMANY

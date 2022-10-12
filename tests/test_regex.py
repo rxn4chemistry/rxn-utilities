@@ -16,7 +16,7 @@ def full_match(regex: str, string: str) -> bool:
     return m is not None
 
 
-def test_integer():
+def test_integer() -> None:
     assert full_match(integer_number_regex, "2")
     assert full_match(integer_number_regex, "23")
     assert full_match(integer_number_regex, "-10")
@@ -31,7 +31,7 @@ def test_integer():
     assert not full_match(integer_number_regex, "+")
 
 
-def test_real_number():
+def test_real_number() -> None:
     assert full_match(real_number_regex, "2")
     assert full_match(real_number_regex, "23")
     assert full_match(real_number_regex, "2.0")
@@ -49,7 +49,7 @@ def test_real_number():
     assert not full_match(real_number_regex, "+")
 
 
-def test_scientific_number():
+def test_scientific_number() -> None:
     assert full_match(scientific_number_regex, "2")
     assert full_match(scientific_number_regex, "+10.9")
     assert full_match(scientific_number_regex, "2E3")
@@ -63,7 +63,7 @@ def test_scientific_number():
     assert not full_match(scientific_number_regex, "-2F-3")
 
 
-def test_capturing():
+def test_capturing() -> None:
     number = r"\d+"
 
     regex_without_capture = f"value: {number}"
@@ -79,7 +79,7 @@ def test_capturing():
     assert len(match_with_capture.groups()) == 1
 
 
-def test_alternation():
+def test_alternation() -> None:
     choices = ["house", "dog", "tree"]
 
     regex_with_capture = f"I have a {alternation(choices, capture_group=True)}"
@@ -102,7 +102,7 @@ def test_alternation():
     assert re.match(regex_without_capture, "I have a building") is None
 
 
-def test_optional():
+def test_optional() -> None:
     three_digit_number = r"\d\d\d"
     optional_non_capturing_suffix = optional(f" {three_digit_number}")
     optional_capturing_suffix = optional(f" {three_digit_number}", capture_group=True)

@@ -9,7 +9,7 @@ from rxn.utilities.files import dump_list_to_file, load_list_from_file
 @click.argument("input_file", type=str, required=True)
 @click.argument("output_file", type=str, required=True)
 @click.option("--seed", type=int, default=42, help="Random seed")
-def main(input_file: str, output_file: str, seed: int):
+def main(input_file: str, output_file: str, seed: int) -> None:
     """Shuffle a file in a deterministic order (the same seed always reorders
     files of the same number of lines identically).
 

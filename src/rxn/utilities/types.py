@@ -1,6 +1,6 @@
 """Custom types used in RXN projects."""
 from enum import Enum
-from typing import Type, TypeVar
+from typing import Any, Type, TypeVar
 
 T = TypeVar("T", bound="RxnEnum")
 
@@ -46,7 +46,7 @@ class RxnEnum(Enum):
             ) from e
 
     @classmethod
-    def _missing_(cls: Type[T], value) -> T:
+    def _missing_(cls: Type[T], value: Any) -> T:
         """
         Overriden to allow instantiation from both string and enum value.
         """
