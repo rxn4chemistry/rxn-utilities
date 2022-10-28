@@ -12,6 +12,7 @@ class PyMongoSettings(BaseSettings):
 
     mongo_uri: Optional[str] = None
     tls_ca_certificate_path: Optional[str] = None
+    tls_allow_invalid_certificates: bool = False
 
     class Config:
         env_prefix = "RXN_"  # prefix for env vars to override defaults
@@ -21,6 +22,7 @@ class PyMongoSettings(BaseSettings):
     def instantiate_client(
         mongo_uri: str,
         tls_ca_certificate_path: Optional[str] = None,
+        tls_allow_invalid_certificates: bool = False
         tz_aware: bool = False,
     ) -> pymongo.MongoClient[Dict[str, Any]]:
         """Instantiate a Mongo client using the provided SSL settings.
@@ -28,6 +30,7 @@ class PyMongoSettings(BaseSettings):
         Args:
             mongo_uri: connection string for Mongo.
             tls_ca_certificate_path: optional path to an SSL CA certificate.
+            tls_allow_invalid_certificates: allow invalid certificates. Defaults to False.
             tz_aware: flag indicating whether datetime objects returned are timezone aware.
 
         Returns:
@@ -36,7 +39,7 @@ class PyMongoSettings(BaseSettings):
         options: Dict[str, Any] = {}
         if tls_ca_certificate_path and os.path.exists(tls_ca_certificate_path):
             options["tlsCAFile"] = tls_ca_certificate_path
-            options["tlsAllowInvalidCertificates"] = False
+            options["tlsAllowInvalidCertificates"] = tls_allow_invalid_certificates
             options["tlsAllowInvalidHostnames"] = True
             options["tls"] = True
         else:
@@ -59,7 +62,8 @@ class PyMongoSettings(BaseSettings):
                 "mongo_uri is not set, define it via RXN_MONGO_URI environment variable!"
             )
         return self.instantiate_client(
-            self.mongo_uri, self.tls_ca_certificate_path, tz_aware=tz_aware
+            self.mongo_uri, self.tls_ca_certificate_path,
+            tls_allow_invalid_certificates=tls_allow_invalid_certificates, tz_aware=tz_aware
         )
 
 
