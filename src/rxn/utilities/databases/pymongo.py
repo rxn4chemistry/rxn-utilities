@@ -62,8 +62,10 @@ class PyMongoSettings(BaseSettings):
                 "mongo_uri is not set, define it via RXN_MONGO_URI environment variable!"
             )
         return self.instantiate_client(
-            self.mongo_uri, self.tls_ca_certificate_path,
-            tls_allow_invalid_certificates=tls_allow_invalid_certificates, tz_aware=tz_aware
+            self.mongo_uri,
+            self.tls_ca_certificate_path,
+            tls_allow_invalid_certificates=self.tls_allow_invalid_certificates,
+            tz_aware=tz_aware,
         )
 
 
