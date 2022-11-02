@@ -27,7 +27,7 @@ class PyMongoSettings(BaseSettings):
 
         All other options except the tlsCAFile (and tz_aware) are expected
         to be passed via the mongo_uri. For example for insecure access
-        something like the following would added to the url:
+        something like the following could be added to the url:
         ssl=true&tlsAllowInvalidCertificates=true&tlsAllowInvalidHostnames=true
         Different mongodb server versions might behave differently!
 
@@ -50,7 +50,7 @@ class PyMongoSettings(BaseSettings):
 
         All other options except the tlsCAFile (and tz_aware) are expected
         to be passed via the mongo_uri. For example for insecure access
-        something like the following would added to the url:
+        something like the following could be added to the url:
         ssl=true&tlsAllowInvalidCertificates=true&tlsAllowInvalidHostnames=true
         Different mongodb server versions might behave differently!
 
