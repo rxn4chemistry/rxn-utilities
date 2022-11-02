@@ -48,15 +48,14 @@ class PyMongoSettings(BaseSettings):
     def get_client(self, tz_aware: bool = False) -> pymongo.MongoClient[Dict[str, Any]]:
         """Instantiate a Mongo client using the provided SSL settings.
 
-        Args:
-            tz_aware: flag indicating whether datetime objects returned are timezone aware.
-
         All other options except the tlsCAFile (and tz_aware) are expected
         to be passed via the mongo_uri. For example for insecure access
         something like the following would added to the url:
         ssl=true&tlsAllowInvalidCertificates=true&tlsAllowInvalidHostnames=true
         Different mongodb server versions might behave differently!
 
+        Args:
+            tz_aware: flag indicating whether datetime objects returned are timezone aware.
 
         Returns:
             a client for MongoDB.
