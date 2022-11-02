@@ -22,8 +22,14 @@ class PyMongoSettings(BaseSettings):
         mongo_uri: str,
         tls_ca_certificate_path: Optional[str] = None,
         tz_aware: bool = False,
-    ) -> pymongo.MongoClient:
+    ) -> pymongo.MongoClient[Dict[str, Any]]:
         """Instantiate a Mongo client using the provided SSL settings.
+
+        All other options except the tlsCAFile (and tz_aware) are expected
+        to be passed via the mongo_uri. For example for insecure access
+        something like the following would added to the url:
+        ssl=true&tlsAllowInvalidCertificates=true&tlsAllowInvalidHostnames=true
+        Different mongodb server versions might behave differently!
 
         Args:
             mongo_uri: connection string for Mongo.
@@ -33,13 +39,6 @@ class PyMongoSettings(BaseSettings):
 
         Returns:
             a client for MongoDB.
-
-        Note:
-            All other options except the tlsCAFile (and tz_aware) are expected
-            to be passed via the mongo_uri. For example for insecure access
-            something like the following would added to the url:
-            ssl=true&tlsAllowInvalidCertificates=true&tlsAllowInvalidHostnames=true
-            Different mongodb server versions might behave differently!
         """
         options: Dict[str, Any] = {}
         if tls_ca_certificate_path and os.path.exists(tls_ca_certificate_path):
@@ -52,15 +51,15 @@ class PyMongoSettings(BaseSettings):
         Args:
             tz_aware: flag indicating whether datetime objects returned are timezone aware.
 
+        All other options except the tlsCAFile (and tz_aware) are expected
+        to be passed via the mongo_uri. For example for insecure access
+        something like the following would added to the url:
+        ssl=true&tlsAllowInvalidCertificates=true&tlsAllowInvalidHostnames=true
+        Different mongodb server versions might behave differently!
+
+
         Returns:
             a client for MongoDB.
-
-        Note:
-            All other options except the tlsCAFile (and tz_aware) are expected
-            to be passed via the mongo_uri. For example for insecure access
-            something like the following would added to the url:
-            ssl=true&tlsAllowInvalidCertificates=true&tlsAllowInvalidHostnames=true
-            Different mongodb server versions might behave differently!
         """
         if self.mongo_uri is None:
             raise ValueError(
