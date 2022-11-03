@@ -22,7 +22,8 @@ class PyMongoSettings(BaseSettings):
         mongo_uri: str,
         tls_ca_certificate_path: Optional[str] = None,
         tz_aware: bool = False,
-    ) -> pymongo.MongoClient:
+    ) -> pymongo.MongoClient:  # type: ignore
+        # MongoClient's generic typing is incompatible with older versions
         """Instantiate a Mongo client using the provided SSL settings.
 
         All other options except the tlsCAFile (and tz_aware) are expected
@@ -45,7 +46,8 @@ class PyMongoSettings(BaseSettings):
             options["tlsCAFile"] = tls_ca_certificate_path
         return pymongo.MongoClient(mongo_uri, tz_aware=tz_aware, **options)
 
-    def get_client(self, tz_aware: bool = False) -> pymongo.MongoClient:
+    def get_client(self, tz_aware: bool = False) -> pymongo.MongoClient:  # type: ignore
+        # MongoClient's generic typing is incompatible with older versions
         """Instantiate a Mongo client using the provided SSL settings.
 
         All other options except the tlsCAFile (and tz_aware) are expected
