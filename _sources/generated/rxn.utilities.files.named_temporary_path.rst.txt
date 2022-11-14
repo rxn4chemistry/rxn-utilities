@@ -1,0 +1,6 @@
+rxn.utilities.files.named\_temporary\_path
+==========================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: named_temporary_path
