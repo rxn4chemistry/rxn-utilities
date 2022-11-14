@@ -1,7 +1,11 @@
 import errno
 import os
+import shutil
 import sys
-from typing import Generator, Iterable, List, Union
+import tempfile
+from contextlib import contextmanager
+from pathlib import Path
+from typing import Generator, Iterable, List, Union, Iterator
 
 from typing_extensions import TypeAlias
 
@@ -26,6 +30,43 @@ def dump_list_to_file(values: Iterable[str], filename: PathLike) -> None:
 
 def count_lines(filename: PathLike) -> int:
     return sum(1 for _ in open(filename))
+
+
+@contextmanager
+def named_temporary_path(delete: bool = True) -> Iterator[Path]:
+    """
+    Get the path for a temporary file or directory, without creating it (can
+    be especially useful in tests).
+
+    This is similar to tempfile.NamedTemporaryFile, when the file is not
+    to be actually opened, and one is just interested in obtaining a writable /
+    readable path to optionally delete at the end of the context.
+
+    This function was originally created to bypass a limitation of NamedTemporaryFile
+    on Windows (https://stackoverflow.com/q/23212435), which becomes relevant when
+    one does not want the file to be opened automatically. The solution is
+    inspired by https://stackoverflow.com/a/58955530.
+
+    Args:
+        delete: whether to delete the file when exiting the context
+
+    Examples:
+        >>> with named_temporary_path() as temporary_path:
+        ...     # do something on the temporary path.
+        ...     # The file or directory at that path will be deleted at the
+        ...     # end of the context, except if delete=False.
+    """
+
+    base_temp_dir = Path(tempfile.gettempdir())
+    temporary_path = base_temp_dir / os.urandom(24).hex()
+    try:
+        yield temporary_path
+    finally:
+        if delete and temporary_path.exists():
+            if temporary_path.is_file():
+                temporary_path.unlink()
+            else:
+                shutil.rmtree(temporary_path)
 
 
 def is_pathname_valid(pathname: PathLike) -> bool:
