@@ -1,9 +1,9 @@
 from rxn.utilities.files import (
     count_lines,
     dump_list_to_file,
+    is_path_creatable,
     load_list_from_file,
     named_temporary_path,
-    is_path_creatable,
 )
 
 

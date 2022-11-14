@@ -5,7 +5,7 @@ import sys
 import tempfile
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Generator, Iterable, List, Union, Iterator
+from typing import Generator, Iterable, Iterator, List, Union
 
 from typing_extensions import TypeAlias
 
