@@ -98,7 +98,7 @@ def is_pathname_valid(pathname: PathLike) -> bool:
             except OSError as exc:
                 if hasattr(exc, "winerror"):
                     error_invalid_name = 123
-                    if exc.winerror == error_invalid_name:  # type: ignore
+                    if exc.winerror == error_invalid_name:
                         return False
                 elif exc.errno in {errno.ENAMETOOLONG, errno.ERANGE}:
                     return False

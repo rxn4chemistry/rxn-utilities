@@ -40,8 +40,6 @@ def remove_duplicates(
         def key(x: T) -> V:
             return x  # type: ignore
 
-    key = cast(Callable[[T], V], key)  # necessary for mypy
-
     seen: Set[V] = set()
     seen_add = seen.add
     return [x for x in seq if not (key(x) in seen or seen_add(key(x)))]
