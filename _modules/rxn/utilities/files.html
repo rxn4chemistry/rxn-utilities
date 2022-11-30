@@ -165,7 +165,7 @@
             <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="s2">&quot;winerror&quot;</span><span class="p">):</span>
                     <span class="n">error_invalid_name</span> <span class="o">=</span> <span class="mi">123</span>
-                    <span class="k">if</span> <span class="n">exc</span><span class="o">.</span><span class="n">winerror</span> <span class="o">==</span> <span class="n">error_invalid_name</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+                    <span class="k">if</span> <span class="n">exc</span><span class="o">.</span><span class="n">winerror</span> <span class="o">==</span> <span class="n">error_invalid_name</span><span class="p">:</span>
                         <span class="k">return</span> <span class="kc">False</span>
                 <span class="k">elif</span> <span class="n">exc</span><span class="o">.</span><span class="n">errno</span> <span class="ow">in</span> <span class="p">{</span><span class="n">errno</span><span class="o">.</span><span class="n">ENAMETOOLONG</span><span class="p">,</span> <span class="n">errno</span><span class="o">.</span><span class="n">ERANGE</span><span class="p">}:</span>
                     <span class="k">return</span> <span class="kc">False</span>
