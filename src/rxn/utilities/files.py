@@ -10,8 +10,8 @@ from typing import Iterable, Iterator, List, Tuple, Union
 
 from typing_extensions import TypeAlias
 
-from rxn.utilities.basic import temporary_random_seed
-from rxn.utilities.containers import all_identical
+from .basic import temporary_random_seed
+from .containers import all_identical
 
 PathLike: TypeAlias = Union[str, os.PathLike]
 
