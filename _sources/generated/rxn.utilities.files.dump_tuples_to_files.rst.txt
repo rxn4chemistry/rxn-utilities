@@ -1,0 +1,6 @@
+rxn.utilities.files.dump\_tuples\_to\_files
+===========================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: dump_tuples_to_files

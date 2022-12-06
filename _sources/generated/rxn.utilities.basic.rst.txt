@@ -15,6 +15,8 @@ rxn.utilities.basic
       :toctree:
    
       identity
+      sandboxed_random_context
+      temporary_random_seed
    
    
 

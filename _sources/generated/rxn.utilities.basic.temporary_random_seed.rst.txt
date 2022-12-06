@@ -1,0 +1,6 @@
+rxn.utilities.basic.temporary\_random\_seed
+===========================================
+
+.. currentmodule:: rxn.utilities.basic
+
+.. autofunction:: temporary_random_seed

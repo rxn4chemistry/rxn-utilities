@@ -65,13 +65,53 @@
            <div itemprop="articleBody">
              
   <h1>Source code for rxn.utilities.basic</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
+<span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="identity"><a class="viewcode-back" href="../../../generated/rxn.utilities.basic.identity.html#rxn.utilities.basic.identity">[docs]</a><span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">x</span></div>
+
+
+<div class="viewcode-block" id="sandboxed_random_context"><a class="viewcode-back" href="../../../generated/rxn.utilities.basic.sandboxed_random_context.html#rxn.utilities.basic.sandboxed_random_context">[docs]</a><span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">sandboxed_random_context</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enter a context that will not affect the Python random state.</span>
+
+<span class="sd">    This works by saving the random state at the beginning of the context</span>
+<span class="sd">    and resetting it when exiting the context.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; with sandboxed_random_context():</span>
+<span class="sd">        ...     _ = random.random()  # has no effect outside of the context</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">random_state</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">getstate</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">setstate</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="temporary_random_seed"><a class="viewcode-back" href="../../../generated/rxn.utilities.basic.temporary_random_seed.html#rxn.utilities.basic.temporary_random_seed">[docs]</a><span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">temporary_random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set a random seed in a context, to avoid side effects.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; with temporary_random_seed(101):</span>
+<span class="sd">        ...     # ``a`` will always have the same value</span>
+<span class="sd">        ...     a = random.random()</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        seed: seed, directly forwarded to random.seed(). ``None`` means using</span>
+<span class="sd">            the system time.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">sandboxed_random_context</span><span class="p">():</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="k">yield</span></div>
 </pre></div>
 
            </div>

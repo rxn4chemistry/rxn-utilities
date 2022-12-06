@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities.files.load_list_from_file &mdash; RXN utilities 0.1 documentation</title>
+  <title>rxn.utilities.basic.sandboxed_random_context &mdash; RXN utilities 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.files.named_temporary_path" href="rxn.utilities.files.named_temporary_path.html" />
-    <link rel="prev" title="rxn.utilities.files.iterate_tuples_from_files" href="rxn.utilities.files.iterate_tuples_from_files.html" /> 
+    <link rel="next" title="rxn.utilities.basic.temporary_random_seed" href="rxn.utilities.basic.temporary_random_seed.html" />
+    <link rel="prev" title="rxn.utilities.basic.identity" href="rxn.utilities.basic.identity.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,24 +43,16 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">Python API</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="rxn.utilities.html">rxn.utilities</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.attrs.html">rxn.utilities.attrs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.basic.html">rxn.utilities.basic</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.basic.html">rxn.utilities.basic</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.basic.identity.html">rxn.utilities.basic.identity</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.basic.sandboxed_random_context</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.basic.temporary_random_seed.html">rxn.utilities.basic.temporary_random_seed</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.caching.html">rxn.utilities.caching</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.containers.html">rxn.utilities.containers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.databases.html">rxn.utilities.databases</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.files.html">rxn.utilities.files</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.count_lines.html">rxn.utilities.files.count_lines</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.dump_list_to_file.html">rxn.utilities.files.dump_list_to_file</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.dump_tuples_to_files.html">rxn.utilities.files.dump_tuples_to_files</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.is_path_creatable.html">rxn.utilities.files.is_path_creatable</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.is_path_exists_or_creatable.html">rxn.utilities.files.is_path_exists_or_creatable</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.is_pathname_valid.html">rxn.utilities.files.is_pathname_valid</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.iterate_lines_from_file.html">rxn.utilities.files.iterate_lines_from_file</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.iterate_tuples_from_files.html">rxn.utilities.files.iterate_tuples_from_files</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.files.load_list_from_file</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.named_temporary_path.html">rxn.utilities.files.named_temporary_path</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.stable_shuffle.html">rxn.utilities.files.stable_shuffle</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.files.html">rxn.utilities.files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.logging.html">rxn.utilities.logging</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.regex.html">rxn.utilities.regex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.scripts.html">rxn.utilities.scripts</a></li>
@@ -88,10 +80,10 @@
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../api.html">API</a> &raquo;</li>
           <li><a href="rxn.utilities.html">rxn.utilities</a> &raquo;</li>
-          <li><a href="rxn.utilities.files.html">rxn.utilities.files</a> &raquo;</li>
-      <li>rxn.utilities.files.load_list_from_file</li>
+          <li><a href="rxn.utilities.basic.html">rxn.utilities.basic</a> &raquo;</li>
+      <li>rxn.utilities.basic.sandboxed_random_context</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/rxn.utilities.files.load_list_from_file.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/rxn.utilities.basic.sandboxed_random_context.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -99,17 +91,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rxn-utilities-files-load-list-from-file">
-<h1>rxn.utilities.files.load_list_from_file<a class="headerlink" href="#rxn-utilities-files-load-list-from-file" title="Permalink to this heading"></a></h1>
+  <section id="rxn-utilities-basic-sandboxed-random-context">
+<h1>rxn.utilities.basic.sandboxed_random_context<a class="headerlink" href="#rxn-utilities-basic-sandboxed-random-context" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="rxn.utilities.files.load_list_from_file">
-<span class="sig-prename descclassname"><span class="pre">rxn.utilities.files.</span></span><span class="sig-name descname"><span class="pre">load_list_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/files.html#load_list_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.files.load_list_from_file" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>]) – </p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<dt class="sig sig-object py" id="rxn.utilities.basic.sandboxed_random_context">
+<span class="sig-prename descclassname"><span class="pre">rxn.utilities.basic.</span></span><span class="sig-name descname"><span class="pre">sandboxed_random_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/basic.html#sandboxed_random_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.basic.sandboxed_random_context" title="Permalink to this definition"></a></dt>
+<dd><p>Enter a context that will not affect the Python random state.</p>
+<p>This works by saving the random state at the beginning of the context
+and resetting it when exiting the context.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">sandboxed_random_context</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>  <span class="c1"># has no effect outside of the context</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -120,8 +117,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="rxn.utilities.files.iterate_tuples_from_files.html" class="btn btn-neutral float-left" title="rxn.utilities.files.iterate_tuples_from_files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.files.named_temporary_path.html" class="btn btn-neutral float-right" title="rxn.utilities.files.named_temporary_path" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.basic.identity.html" class="btn btn-neutral float-left" title="rxn.utilities.basic.identity" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn.utilities.basic.temporary_random_seed.html" class="btn btn-neutral float-right" title="rxn.utilities.basic.temporary_random_seed" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
