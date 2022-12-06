@@ -1,9 +1,14 @@
+import pytest
+
 from rxn.utilities.files import (
     count_lines,
     dump_list_to_file,
+    dump_tuples_to_files,
     is_path_creatable,
+    iterate_tuples_from_files,
     load_list_from_file,
     named_temporary_path,
+    stable_shuffle,
 )
 
 
@@ -52,13 +57,75 @@ def test_named_temporary_path() -> None:
 
 
 def test_dump_and_load_list() -> None:
-    original_list = ["some", "random", "words"]
+    original_list = ["some", "random", "words", " with", "    ", "spaces  "]
 
     with named_temporary_path() as tmp_path:
         dump_list_to_file(original_list, tmp_path)
         loaded_list = load_list_from_file(tmp_path)
 
     assert loaded_list == original_list
+
+    # Test that it works with different newline characters
+    hardcoded_newline_characters = "some\nrandom\nwords\n with\n    \nspaces  "
+    for newline_character in ["\r", "\r\n", "\n"]:
+        with named_temporary_path() as tmp_path:
+            with open(tmp_path, "w", newline=newline_character) as f:
+                f.write(hardcoded_newline_characters)
+            loaded_list = load_list_from_file(tmp_path)
+        assert loaded_list == original_list
+
+
+def test_dump_and_load_tuples() -> None:
+    original_tuples = [
+        ("a1", "b1", "c1"),
+        ("a2", "b2", "c2"),
+        ("a3", "b3", "c3"),
+        ("a4", "b4", "c4"),
+    ]
+    with named_temporary_path() as p1, named_temporary_path() as p2, named_temporary_path() as p3:
+        dump_tuples_to_files(original_tuples, [p1, p2, p3])
+        loaded_tuples = list(iterate_tuples_from_files([p1, p2, p3]))
+        first_file_list = load_list_from_file(p1)
+
+    assert loaded_tuples == original_tuples
+    assert first_file_list == ["a1", "a2", "a3", "a4"]
+
+
+def test_load_tuples_inconsistent_line_counts() -> None:
+
+    with named_temporary_path() as p1, named_temporary_path() as p2, named_temporary_path() as p3:
+        # The third file has one line more
+        dump_list_to_file(["a", "b", "c"], p1)
+        dump_list_to_file(["a", "b", "c"], p2)
+        dump_list_to_file(["a", "b", "c", "d"], p3)
+        with pytest.raises(ValueError):
+            _ = list(iterate_tuples_from_files([p1, p2, p3]))
+
+        # Now the third file has one line too few
+        dump_list_to_file(["a", "b"], p3)
+        with pytest.raises(ValueError):
+            _ = list(iterate_tuples_from_files([p1, p2, p3]))
+
+
+def test_dump_tuples_incorrect_sizes() -> None:
+    too_long_tuple = [
+        ("a", "b", "c"),
+        ("a", "b", "c", "d"),
+        ("a", "b", "c"),
+    ]
+
+    too_short_tuple = [
+        ("a", "b", "c"),
+        ("a", "b", "c", "d"),
+        ("a", "b", "c"),
+    ]
+
+    with named_temporary_path() as p1, named_temporary_path() as p2, named_temporary_path() as p3:
+        with pytest.raises(ValueError):
+            dump_tuples_to_files(too_long_tuple, [p1, p2, p3])
+
+        with pytest.raises(ValueError):
+            dump_tuples_to_files(too_short_tuple, [p1, p2, p3])
 
 
 def test_count_lines() -> None:
@@ -69,3 +136,28 @@ def test_count_lines() -> None:
         # Test with argument given as str and Path
         assert count_lines(str(tmp_path)) == len(lines)
         assert count_lines(tmp_path) == len(lines)
+
+
+def test_stable_shuffle() -> None:
+    # We will generate a few files based on tuples of values (all "a*" go to the
+    # first file, "b*" to the second, etc). Then we check that after stable-shuffling,
+    # the tuples still match (all "*1" together, etc.).
+    original_tuples = [(f"a{i}", f"b{i}", f"c{i}") for i in range(1, 21)]
+    with named_temporary_path() as p1, named_temporary_path() as p2, named_temporary_path() as p3:
+        dump_tuples_to_files(original_tuples, [p1, p2, p3])
+
+        # we shuffle the files in-place with the same seed
+        stable_shuffle(p1, p1, 42)
+        stable_shuffle(p2, p2, 42)
+        stable_shuffle(p3, p3, 42)
+        loaded_tuples = list(iterate_tuples_from_files([p1, p2, p3]))
+        # The lists must be different, but their set identical
+        assert loaded_tuples != original_tuples
+        assert set(loaded_tuples) == set(original_tuples)
+
+        # Control: re-shuffle but with different seeds -> the tuples will be mixed
+        stable_shuffle(p1, p1, 42)
+        stable_shuffle(p2, p2, 43)
+        stable_shuffle(p3, p3, 44)
+        loaded_tuples = list(iterate_tuples_from_files([p1, p2, p3]))
+        assert set(loaded_tuples) != set(original_tuples)

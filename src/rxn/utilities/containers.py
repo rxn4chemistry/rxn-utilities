@@ -11,7 +11,6 @@ from typing import (
     Set,
     Tuple,
     TypeVar,
-    cast,
 )
 
 T = TypeVar("T")

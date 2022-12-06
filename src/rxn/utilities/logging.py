@@ -2,7 +2,7 @@ import logging
 from enum import Enum
 from typing import Iterable, Union
 
-from rxn.utilities.files import PathLike
+from .files import PathLike
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
