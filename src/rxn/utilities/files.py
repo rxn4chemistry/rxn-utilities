@@ -1,13 +1,17 @@
 import errno
 import os
+import random
 import shutil
 import sys
 import tempfile
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 from pathlib import Path
-from typing import Generator, Iterable, Iterator, List, Union
+from typing import Iterable, Iterator, List, Tuple, Union
 
 from typing_extensions import TypeAlias
+
+from rxn.utilities.basic import temporary_random_seed
+from rxn.utilities.containers import all_identical
 
 PathLike: TypeAlias = Union[str, os.PathLike]
 
@@ -16,10 +20,10 @@ def load_list_from_file(filename: PathLike) -> List[str]:
     return list(iterate_lines_from_file(filename))
 
 
-def iterate_lines_from_file(filename: PathLike) -> Generator[str, None, None]:
+def iterate_lines_from_file(filename: PathLike) -> Iterator[str]:
     with open(filename, "rt") as f:
         for line in f:
-            yield line.strip()
+            yield line.rstrip("\r\n")
 
 
 def dump_list_to_file(values: Iterable[str], filename: PathLike) -> None:
@@ -30,6 +34,72 @@ def dump_list_to_file(values: Iterable[str], filename: PathLike) -> None:
 
 def count_lines(filename: PathLike) -> int:
     return sum(1 for _ in open(filename))
+
+
+def iterate_tuples_from_files(
+    filenames: List[PathLike],
+) -> Iterator[Tuple[str, ...]]:
+    """
+    Read from several files at once, and put the values from the same lines numbers
+    into tuples.
+
+    Args:
+        filenames: files to read.
+
+    Returns:
+        iterator over the generated tuples.
+    """
+    # Make sure the files have the same lengths. This is not the optimal solution
+    # and in principle, one could detect unequal lengths when reading the files.
+    # However, an easy solution is available only from Python 3.10:
+    # https://stackoverflow.com/q/32954486
+    if not all_identical([count_lines(file) for file in filenames]):
+        raise ValueError("Not all the files have identical lengths")
+
+    # Opening several files at once;
+    # See https://docs.python.org/3/library/contextlib.html#contextlib.ExitStack
+    with ExitStack() as stack:
+        files = [stack.enter_context(open(fname, "rt")) for fname in filenames]
+        iterators = [(line.rstrip("\r\n") for line in f) for f in files]
+        yield from zip(*iterators)
+
+
+def dump_tuples_to_files(
+    values: Iterable[Tuple[str, ...]], filenames: List[PathLike]
+) -> None:
+    """Write tuples to multiple files (1st tuple value ends up in 1st file, etc.).
+
+    Args:
+        values: tuples to write to files.
+        filenames: files to create.
+    """
+    # Opening several files at once;
+    # See https://docs.python.org/3/library/contextlib.html#contextlib.ExitStack
+    with ExitStack() as stack:
+        files = [stack.enter_context(open(fname, "wt")) for fname in filenames]
+        number_files = len(files)
+        for value_tuple in values:
+            if len(value_tuple) != number_files:
+                raise ValueError(
+                    f"Tuple {value_tuple} has incorrect size (expected: {number_files})."
+                )
+            for value, f in zip(value_tuple, files):
+                f.write(f"{value}\n")
+
+
+def stable_shuffle(input_file: PathLike, output_file: PathLike, seed: int) -> None:
+    """
+    Shuffle a file in a deterministic order (the same seed always reorders
+    files of the same number of lines identically).
+
+    Useful, as an example, to shuffle a source and target files identically.
+    """
+
+    # Note we use the context manager to avoid side effects of setting the seed.
+    with temporary_random_seed(seed):
+        lines = load_list_from_file(input_file)
+        random.shuffle(lines)
+        dump_list_to_file(lines, output_file)
 
 
 @contextmanager
