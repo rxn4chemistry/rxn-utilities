@@ -75,12 +75,12 @@
 
 
 <div class="viewcode-block" id="capturing"><a class="viewcode-back" href="../../../generated/rxn.utilities.regex.capturing.html#rxn.utilities.regex.capturing">[docs]</a><span class="k">def</span> <span class="nf">capturing</span><span class="p">(</span><span class="n">initial_regex</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Add capturing parentheses to a regex string&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add capturing parentheses to a regex string&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">initial_regex</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
 <div class="viewcode-block" id="alternation"><a class="viewcode-back" href="../../../generated/rxn.utilities.regex.alternation.html#rxn.utilities.regex.alternation">[docs]</a><span class="k">def</span> <span class="nf">alternation</span><span class="p">(</span><span class="n">choices</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">capture_group</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;OR operator&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;OR operator&quot;&quot;&quot;</span>
 
     <span class="n">inner_string</span> <span class="o">=</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
 
@@ -91,7 +91,7 @@
 
 
 <div class="viewcode-block" id="optional"><a class="viewcode-back" href="../../../generated/rxn.utilities.regex.optional.html#rxn.utilities.regex.optional">[docs]</a><span class="k">def</span> <span class="nf">optional</span><span class="p">(</span><span class="n">initial_regex</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">capture_group</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Creates the regex string to make a group optional&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates the regex string to make a group optional&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">capture_group</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">initial_regex</span><span class="si">}</span><span class="s2">)?&quot;</span>
     <span class="k">else</span><span class="p">:</span>

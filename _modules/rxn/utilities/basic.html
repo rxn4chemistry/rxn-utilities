@@ -78,7 +78,7 @@
 
 <div class="viewcode-block" id="sandboxed_random_context"><a class="viewcode-back" href="../../../generated/rxn.utilities.basic.sandboxed_random_context.html#rxn.utilities.basic.sandboxed_random_context">[docs]</a><span class="nd">@contextmanager</span>
 <span class="k">def</span> <span class="nf">sandboxed_random_context</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enter a context that will not affect the Python random state.</span>
 
 <span class="sd">    This works by saving the random state at the beginning of the context</span>
@@ -97,7 +97,7 @@
 
 <div class="viewcode-block" id="temporary_random_seed"><a class="viewcode-back" href="../../../generated/rxn.utilities.basic.temporary_random_seed.html#rxn.utilities.basic.temporary_random_seed">[docs]</a><span class="nd">@contextmanager</span>
 <span class="k">def</span> <span class="nf">temporary_random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set a random seed in a context, to avoid side effects.</span>
 
 <span class="sd">    Examples:</span>

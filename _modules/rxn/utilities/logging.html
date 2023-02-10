@@ -76,7 +76,7 @@
 
 
 <div class="viewcode-block" id="LoggingFormat"><a class="viewcode-back" href="../../../generated/rxn.utilities.logging.LoggingFormat.html#rxn.utilities.logging.LoggingFormat">[docs]</a><span class="k">class</span> <span class="nc">LoggingFormat</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Common logging formats used in the RXN universe.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -90,7 +90,7 @@
     <span class="n">level</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
     <span class="nb">format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">LoggingFormat</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">LoggingFormat</span><span class="o">.</span><span class="n">BASIC</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set up a logger writing to the console (i.e., to stderr).</span>
 
 <span class="sd">    Args:</span>
@@ -107,7 +107,7 @@
     <span class="n">level</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
     <span class="nb">format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">LoggingFormat</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">LoggingFormat</span><span class="o">.</span><span class="n">BASIC</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set up a logger writing to the given file.</span>
 
 <span class="sd">    Overwrites the default file mode &#39;a&#39; with &#39;w&#39; (i.e., overwrites the file).</span>
@@ -126,7 +126,7 @@
     <span class="n">level</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
     <span class="nb">format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">LoggingFormat</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">LoggingFormat</span><span class="o">.</span><span class="n">BASIC</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set up a logger writing to both the terminal and the given file.</span>
 
 <span class="sd">    Overwrites the default file mode &#39;a&#39; with &#39;w&#39; (i.e., overwrites the file).</span>
@@ -147,7 +147,7 @@
     <span class="n">level</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="nb">format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">LoggingFormat</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper function to avoid duplication in the other setup functions.</span>
 
 <span class="sd">    Args:</span>
@@ -161,7 +161,7 @@
 
 
 <div class="viewcode-block" id="log_debug"><a class="viewcode-back" href="../../../generated/rxn.utilities.logging.log_debug.html#rxn.utilities.logging.log_debug">[docs]</a><span class="k">def</span> <span class="nf">log_debug</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to log a message with DEBUG level.</span>
 
 <span class="sd">    Can be useful for testing purposes, to test logging capabilities from</span>
@@ -171,7 +171,7 @@
 
 
 <div class="viewcode-block" id="log_info"><a class="viewcode-back" href="../../../generated/rxn.utilities.logging.log_info.html#rxn.utilities.logging.log_info">[docs]</a><span class="k">def</span> <span class="nf">log_info</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to log a message with INFO level.</span>
 
 <span class="sd">    Can be useful for testing purposes, to test logging capabilities from</span>
@@ -181,7 +181,7 @@
 
 
 <div class="viewcode-block" id="log_warning"><a class="viewcode-back" href="../../../generated/rxn.utilities.logging.log_warning.html#rxn.utilities.logging.log_warning">[docs]</a><span class="k">def</span> <span class="nf">log_warning</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to log a message with WARNING level.</span>
 
 <span class="sd">    Can be useful for testing purposes, to test logging capabilities from</span>
@@ -191,7 +191,7 @@
 
 
 <div class="viewcode-block" id="log_error"><a class="viewcode-back" href="../../../generated/rxn.utilities.logging.log_error.html#rxn.utilities.logging.log_error">[docs]</a><span class="k">def</span> <span class="nf">log_error</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility function to log a message with ERROR level.</span>
 
 <span class="sd">    Can be useful for testing purposes, to test logging capabilities from</span>

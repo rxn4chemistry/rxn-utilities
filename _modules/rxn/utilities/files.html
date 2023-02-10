@@ -106,7 +106,7 @@
 <div class="viewcode-block" id="iterate_tuples_from_files"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.iterate_tuples_from_files.html#rxn.utilities.files.iterate_tuples_from_files">[docs]</a><span class="k">def</span> <span class="nf">iterate_tuples_from_files</span><span class="p">(</span>
     <span class="n">filenames</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PathLike</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read from several files at once, and put the values from the same lines numbers</span>
 <span class="sd">    into tuples.</span>
 
@@ -134,7 +134,7 @@
 <div class="viewcode-block" id="dump_tuples_to_files"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.dump_tuples_to_files.html#rxn.utilities.files.dump_tuples_to_files">[docs]</a><span class="k">def</span> <span class="nf">dump_tuples_to_files</span><span class="p">(</span>
     <span class="n">values</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]],</span> <span class="n">filenames</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PathLike</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Write tuples to multiple files (1st tuple value ends up in 1st file, etc.).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write tuples to multiple files (1st tuple value ends up in 1st file, etc.).</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        values: tuples to write to files.</span>
@@ -155,7 +155,7 @@
 
 
 <div class="viewcode-block" id="stable_shuffle"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.stable_shuffle.html#rxn.utilities.files.stable_shuffle">[docs]</a><span class="k">def</span> <span class="nf">stable_shuffle</span><span class="p">(</span><span class="n">input_file</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">output_file</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Shuffle a file in a deterministic order (the same seed always reorders</span>
 <span class="sd">    files of the same number of lines identically).</span>
 
@@ -171,7 +171,7 @@
 
 <div class="viewcode-block" id="named_temporary_path"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.named_temporary_path.html#rxn.utilities.files.named_temporary_path">[docs]</a><span class="nd">@contextmanager</span>
 <span class="k">def</span> <span class="nf">named_temporary_path</span><span class="p">(</span><span class="n">delete</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the path for a temporary file or directory, without creating it (can</span>
 <span class="sd">    be especially useful in tests).</span>
 
@@ -207,7 +207,7 @@
 
 
 <div class="viewcode-block" id="is_pathname_valid"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.is_pathname_valid.html#rxn.utilities.files.is_pathname_valid">[docs]</a><span class="k">def</span> <span class="nf">is_pathname_valid</span><span class="p">(</span><span class="n">pathname</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `True` if the passed pathname is a valid pathname for the current OS;</span>
 <span class="sd">    `False` otherwise.</span>
 
@@ -246,7 +246,7 @@
 
 
 <div class="viewcode-block" id="is_path_creatable"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.is_path_creatable.html#rxn.utilities.files.is_path_creatable">[docs]</a><span class="k">def</span> <span class="nf">is_path_creatable</span><span class="p">(</span><span class="n">pathname</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `True` if the current user has sufficient permissions to create the passed</span>
 <span class="sd">    pathname; `False` otherwise.</span>
 
@@ -258,7 +258,7 @@
 
 
 <div class="viewcode-block" id="is_path_exists_or_creatable"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.is_path_exists_or_creatable.html#rxn.utilities.files.is_path_exists_or_creatable">[docs]</a><span class="k">def</span> <span class="nf">is_path_exists_or_creatable</span><span class="p">(</span><span class="n">pathname</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `True` if the passed pathname is a valid pathname for the current OS _and_</span>
 <span class="sd">    either currently exists or is hypothetically creatable; `False` otherwise.</span>
 
@@ -273,6 +273,30 @@
         <span class="p">)</span>
     <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="paths_are_identical"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.paths_are_identical.html#rxn.utilities.files.paths_are_identical">[docs]</a><span class="k">def</span> <span class="nf">paths_are_identical</span><span class="p">(</span><span class="o">*</span><span class="n">paths</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Whether paths, possibly given in a mix of absolute and relative formats,</span>
+<span class="sd">    point to the same file.&quot;&quot;&quot;</span>
+    <span class="n">real_paths</span> <span class="o">=</span> <span class="p">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">}</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">real_paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="raise_if_paths_are_identical"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.raise_if_paths_are_identical.html#rxn.utilities.files.raise_if_paths_are_identical">[docs]</a><span class="k">def</span> <span class="nf">raise_if_paths_are_identical</span><span class="p">(</span><span class="o">*</span><span class="n">paths</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Raise an exception if input and output paths point to the same file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">paths_are_identical</span><span class="p">(</span><span class="o">*</span><span class="n">paths</span><span class="p">):</span>
+        <span class="n">paths_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The paths </span><span class="si">{</span><span class="n">paths_str</span><span class="si">}</span><span class="s2"> must be different.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ensure_directory_exists_and_is_empty"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.ensure_directory_exists_and_is_empty.html#rxn.utilities.files.ensure_directory_exists_and_is_empty">[docs]</a><span class="k">def</span> <span class="nf">ensure_directory_exists_and_is_empty</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a directory if it does not exist already, and raise if not empty.&quot;&quot;&quot;</span>
+    <span class="n">directory</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">directory_contains_files</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">directory</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">directory_contains_files</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The directory &quot;</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s1">&quot; is required to be empty.&#39;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

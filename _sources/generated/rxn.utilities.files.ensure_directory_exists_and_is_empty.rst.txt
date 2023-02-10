@@ -1,0 +1,6 @@
+rxn.utilities.files.ensure\_directory\_exists\_and\_is\_empty
+=============================================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: ensure_directory_exists_and_is_empty

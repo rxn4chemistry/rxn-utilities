@@ -1,0 +1,6 @@
+rxn.utilities.files.raise\_if\_paths\_are\_identical
+====================================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: raise_if_paths_are_identical

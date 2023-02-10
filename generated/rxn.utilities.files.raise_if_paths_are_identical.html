@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities.files.iterate_lines_from_file &mdash; RXN utilities 0.1 documentation</title>
+  <title>rxn.utilities.files.raise_if_paths_are_identical &mdash; RXN utilities 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.files.iterate_tuples_from_files" href="rxn.utilities.files.iterate_tuples_from_files.html" />
-    <link rel="prev" title="rxn.utilities.files.is_pathname_valid" href="rxn.utilities.files.is_pathname_valid.html" /> 
+    <link rel="next" title="rxn.utilities.files.stable_shuffle" href="rxn.utilities.files.stable_shuffle.html" />
+    <link rel="prev" title="rxn.utilities.files.paths_are_identical" href="rxn.utilities.files.paths_are_identical.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -55,12 +55,12 @@
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.is_path_creatable.html">rxn.utilities.files.is_path_creatable</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.is_path_exists_or_creatable.html">rxn.utilities.files.is_path_exists_or_creatable</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.is_pathname_valid.html">rxn.utilities.files.is_pathname_valid</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.files.iterate_lines_from_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.iterate_lines_from_file.html">rxn.utilities.files.iterate_lines_from_file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.iterate_tuples_from_files.html">rxn.utilities.files.iterate_tuples_from_files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.load_list_from_file.html">rxn.utilities.files.load_list_from_file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.named_temporary_path.html">rxn.utilities.files.named_temporary_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.paths_are_identical.html">rxn.utilities.files.paths_are_identical</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.raise_if_paths_are_identical.html">rxn.utilities.files.raise_if_paths_are_identical</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.files.raise_if_paths_are_identical</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.stable_shuffle.html">rxn.utilities.files.stable_shuffle</a></li>
 </ul>
 </li>
@@ -92,9 +92,9 @@
           <li><a href="../api.html">API</a> &raquo;</li>
           <li><a href="rxn.utilities.html">rxn.utilities</a> &raquo;</li>
           <li><a href="rxn.utilities.files.html">rxn.utilities.files</a> &raquo;</li>
-      <li>rxn.utilities.files.iterate_lines_from_file</li>
+      <li>rxn.utilities.files.raise_if_paths_are_identical</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/rxn.utilities.files.iterate_lines_from_file.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/rxn.utilities.files.raise_if_paths_are_identical.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -102,17 +102,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rxn-utilities-files-iterate-lines-from-file">
-<h1>rxn.utilities.files.iterate_lines_from_file<a class="headerlink" href="#rxn-utilities-files-iterate-lines-from-file" title="Permalink to this heading"></a></h1>
+  <section id="rxn-utilities-files-raise-if-paths-are-identical">
+<h1>rxn.utilities.files.raise_if_paths_are_identical<a class="headerlink" href="#rxn-utilities-files-raise-if-paths-are-identical" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="rxn.utilities.files.iterate_lines_from_file">
-<span class="sig-prename descclassname"><span class="pre">rxn.utilities.files.</span></span><span class="sig-name descname"><span class="pre">iterate_lines_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/files.html#iterate_lines_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.files.iterate_lines_from_file" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dt class="sig sig-object py" id="rxn.utilities.files.raise_if_paths_are_identical">
+<span class="sig-prename descclassname"><span class="pre">rxn.utilities.files.</span></span><span class="sig-name descname"><span class="pre">raise_if_paths_are_identical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">paths</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/files.html#raise_if_paths_are_identical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.files.raise_if_paths_are_identical" title="Permalink to this definition"></a></dt>
+<dd><p>Raise an exception if input and output paths point to the same file.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>]) – </p>
+<dd class="field-odd"><p><strong>paths</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>]) – </p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -123,8 +124,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="rxn.utilities.files.is_pathname_valid.html" class="btn btn-neutral float-left" title="rxn.utilities.files.is_pathname_valid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.files.iterate_tuples_from_files.html" class="btn btn-neutral float-right" title="rxn.utilities.files.iterate_tuples_from_files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.files.paths_are_identical.html" class="btn btn-neutral float-left" title="rxn.utilities.files.paths_are_identical" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn.utilities.files.stable_shuffle.html" class="btn btn-neutral float-right" title="rxn.utilities.files.stable_shuffle" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
