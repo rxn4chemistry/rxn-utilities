@@ -35,6 +35,7 @@
    rxn.utilities.databases
    rxn.utilities.files
    rxn.utilities.logging
+   rxn.utilities.misc
    rxn.utilities.regex
    rxn.utilities.scripts
    rxn.utilities.strings

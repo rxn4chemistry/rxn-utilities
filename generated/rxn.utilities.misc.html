@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities &mdash; RXN utilities 0.1 documentation</title>
+  <title>rxn.utilities.misc &mdash; RXN utilities 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.attrs" href="rxn.utilities.attrs.html" />
-    <link rel="prev" title="API" href="../api.html" /> 
+    <link rel="next" title="rxn.utilities.misc.get_multiplier" href="rxn.utilities.misc.get_multiplier.html" />
+    <link rel="prev" title="rxn.utilities.logging.LoggingFormat" href="rxn.utilities.logging.LoggingFormat.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,7 +41,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../README.html">README</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">Python API</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">rxn.utilities</a><ul>
+<li class="toctree-l2 current"><a class="reference internal" href="rxn.utilities.html">rxn.utilities</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.attrs.html">rxn.utilities.attrs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.basic.html">rxn.utilities.basic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.caching.html">rxn.utilities.caching</a></li>
@@ -49,7 +49,11 @@
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.databases.html">rxn.utilities.databases</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.files.html">rxn.utilities.files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.logging.html">rxn.utilities.logging</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.misc.html">rxn.utilities.misc</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">rxn.utilities.misc</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.misc.get_multiplier.html">rxn.utilities.misc.get_multiplier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.misc.get_multipliers.html">rxn.utilities.misc.get_multipliers</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.regex.html">rxn.utilities.regex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.scripts.html">rxn.utilities.scripts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.strings.html">rxn.utilities.strings</a></li>
@@ -75,9 +79,10 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../api.html">API</a> &raquo;</li>
-      <li>rxn.utilities</li>
+          <li><a href="rxn.utilities.html">rxn.utilities</a> &raquo;</li>
+      <li>rxn.utilities.misc</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/rxn.utilities.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/rxn.utilities.misc.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -85,50 +90,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-rxn.utilities">
-<span id="rxn-utilities"></span><h1>rxn.utilities<a class="headerlink" href="#module-rxn.utilities" title="Permalink to this heading"></a></h1>
-<p class="rubric">Modules</p>
+  <section id="module-rxn.utilities.misc">
+<span id="rxn-utilities-misc"></span><h1>rxn.utilities.misc<a class="headerlink" href="#module-rxn.utilities.misc" title="Permalink to this heading"></a></h1>
+<p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.attrs.html#module-rxn.utilities.attrs" title="rxn.utilities.attrs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.attrs</span></code></a></p></td>
-<td><p>Helper functions for handling classes defined with the package attrs.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.misc.get_multiplier.html#rxn.utilities.misc.get_multiplier" title="rxn.utilities.misc.get_multiplier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_multiplier</span></code></a>(a, b)</p></td>
+<td><p>Get the multiplier m so that m * a == b.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.basic.html#module-rxn.utilities.basic" title="rxn.utilities.basic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.basic</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.caching.html#module-rxn.utilities.caching" title="rxn.utilities.caching"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.caching</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.containers.html#module-rxn.utilities.containers" title="rxn.utilities.containers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.containers</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.databases.html#module-rxn.utilities.databases" title="rxn.utilities.databases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.databases</span></code></a></p></td>
-<td><p>Module for database utilities.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.html#module-rxn.utilities.files" title="rxn.utilities.files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.files</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.logging.html#module-rxn.utilities.logging" title="rxn.utilities.logging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.logging</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.misc.html#module-rxn.utilities.misc" title="rxn.utilities.misc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.misc</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.regex.html#module-rxn.utilities.regex" title="rxn.utilities.regex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.regex</span></code></a></p></td>
-<td><p>Functions to help build regex strings.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.scripts.html#module-rxn.utilities.scripts" title="rxn.utilities.scripts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.scripts</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.strings.html#module-rxn.utilities.strings" title="rxn.utilities.strings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.strings</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.types.html#module-rxn.utilities.types" title="rxn.utilities.types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rxn.utilities.types</span></code></a></p></td>
-<td><p>Custom types used in RXN projects.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.misc.get_multipliers.html#rxn.utilities.misc.get_multipliers" title="rxn.utilities.misc.get_multipliers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_multipliers</span></code></a>(a, b)</p></td>
+<td><p>Get the multipliers m_a and m_b so that m_a * a == m_b * b.</p></td>
 </tr>
 </tbody>
 </table>
@@ -138,8 +113,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../api.html" class="btn btn-neutral float-left" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.attrs.html" class="btn btn-neutral float-right" title="rxn.utilities.attrs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.logging.LoggingFormat.html" class="btn btn-neutral float-left" title="rxn.utilities.logging.LoggingFormat" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn.utilities.misc.get_multiplier.html" class="btn btn-neutral float-right" title="rxn.utilities.misc.get_multiplier" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

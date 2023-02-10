@@ -1,0 +1,6 @@
+rxn.utilities.misc.get\_multipliers
+===================================
+
+.. currentmodule:: rxn.utilities.misc
+
+.. autofunction:: get_multipliers

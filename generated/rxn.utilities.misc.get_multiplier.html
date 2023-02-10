@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities.scripts.stable_shuffle &mdash; RXN utilities 0.1 documentation</title>
+  <title>rxn.utilities.misc.get_multiplier &mdash; RXN utilities 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.strings" href="rxn.utilities.strings.html" />
-    <link rel="prev" title="rxn.utilities.scripts" href="rxn.utilities.scripts.html" /> 
+    <link rel="next" title="rxn.utilities.misc.get_multipliers" href="rxn.utilities.misc.get_multipliers.html" />
+    <link rel="prev" title="rxn.utilities.misc" href="rxn.utilities.misc.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,12 +49,13 @@
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.databases.html">rxn.utilities.databases</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.files.html">rxn.utilities.files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.logging.html">rxn.utilities.logging</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.misc.html">rxn.utilities.misc</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.regex.html">rxn.utilities.regex</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.scripts.html">rxn.utilities.scripts</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.scripts.stable_shuffle</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.misc.html">rxn.utilities.misc</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.misc.get_multiplier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.misc.get_multipliers.html">rxn.utilities.misc.get_multipliers</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.regex.html">rxn.utilities.regex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.scripts.html">rxn.utilities.scripts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.strings.html">rxn.utilities.strings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.types.html">rxn.utilities.types</a></li>
 </ul>
@@ -79,10 +80,10 @@
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../api.html">API</a> &raquo;</li>
           <li><a href="rxn.utilities.html">rxn.utilities</a> &raquo;</li>
-          <li><a href="rxn.utilities.scripts.html">rxn.utilities.scripts</a> &raquo;</li>
-      <li>rxn.utilities.scripts.stable_shuffle</li>
+          <li><a href="rxn.utilities.misc.html">rxn.utilities.misc</a> &raquo;</li>
+      <li>rxn.utilities.misc.get_multiplier</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/rxn.utilities.scripts.stable_shuffle.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/rxn.utilities.misc.get_multiplier.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -90,16 +91,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-rxn.utilities.scripts.stable_shuffle">
-<span id="rxn-utilities-scripts-stable-shuffle"></span><h1>rxn.utilities.scripts.stable_shuffle<a class="headerlink" href="#module-rxn.utilities.scripts.stable_shuffle" title="Permalink to this heading"></a></h1>
+  <section id="rxn-utilities-misc-get-multiplier">
+<h1>rxn.utilities.misc.get_multiplier<a class="headerlink" href="#rxn-utilities-misc-get-multiplier" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="rxn.utilities.misc.get_multiplier">
+<span class="sig-prename descclassname"><span class="pre">rxn.utilities.misc.</span></span><span class="sig-name descname"><span class="pre">get_multiplier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/misc.html#get_multiplier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.misc.get_multiplier" title="Permalink to this definition"></a></dt>
+<dd><p>Get the multiplier m so that m * a == b.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If b is not exactly a multiplier of a (possibly forwarded from
+    get_multipliers).</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>multiplier for a.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>a</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
+<li><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="rxn.utilities.scripts.html" class="btn btn-neutral float-left" title="rxn.utilities.scripts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.strings.html" class="btn btn-neutral float-right" title="rxn.utilities.strings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.misc.html" class="btn btn-neutral float-left" title="rxn.utilities.misc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn.utilities.misc.get_multipliers.html" class="btn btn-neutral float-right" title="rxn.utilities.misc.get_multipliers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

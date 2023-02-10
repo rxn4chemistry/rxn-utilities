@@ -1,0 +1,31 @@
+rxn.utilities.misc
+==================
+
+.. automodule:: rxn.utilities.misc
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      get_multiplier
+      get_multipliers
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
