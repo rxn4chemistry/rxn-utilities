@@ -1,13 +1,18 @@
+from pathlib import Path
+
 import pytest
 
 from rxn.utilities.files import (
     count_lines,
     dump_list_to_file,
     dump_tuples_to_files,
+    ensure_directory_exists_and_is_empty,
     is_path_creatable,
     iterate_tuples_from_files,
     load_list_from_file,
     named_temporary_path,
+    paths_are_identical,
+    raise_if_paths_are_identical,
     stable_shuffle,
 )
 
@@ -92,7 +97,6 @@ def test_dump_and_load_tuples() -> None:
 
 
 def test_load_tuples_inconsistent_line_counts() -> None:
-
     with named_temporary_path() as p1, named_temporary_path() as p2, named_temporary_path() as p3:
         # The third file has one line more
         dump_list_to_file(["a", "b", "c"], p1)
@@ -161,3 +165,45 @@ def test_stable_shuffle() -> None:
         stable_shuffle(p3, p3, 44)
         loaded_tuples = list(iterate_tuples_from_files([p1, p2, p3]))
         assert set(loaded_tuples) != set(original_tuples)
+
+
+def test_paths_are_identical() -> None:
+    assert paths_are_identical("f.txt", "f.txt")
+    assert paths_are_identical("f.txt", Path("f.txt"))
+
+    # relative path vs path built from cwd()
+    assert paths_are_identical("f.txt", Path.cwd() / "f.txt")
+
+    # relative path vs path going into dir and back
+    assert paths_are_identical("f.txt", "b/../f.txt")
+
+    assert not paths_are_identical("f.txt", Path("f.txt"), "g.txt")
+    assert not paths_are_identical("f.txt", "f.csv")
+    assert not paths_are_identical("f.txt", "g.txt")
+    assert not paths_are_identical("f.txt", "b/f.txt")
+
+
+def test_raise_if_paths_are_identical() -> None:
+    # No exception
+    raise_if_paths_are_identical("f.txt", "f.csv")
+
+    with pytest.raises(ValueError):
+        raise_if_paths_are_identical("f.txt", Path.cwd() / "f.txt")
+
+
+def test_ensure_directory_exists_and_is_empty() -> None:
+    path: Path
+    with named_temporary_path() as path:
+        # Calling the function on the path creates it as a directory
+        assert not path.exists()
+        ensure_directory_exists_and_is_empty(path)
+        assert path.exists()
+        assert path.is_dir()
+
+        # Calling it a second time does nothing
+        ensure_directory_exists_and_is_empty(path)
+
+        # Creating a file inside it and calling it again -> will fail
+        (path / "foo").touch()
+        with pytest.raises(RuntimeError):
+            ensure_directory_exists_and_is_empty(path)
