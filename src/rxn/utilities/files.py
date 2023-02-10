@@ -206,3 +206,27 @@ def is_path_exists_or_creatable(pathname: PathLike) -> bool:
         )
     except OSError:
         return False
+
+
+def paths_are_identical(*paths: PathLike) -> bool:
+    """Whether paths, possibly given in a mix of absolute and relative formats,
+    point to the same file."""
+    real_paths = {os.path.realpath(p) for p in paths}
+    return len(real_paths) == 1
+
+
+def raise_if_paths_are_identical(*paths: PathLike) -> None:
+    """
+    Raise an exception if input and output paths point to the same file.
+    """
+    if paths_are_identical(*paths):
+        paths_str = ", ".join(f'"{p}"' for p in paths)
+        raise ValueError(f"The paths {paths_str} must be different.")
+
+
+def ensure_directory_exists_and_is_empty(directory: Path) -> None:
+    """Create a directory if it does not exist already, and raise if not empty."""
+    directory.mkdir(parents=True, exist_ok=True)
+    directory_contains_files = any(directory.iterdir())
+    if directory_contains_files:
+        raise RuntimeError(f'The directory "{directory}" is required to be empty.')
