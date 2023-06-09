@@ -28,5 +28,6 @@ rxn.utilities.scripts
    :template: custom-module-template.rst
    :recursive:
 
+   rxn.utilities.scripts.extract_csv_column
    rxn.utilities.scripts.stable_shuffle
 
