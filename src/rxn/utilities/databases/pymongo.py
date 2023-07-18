@@ -4,10 +4,17 @@ from functools import lru_cache
 from typing import Any, Dict, Optional
 
 import pymongo
-from pydantic import BaseSettings, Extra
+from pydantic import Extra
+
+try:
+    # pydantic >= 2, requires the pydantic_settings package
+    from pydantic_settings import BaseSettings  # type: ignore[import,unused-ignore]
+except ImportError:
+    # pydantic < 2
+    from pydantic import BaseSettings  # type: ignore[no-redef,unused-ignore]
 
 
-class PyMongoSettings(BaseSettings):
+class PyMongoSettings(BaseSettings):  # type: ignore[misc,unused-ignore]
     """Settings for connecting to a MongoDB via pymongo."""
 
     mongo_uri: Optional[str] = None
