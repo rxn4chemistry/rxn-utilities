@@ -8,13 +8,13 @@ from pydantic import Extra
 
 try:
     # pydantic >= 2, requires the pydantic_settings package
-    from pydantic_settings import BaseSettings
+    from pydantic_settings import BaseSettings  # type: ignore[import]
 except ImportError:
     # pydantic < 2
     from pydantic import BaseSettings
 
 
-class PyMongoSettings(BaseSettings):
+class PyMongoSettings(BaseSettings):  # type: ignore[misc]
     """Settings for connecting to a MongoDB via pymongo."""
 
     mongo_uri: Optional[str] = None
