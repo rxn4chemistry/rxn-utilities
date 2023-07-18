@@ -14,7 +14,7 @@ except ImportError:
     from pydantic import BaseSettings  # type: ignore[no-redef,unused-ignore]
 
 
-class PyMongoSettings(BaseSettings):  # type: ignore[misc]
+class PyMongoSettings(BaseSettings):  # type: ignore[misc,unused-ignore]
     """Settings for connecting to a MongoDB via pymongo."""
 
     mongo_uri: Optional[str] = None
