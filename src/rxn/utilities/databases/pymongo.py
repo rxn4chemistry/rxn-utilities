@@ -4,7 +4,14 @@ from functools import lru_cache
 from typing import Any, Dict, Optional
 
 import pymongo
-from pydantic import BaseSettings, Extra
+from pydantic import Extra
+
+try:
+    # pydantic >= 2, requires the pydantic_settings package
+    from pydantic_settings import BaseSettings
+except ImportError:
+    # pydantic < 2
+    from pydantic import BaseSettings
 
 
 class PyMongoSettings(BaseSettings):
