@@ -8,10 +8,10 @@ from pydantic import Extra
 
 try:
     # pydantic >= 2, requires the pydantic_settings package
-    from pydantic_settings import BaseSettings  # type: ignore[import]
+    from pydantic_settings import BaseSettings  # type: ignore[import,unused-ignore]
 except ImportError:
     # pydantic < 2
-    from pydantic import BaseSettings
+    from pydantic import BaseSettings  # type: ignore[no-redef,unused-ignore]
 
 
 class PyMongoSettings(BaseSettings):  # type: ignore[misc]
