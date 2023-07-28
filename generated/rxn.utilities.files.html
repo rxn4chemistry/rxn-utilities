@@ -59,6 +59,7 @@
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.iterate_lines_from_file.html">rxn.utilities.files.iterate_lines_from_file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.iterate_tuples_from_files.html">rxn.utilities.files.iterate_tuples_from_files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.load_list_from_file.html">rxn.utilities.files.load_list_from_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.named_temporary_directory.html">rxn.utilities.files.named_temporary_directory</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.named_temporary_path.html">rxn.utilities.files.named_temporary_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.paths_are_identical.html">rxn.utilities.files.paths_are_identical</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.raise_if_paths_are_identical.html">rxn.utilities.files.raise_if_paths_are_identical</a></li>
@@ -161,16 +162,19 @@
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.named_temporary_path.html#rxn.utilities.files.named_temporary_path" title="rxn.utilities.files.named_temporary_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">named_temporary_path</span></code></a>([delete])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.named_temporary_directory.html#rxn.utilities.files.named_temporary_directory" title="rxn.utilities.files.named_temporary_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">named_temporary_directory</span></code></a>([delete])</p></td>
+<td><p>Get the path for a temporary directory and create it.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.named_temporary_path.html#rxn.utilities.files.named_temporary_path" title="rxn.utilities.files.named_temporary_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">named_temporary_path</span></code></a>([delete])</p></td>
 <td><p>Get the path for a temporary file or directory, without creating it (can be especially useful in tests).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.paths_are_identical.html#rxn.utilities.files.paths_are_identical" title="rxn.utilities.files.paths_are_identical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paths_are_identical</span></code></a>(*paths)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.paths_are_identical.html#rxn.utilities.files.paths_are_identical" title="rxn.utilities.files.paths_are_identical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paths_are_identical</span></code></a>(*paths)</p></td>
 <td><p>Whether paths, possibly given in a mix of absolute and relative formats, point to the same file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.raise_if_paths_are_identical.html#rxn.utilities.files.raise_if_paths_are_identical" title="rxn.utilities.files.raise_if_paths_are_identical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">raise_if_paths_are_identical</span></code></a>(*paths)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.raise_if_paths_are_identical.html#rxn.utilities.files.raise_if_paths_are_identical" title="rxn.utilities.files.raise_if_paths_are_identical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">raise_if_paths_are_identical</span></code></a>(*paths)</p></td>
 <td><p>Raise an exception if input and output paths point to the same file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.stable_shuffle.html#rxn.utilities.files.stable_shuffle" title="rxn.utilities.files.stable_shuffle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stable_shuffle</span></code></a>(input_file, output_file, seed)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.stable_shuffle.html#rxn.utilities.files.stable_shuffle" title="rxn.utilities.files.stable_shuffle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stable_shuffle</span></code></a>(input_file, output_file, seed)</p></td>
 <td><p>Shuffle a file in a deterministic order (the same seed always reorders files of the same number of lines identically).</p></td>
 </tr>
 </tbody>
