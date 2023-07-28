@@ -11,6 +11,7 @@ from rxn.utilities.files import (
     iterate_csv_column,
     iterate_tuples_from_files,
     load_list_from_file,
+    named_temporary_directory,
     named_temporary_path,
     paths_are_identical,
     raise_if_paths_are_identical,
@@ -55,6 +56,37 @@ def test_named_temporary_path() -> None:
     # create directory with files and directories, without deleting
     with named_temporary_path(delete=False) as path:
         path.mkdir()
+        (path / "foo").mkdir()
+        (path / "foo" / "bar").touch()
+        (path / "foo.bar").touch()
+        assert set(path.iterdir()) == {path / "foo", path / "foo.bar"}
+    assert set(path.iterdir()) == {path / "foo", path / "foo.bar"}
+
+
+def test_named_temporary_directory() -> None:
+    # Basic checks - empty directory, deleted automatically
+    with named_temporary_directory() as path:
+        assert path.exists()
+        assert path.is_dir()
+        is_empty = not any(path.iterdir())
+        assert is_empty
+    assert not path.exists()
+
+    # create directory, without deleting it
+    with named_temporary_directory(delete=False) as path:
+        pass
+    assert path.exists()
+
+    # create directory with files and directories, make sure it is deleted
+    with named_temporary_directory() as path:
+        (path / "foo").mkdir()
+        (path / "foo" / "bar").touch()
+        (path / "foo.bar").touch()
+        assert set(path.iterdir()) == {path / "foo", path / "foo.bar"}
+    assert not path.exists()
+
+    # create directory with files and directories, without deleting
+    with named_temporary_directory(delete=False) as path:
         (path / "foo").mkdir()
         (path / "foo" / "bar").touch()
         (path / "foo.bar").touch()
