@@ -140,6 +140,29 @@ def named_temporary_path(delete: bool = True) -> Iterator[Path]:
                 shutil.rmtree(temporary_path)
 
 
+@contextmanager
+def named_temporary_directory(delete: bool = True) -> Iterator[Path]:
+    """
+    Get the path for a temporary directory and create it.
+
+    Relies on ``named_temporary_path`` to provide a context manager that will
+    automatically delete the directory when leaving the context.
+
+    Args:
+        delete: whether to delete the file when exiting the context
+
+    Examples:
+        >>> with named_temporary_directory() as temporary_directory:
+        ...     # do something with the temporary directory.
+        ...     # The directory will be deleted at the
+        ...     # end of the context, except if delete=False.
+    """
+
+    with named_temporary_path(delete=delete) as path:
+        path.mkdir()
+        yield path
+
+
 def is_pathname_valid(pathname: PathLike) -> bool:
     """
     `True` if the passed pathname is a valid pathname for the current OS;
