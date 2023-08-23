@@ -9,6 +9,7 @@ from rxn.utilities.files import (
     named_temporary_directory,
     dump_list_to_file,
     load_list_from_file,
+    PathLike,
 )
 from rxn.utilities.light_csv_editor import LightCsvEditor
 
@@ -19,7 +20,12 @@ def temp_dir() -> Iterator[Path]:
         yield path
 
 
-def assert_files_identical(file1, file2) -> None:
+def assert_files_identical(file1: PathLike, file2: PathLike) -> None:
+    """Verify that two files have the same content.
+
+    Preferred to filecmp.cmp(), in order to get a more sensible error
+    message when failing.
+    """
     content1 = load_list_from_file(file1)
     content2 = load_list_from_file(file2)
     assert content1 == content2
@@ -37,12 +43,12 @@ def test_identity(temp_dir: Path) -> None:
 
     csv_editor.process(input_file, output_file)
 
-    # expeted
+    # expected
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], expected_file)
     assert_files_identical(output_file, expected_file)
 
 
-def test_basic_transformation(temp_dir: Path) -> None:
+def test_overwrite_one_column(temp_dir: Path) -> None:
     input_file = temp_dir / "input"
     output_file = temp_dir / "output"
     expected_file = temp_dir / "expected"
@@ -53,12 +59,10 @@ def test_basic_transformation(temp_dir: Path) -> None:
     def fn(values: List[str]) -> List[str]:
         return [v.upper() for v in values]
 
-    csv_editor = LightCsvEditor(["a"], ["new"], fn)
+    csv_editor = LightCsvEditor(["a"], ["a"], fn)
 
     csv_editor.process(input_file, output_file)
 
-    # expeted
-    dump_list_to_file(
-        ["a,b,c,new", "first,line,1,FIRST", "second,line,2,SECOND"], expected_file
-    )
-    assert filecmp.cmp(output_file, expected_file)
+    # expected
+    dump_list_to_file(["a,b,c", "FIRST,line,1", "SECOND,line,2"], expected_file)
+    assert_files_identical(output_file, expected_file)
