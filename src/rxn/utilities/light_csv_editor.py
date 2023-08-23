@@ -1,5 +1,5 @@
 import csv
-from typing import List, Callable, Iterator, Iterable
+from typing import Callable, Iterable, Iterator, List
 
 from typing_extensions import TypeAlias
 
