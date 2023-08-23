@@ -22,7 +22,7 @@ class FileTriplet:
 
 
 @pytest.fixture
-def temp_dir() -> Iterator[FileTriplet]:
+def files() -> Iterator[FileTriplet]:
     with named_temporary_directory() as path:
         yield FileTriplet(path / "in", path / "out", path / "expected")
 
@@ -38,14 +38,47 @@ def assert_files_identical(file1: PathLike, file2: PathLike) -> None:
     assert content1 == content2
 
 
-def test_identity(files: FileTriplet) -> None:
+def test_identity_on_one_column(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
     csv_editor = LightCsvEditor(["a"], ["a"], identity)
-
     csv_editor.process(files.in_, files.out)
 
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.expected)
+    assert_files_identical(files.out, files.expected)
+
+
+def test_identity_on_multiple_columns(files: FileTriplet) -> None:
+    dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
+
+    csv_editor = LightCsvEditor(["a", "c"], ["a", "c"], identity)
+    csv_editor.process(files.in_, files.out)
+
+    dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.expected)
+    assert_files_identical(files.out, files.expected)
+
+
+def test_identity_replacing_another_column(files: FileTriplet) -> None:
+    dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
+
+    csv_editor = LightCsvEditor(["a"], ["c"], identity)
+    csv_editor.process(files.in_, files.out)
+
+    dump_list_to_file(
+        ["a,b,c", "first,line,first", "second,line,second"], files.expected
+    )
+    assert_files_identical(files.out, files.expected)
+
+
+def test_identity_adding_a_new_column(files: FileTriplet) -> None:
+    dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
+
+    csv_editor = LightCsvEditor(["a"], ["new"], identity)
+    csv_editor.process(files.in_, files.out)
+
+    dump_list_to_file(
+        ["a,b,c,new", "first,line,1,first", "second,line,2,first"], files.expected
+    )
     assert_files_identical(files.out, files.expected)
 
 
