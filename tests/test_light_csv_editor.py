@@ -77,7 +77,7 @@ def test_identity_adding_a_new_column(files: FileTriplet) -> None:
     csv_editor.process(files.in_, files.out)
 
     dump_list_to_file(
-        ["a,b,c,new", "first,line,1,first", "second,line,2,first"], files.expected
+        ["a,b,c,new", "first,line,1,first", "second,line,2,second"], files.expected
     )
     assert_files_identical(files.out, files.expected)
 

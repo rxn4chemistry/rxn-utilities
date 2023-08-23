@@ -33,19 +33,29 @@ class _Helper:
             except ValueError:
                 raise RuntimeError(f'"{c}" is not a column.')
 
-        # Not correct yet
+        not_found_keys = [c for c in transformation.columns_out if c not in columns]
+        self.n_new_columns = len(not_found_keys)
+        self.columns = columns + not_found_keys
+
         self.indices_out: List[int] = []
         for c in transformation.columns_out:
             try:
                 self.indices_out.append(self.columns.index(c))
             except ValueError:
-                raise RuntimeError(f'"{c}" is not a column.')
+                raise ValueError("this should not happen")
 
     def process_line(self, row: List[str]) -> List[str]:
+        # Process the values
         input_items = [row[i] for i in self.indices_in]
         results = self.fn(input_items)
+
+        # Extend the row object to make space for the new values (if needed)
+        row.extend("" for _ in range(self.n_new_columns))
+
+        # overwrite the results
         for index, result in zip(self.indices_out, results):
             row[index] = result
+
         return row
 
 
@@ -83,7 +93,7 @@ class LightCsvEditor:
         helper = _Helper(header, transformation=self.transformation)
         output_iterator = (helper.process_line(row) for row in content_iterator)
 
-        self._write_header(header, path_out)
+        self._write_header(helper.columns, path_out)
         self._write_content(output_iterator, path_out)
 
     def _read_header(self, path_in: PathLike) -> List[str]:
