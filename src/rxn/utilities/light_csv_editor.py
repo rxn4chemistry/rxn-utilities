@@ -20,6 +20,7 @@ class Transformation:
     def from_unary_function(cls, fn: Callable[[str], str]) -> TransformationFunction:
         """Convert a unary function, taking in a string and returning a string,
         to a callable as expected by the Transformation object."""
+
         def new_fn(inputs: List[str]) -> List[str]:
             # Note: we don't check that there's really only one input
             # and one output
@@ -100,7 +101,7 @@ class LightCsvEditor:
             verbose: whether to write the progress with tqdm.
         """
         header = self._read_header(path_in)
-        content_iterator = self._read_content(path_in)
+        content_iterator: Iterable[List[str]] = self._read_content(path_in)
 
         if verbose:
             row_count = count_lines(path_in)
