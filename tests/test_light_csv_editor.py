@@ -94,3 +94,22 @@ def test_overwrite_one_column(files: FileTriplet) -> None:
 
     dump_list_to_file(["a,b,c", "FIRST,line,1", "SECOND,line,2"], files.expected)
     assert_files_identical(files.out, files.expected)
+
+
+def test_overwrite_one_and_add_one(files: FileTriplet) -> None:
+    dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
+
+    # the function in this test takes one input and has two outputs
+    # the first output is the uppercase, the second one is the first letter
+    def fn(values: List[str]) -> List[str]:
+        v = values[0]
+        return [v.upper(), v[0]]
+
+    csv_editor = LightCsvEditor(["a"], ["c", "new"], fn)
+
+    csv_editor.process(files.in_, files.out)
+
+    dump_list_to_file(
+        ["a,b,c,new", "first,line,FIRST,f", "second,line,SECOND,s"], files.expected
+    )
+    assert_files_identical(files.out, files.expected)
