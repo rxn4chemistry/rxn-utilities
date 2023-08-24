@@ -207,3 +207,39 @@ def test_different_callback_formulations(files: FileTriplet) -> None:
             files_to_compare.append(file_i)
 
         assert_files_identical(*files_to_compare)
+
+
+def test_raises_if_function_not_annotated() -> None:
+    # parameter not annotated
+    with pytest.raises(ValueError):
+
+        def fn1(a) -> str:  # type: ignore[no-untyped-def]
+            return a  # type: ignore[no-any-return]
+
+        _ = LightCsvEditor(["a"], ["a"], fn1)
+
+    # return type not annotated
+    with pytest.raises(ValueError):
+
+        def fn2(a: str):  # type: ignore[no-untyped-def]
+            return a
+
+        _ = LightCsvEditor(["a"], ["a"], fn2)
+
+
+def test_raises_for_unsupported_annotations() -> None:
+    # int not supported
+    with pytest.raises(ValueError):
+
+        def fn1(a: str, b: int) -> str:
+            return a + str(b)
+
+        _ = LightCsvEditor(["a", "b"], ["a"], fn1)
+
+    # combination of List and str
+    with pytest.raises(ValueError):
+
+        def fn2(a: List[str], b: str) -> str:
+            return a[0] + b
+
+        _ = LightCsvEditor(["a", "b"], ["a"], fn2)
