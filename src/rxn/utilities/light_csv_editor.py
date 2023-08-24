@@ -25,6 +25,7 @@ class LightCsvEditor:
         columns_in: List[str],
         columns_out: List[str],
         transformation: Callable[..., Any],
+            line_terminator: str = "\n"
     ):
         """
         Args:
@@ -42,12 +43,14 @@ class LightCsvEditor:
                       - one string
                       - a list of strings (with one or more elements)
                       - a tuple of strings (with one or more elements)
+            line_terminator: line terminator to use for writing the CSV.
         """
         self.transformation = _CsvTransformation(
             columns_in=columns_in,
             columns_out=columns_out,
             fn=_callback_handler(transformation),
         )
+        self.line_terminator = line_terminator
 
     def process(
         self, path_in: PathLike, path_out: PathLike, verbose: bool = False
@@ -86,12 +89,12 @@ class LightCsvEditor:
 
     def _write_header(self, header: List[str], path_out: PathLike) -> None:
         with open(path_out, "wt") as f:
-            writer = csv.writer(f)
+            writer = csv.writer(f, lineterminator=self.line_terminator)
             writer.writerow(header)
 
     def _write_content(self, content: Iterable[List[str]], path_out: PathLike) -> None:
         with open(path_out, "at") as f:
-            writer = csv.writer(f)
+            writer = csv.writer(f, lineterminator=self.line_terminator)
             writer.writerows(content)
 
 
