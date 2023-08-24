@@ -1,6 +1,4 @@
-from inspect import signature
 from pathlib import Path
-from typing import Tuple, List
 
 import pytest
 
@@ -19,22 +17,6 @@ from rxn.utilities.files import (
     raise_if_paths_are_identical,
     stable_shuffle,
 )
-
-def test_fn() -> None:
-    def fn(a: str, b: int) -> Tuple[str, str]:
-        return a, str(b)
-
-    def fn2(a: List[str]) -> List[str]:
-        return a
-
-    def fn3(a) -> str:
-        return a
-
-    b = fn.__annotations__
-    sig = signature(fn)
-    sig2 = signature(fn2)
-    sig3 = signature(fn3)
-    print(b)
 
 
 def test_named_temporary_path() -> None:

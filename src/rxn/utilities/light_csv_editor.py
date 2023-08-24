@@ -1,6 +1,6 @@
 import csv
 from inspect import Signature, signature
-from typing import Callable, Iterable, Iterator, List, Type
+from typing import Callable, Iterable, Iterator, List, Type, Union, Tuple
 
 from attr import define
 from tqdm import tqdm
@@ -8,7 +8,18 @@ from typing_extensions import TypeAlias
 
 from .files import PathLike, count_lines
 
-TransformationFunction: TypeAlias = Callable[[List[str]], List[str]]
+TransformationFunction: TypeAlias = Union[
+    Callable[[str], str],
+    Callable[[List[str]], str],
+    Callable[[Tuple[str, ...]], str],
+    Callable[[str], List[str]],
+    Callable[[List[str]], List[str]],
+    Callable[[Tuple[str, ...]], List[str]],
+    Callable[[str], Tuple[str, ...]],
+    Callable[[List[str]], Tuple[str, ...]],
+    Callable[[Tuple[str, ...]], Tuple[str, ...]],
+]
+_TransformationFunction: TypeAlias = Callable[[List[str]], List[str]]
 
 
 def _parameter_is_tuple(parameter_type: Type) -> bool:
@@ -23,7 +34,7 @@ def _parameter_is_list_or_tuple(parameter_type: Type) -> bool:
     return _parameter_is_list(parameter_type) or _parameter_is_tuple(parameter_type)
 
 
-def _callback_handler(fn: Callable) -> TransformationFunction:
+def _callback_handler(fn: Callable) -> _TransformationFunction:
     sig = signature(fn)
     parameter_types = [p.annotation for p in sig.parameters.values()]
     return_type = sig.return_annotation
@@ -94,10 +105,10 @@ def _callback_handler(fn: Callable) -> TransformationFunction:
 class CsvTransformation:
     columns_in: List[str]
     columns_out: List[str]
-    fn: TransformationFunction
+    fn: _TransformationFunction
 
     @classmethod
-    def from_unary_function(cls, fn: Callable[[str], str]) -> TransformationFunction:
+    def from_unary_function(cls, fn: Callable[[str], str]) -> _TransformationFunction:
         """Convert a unary function, taking in a string and returning a string,
         to a callable as expected by the CsvTransformation object."""
 
@@ -164,7 +175,7 @@ class LightCsvEditor:
         self,
         columns_in: List[str],
         columns_out: List[str],
-        transformation: Callable,
+        transformation: TransformationFunction,
     ):
         """
         Args:

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterator, List, Tuple
+from typing import Iterator, List, Tuple, Callable
 
 import pytest
 from attr import define
@@ -11,7 +11,7 @@ from rxn.utilities.files import (
     load_list_from_file,
     named_temporary_directory,
 )
-from rxn.utilities.light_csv_editor import LightCsvEditor
+from rxn.utilities.light_csv_editor import LightCsvEditor, TransformationFunction
 
 
 @define
@@ -125,7 +125,8 @@ def test_overwrite_one_and_add_one(files: FileTriplet) -> None:
 def test_different_callback_formulations(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
-    # We define multiple functions that have identical behavior.
+    # We define multiple functions that should have identical behavior, to test
+    # the flexibility of callables given to the LightCsvEditor.
     # The first digit is the number of inputs, the second is the number of outputs,
     # the letter indicates the variant (functions differing only in the letter
     # have identical behavior).
@@ -163,13 +164,13 @@ def test_different_callback_formulations(files: FileTriplet) -> None:
     def fn_21b(values: List[str]) -> str:
         return values[0].upper() + values[1]
 
-    def fn_21c(values: Tuple[str]) -> str:
+    def fn_21c(values: Tuple[str, str]) -> str:
         return values[0].upper() + values[1]
 
     def fn_21d(v1: str, v2: str) -> List[str]:
         return [v1.upper() + v2]
 
-    def fn_21e(values: Tuple[str]) -> List[str]:
+    def fn_21e(values: Tuple[str, str]) -> List[str]:
         return [values[0].upper() + values[1]]
 
     def fn_21f(values: List[str]) -> Tuple[str]:
@@ -182,13 +183,15 @@ def test_different_callback_formulations(files: FileTriplet) -> None:
     def fn_22b(values: List[str]) -> List[str]:
         return [values[0].upper(), values[1][0]]
 
-    def fn_22c(values: Tuple[str]) -> List[str]:
+    def fn_22c(values: Tuple[str, str]) -> List[str]:
         return [values[0].upper(), values[1][0]]
 
     def fn_22d(values: List[str]) -> Tuple[str, str]:
         return values[0].upper(), values[1][0]
 
-    all_functions_to_compare = [
+    all_functions_to_compare: List[
+        Tuple[List[TransformationFunction], List[str], List[str]]
+    ] = [
         ([fn_11a, fn_11b, fn_11c, fn_11d, fn_11e], ["a"], ["c"]),
         ([fn_12a, fn_12b, fn_12c], ["a"], ["c", "new"]),
         ([fn_21a, fn_21b, fn_21c, fn_21d, fn_21e, fn_21f], ["a", "b"], ["new"]),
