@@ -60,17 +60,17 @@ class LightCsvEditor:
             path_out: path to the edited CSV (to be saved).
             verbose: whether to write the progress with tqdm.
         """
-        header = self._read_header(path_in)
+        input_columns = self._read_header(path_in)
         content_iterator: Iterable[List[str]] = self._read_content(path_in)
 
         if verbose:
             row_count = count_lines(path_in)
             content_iterator = tqdm(content_iterator, total=row_count)
 
-        helper = _Helper(header, transformation=self.transformation)
+        helper = _Helper(input_columns, transformation=self.transformation)
         output_iterator = (helper.process_line(row) for row in content_iterator)
 
-        self._write_header(helper.columns, path_out)
+        self._write_header(helper.output_columns, path_out)
         self._write_content(output_iterator, path_out)
 
     def _read_header(self, path_in: PathLike) -> List[str]:
@@ -119,10 +119,10 @@ class _Helper:
         )
         new_columns = [c for c in transformation.columns_out if c not in input_columns]
         self.n_new_columns = len(new_columns)
-        self.columns = input_columns + new_columns
+        self.output_columns = input_columns + new_columns
 
         self.indices_out = self._determine_column_indices(
-            self.columns, transformation.columns_out
+            self.output_columns, transformation.columns_out
         )
 
     def _determine_column_indices(
