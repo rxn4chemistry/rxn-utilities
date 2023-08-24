@@ -1,6 +1,6 @@
 import csv
 from inspect import Signature, signature
-from typing import Any, Callable, Iterable, Iterator, List, Type
+from typing import Any, Callable, Iterable, Iterator, List, Tuple, Type, Union
 
 from attr import define
 from tqdm import tqdm
@@ -157,68 +157,92 @@ def _parameter_is_list_or_tuple(parameter_type: Type[Any]) -> bool:
     return _parameter_is_list(parameter_type) or _parameter_is_tuple(parameter_type)
 
 
-def _callback_handler(fn: Callable[..., Any]) -> _TransformationFunction:
+def _postprocessing_fn(fn: Callable[..., Any]) -> Callable[..., List[str]]:
+    """From the user-given function, get an adapter to process its result
+    into a list of strings."""
     sig = signature(fn)
-    parameter_types = [p.annotation for p in sig.parameters.values()]
     return_type = sig.return_annotation
-    if any(p is Signature.empty for p in parameter_types):
-        raise ValueError(
-            "Make sure that the function you provided is fully type-annotated."
-        )
     if return_type is Signature.empty:
         raise ValueError(
             "Make sure that the function you provided has a return annotation."
         )
 
-    return_is_str = return_type is str
+    adapter: Callable[..., List[str]]
+    if return_type is str:
+
+        def adapter(x: str) -> List[str]:
+            return [x]
+
+        return adapter
+    if _parameter_is_list_or_tuple(return_type):
+
+        def adapter(x: Union[List[str], Tuple[str]]) -> List[str]:
+            return list(x)
+
+        return adapter
+    raise ValueError(f"Unsupported return type: {return_type}")
+
+
+def _preprocessing_fn(fn: Callable[..., Any]) -> Callable[[List[str]], Any]:
+    """From the user-given function, get an adapter to wire a list of strings
+    into it."""
+    sig = signature(fn)
+    parameter_types = [p.annotation for p in sig.parameters.values()]
+    if any(p is Signature.empty for p in parameter_types):
+        raise ValueError(
+            "Make sure that the function you provided is fully type-annotated."
+        )
+
+    # Necessary for the below
+    adapter: Callable[[List[str]], Any]
+
     parameters_are_strs = all(p is str for p in parameter_types)
+    if parameters_are_strs:
 
-    if return_is_str and parameters_are_strs:
+        def adapter(inputs: List[str]) -> Any:
+            return fn(*inputs)
 
-        def new_fn(inputs: List[str]) -> List[str]:
-            return [fn(*inputs)]
-
-        return new_fn
-
-    return_is_list_or_tuple = _parameter_is_list_or_tuple(return_type)
-    if return_is_list_or_tuple and parameters_are_strs:
-
-        def new_fn(inputs: List[str]) -> List[str]:
-            return list(fn(*inputs))
-
-        return new_fn
+        return adapter
 
     parameters_is_list = len(parameter_types) == 1 and _parameter_is_list(
         parameter_types[0]
     )
-    if parameters_is_list and return_is_str:
+    if parameters_is_list:
 
-        def new_fn(inputs: List[str]) -> List[str]:
-            return [fn(inputs)]
+        def adapter(inputs: List[str]) -> Any:
+            return fn(inputs)
 
-        return new_fn
+        return adapter
+
     parameters_is_tuple = len(parameter_types) == 1 and _parameter_is_tuple(
         parameter_types[0]
     )
-    if parameters_is_tuple and return_is_str:
+    if parameters_is_tuple:
 
-        def new_fn(inputs: List[str]) -> List[str]:
-            return [fn(tuple(inputs))]
+        def adapter(inputs: List[str]) -> Any:
+            return fn(tuple(inputs))
 
-        return new_fn
+        return adapter
 
-    if parameters_is_list and return_is_list_or_tuple:
+    raise ValueError(
+        f"Cannot process parameter types of function with signature {sig}."
+    )
 
-        def new_fn(inputs: List[str]) -> List[str]:
-            return list(fn(inputs))
 
-        return new_fn
+def _callback_handler(fn: Callable[..., Any]) -> _TransformationFunction:
+    """From the user-provided callback, convert it to a function converting
+    a list of strings to a list of strings."""
+    sig = signature(fn)
+    parameter_types = [p.annotation for p in sig.parameters.values()]
+    if any(p is Signature.empty for p in parameter_types):
+        raise ValueError(
+            "Make sure that the function you provided is fully type-annotated."
+        )
 
-    if parameters_is_tuple and return_is_list_or_tuple:
+    postprocessing_fn = _postprocessing_fn(fn)
+    preprocessing_fn = _preprocessing_fn(fn)
 
-        def new_fn(inputs: List[str]) -> List[str]:
-            return list(fn(tuple(inputs)))
+    def new_fn(inputs: List[str]) -> List[str]:
+        return postprocessing_fn(preprocessing_fn(inputs))
 
-        return new_fn
-
-    raise ValueError(f"Cannot process function with signature {sig}.")
+    return new_fn
