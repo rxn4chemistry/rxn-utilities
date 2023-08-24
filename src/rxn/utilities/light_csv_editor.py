@@ -97,40 +97,54 @@ class LightCsvEditor:
 
 @define
 class _CsvTransformation:
+    """Helper class containing the details of a transformation for one CSV file."""
+
     columns_in: List[str]
     columns_out: List[str]
     fn: _TransformationFunction
 
 
 class _Helper:
+    """Helper class that does the actual row-by-row processing."""
+
     def __init__(
         self,
-        columns: List[str],
+        input_columns: List[str],
         transformation: _CsvTransformation,
     ):
-        self.columns = columns
-
         self.fn = transformation.fn
 
-        self.indices_in: List[int] = []
-        for c in transformation.columns_in:
-            try:
-                self.indices_in.append(self.columns.index(c))
-            except ValueError:
-                raise RuntimeError(f'"{c}" is not a column.')
+        self.indices_in = self._determine_column_indices(
+            input_columns, transformation.columns_in
+        )
+        new_columns = [c for c in transformation.columns_out if c not in input_columns]
+        self.n_new_columns = len(new_columns)
+        self.columns = input_columns + new_columns
 
-        not_found_keys = [c for c in transformation.columns_out if c not in columns]
-        self.n_new_columns = len(not_found_keys)
-        self.columns = columns + not_found_keys
+        self.indices_out = self._determine_column_indices(
+            self.columns, transformation.columns_out
+        )
 
-        self.indices_out: List[int] = []
-        for c in transformation.columns_out:
+    def _determine_column_indices(
+        self, all_columns: List[str], target_columns: List[str]
+    ) -> List[int]:
+        indices: List[int] = []
+        for c in target_columns:
             try:
-                self.indices_out.append(self.columns.index(c))
+                indices.append(all_columns.index(c))
             except ValueError:
-                raise ValueError("this should not happen")
+                raise RuntimeError(f'"{c}" not found in {all_columns}.')
+        return indices
 
     def process_line(self, row: List[str]) -> List[str]:
+        """Process one line from the CSV.
+
+        Args:
+            row: content of one CSV line.
+
+        Returns:
+            Content of the line after applying the function
+        """
         # Process the values
         input_items = [row[i] for i in self.indices_in]
         results = self.fn(input_items)
@@ -158,8 +172,8 @@ def _parameter_is_list_or_tuple(parameter_type: Type[Any]) -> bool:
 
 
 def _postprocessing_fn(fn: Callable[..., Any]) -> Callable[..., List[str]]:
-    """From the user-given function, get an adapter to process its result
-    into a list of strings."""
+    """From the user-given function, wrap it so that the result is converted
+    to a list of strings."""
     sig = signature(fn)
     return_type = sig.return_annotation
     if return_type is Signature.empty:
@@ -184,8 +198,7 @@ def _postprocessing_fn(fn: Callable[..., Any]) -> Callable[..., List[str]]:
 
 
 def _preprocessing_fn(fn: Callable[..., Any]) -> Callable[[List[str]], Any]:
-    """From the user-given function, get an adapter to wire a list of strings
-    into it."""
+    """From the user-given function, wrap it so that it can ingest a list of strings."""
     sig = signature(fn)
     parameter_types = [p.annotation for p in sig.parameters.values()]
     if any(p is Signature.empty for p in parameter_types):

@@ -52,8 +52,7 @@ def test_identity_on_one_column(files: FileTriplet) -> None:
     csv_editor = LightCsvEditor(["a"], ["a"], identity_str)
     csv_editor.process(files.in_, files.out)
 
-    dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.expected)
-    assert_files_identical(files.out, files.expected)
+    assert_files_identical(files.out, files.in_)
 
 
 def test_identity_on_multiple_columns(files: FileTriplet) -> None:
@@ -62,8 +61,7 @@ def test_identity_on_multiple_columns(files: FileTriplet) -> None:
     csv_editor = LightCsvEditor(["a", "c"], ["a", "c"], identity_list)
     csv_editor.process(files.in_, files.out)
 
-    dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.expected)
-    assert_files_identical(files.out, files.expected)
+    assert_files_identical(files.out, files.in_)
 
 
 def test_identity_replacing_another_column(files: FileTriplet) -> None:
