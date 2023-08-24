@@ -1,6 +1,6 @@
 import csv
 from inspect import Signature, signature
-from typing import Callable, Iterable, Iterator, List, Type, Union, Tuple
+from typing import Any, Callable, Iterable, Iterator, List, Type
 
 from attr import define
 from tqdm import tqdm
@@ -8,33 +8,23 @@ from typing_extensions import TypeAlias
 
 from .files import PathLike, count_lines
 
-TransformationFunction: TypeAlias = Union[
-    Callable[[str], str],
-    Callable[[List[str]], str],
-    Callable[[Tuple[str, ...]], str],
-    Callable[[str], List[str]],
-    Callable[[List[str]], List[str]],
-    Callable[[Tuple[str, ...]], List[str]],
-    Callable[[str], Tuple[str, ...]],
-    Callable[[List[str]], Tuple[str, ...]],
-    Callable[[Tuple[str, ...]], Tuple[str, ...]],
-]
+TransformationFunction: TypeAlias = Callable[..., Any]
 _TransformationFunction: TypeAlias = Callable[[List[str]], List[str]]
 
 
-def _parameter_is_tuple(parameter_type: Type) -> bool:
+def _parameter_is_tuple(parameter_type: Type[Any]) -> bool:
     return any(v in str(parameter_type) for v in ["Tuple", "tuple"])
 
 
-def _parameter_is_list(parameter_type: Type) -> bool:
+def _parameter_is_list(parameter_type: Type[Any]) -> bool:
     return any(v in str(parameter_type) for v in ["List", "list"])
 
 
-def _parameter_is_list_or_tuple(parameter_type: Type) -> bool:
+def _parameter_is_list_or_tuple(parameter_type: Type[Any]) -> bool:
     return _parameter_is_list(parameter_type) or _parameter_is_tuple(parameter_type)
 
 
-def _callback_handler(fn: Callable) -> _TransformationFunction:
+def _callback_handler(fn: TransformationFunction) -> _TransformationFunction:
     sig = signature(fn)
     parameter_types = [p.annotation for p in sig.parameters.values()]
     return_type = sig.return_annotation

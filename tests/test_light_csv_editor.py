@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterator, List, Tuple, Callable
+from typing import Iterator, List, Tuple
 
 import pytest
 from attr import define
@@ -144,6 +144,8 @@ def test_different_callback_formulations(files: FileTriplet) -> None:
     def fn_11d(value: Tuple[str]) -> List[str]:
         return [value[0].upper()]
 
+    t: Tuple[str, ...] = ("kldj",)
+
     def fn_11e(value: List[str]) -> Tuple[str]:
         return (value[0].upper(),)
 
@@ -189,6 +191,7 @@ def test_different_callback_formulations(files: FileTriplet) -> None:
     def fn_22d(values: List[str]) -> Tuple[str, str]:
         return values[0].upper(), values[1][0]
 
+    l1: List[TransformationFunction] = [fn_11a, fn_11b, fn_11c, fn_11d, fn_11e]
     all_functions_to_compare: List[
         Tuple[List[TransformationFunction], List[str], List[str]]
     ] = [
