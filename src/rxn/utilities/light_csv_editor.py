@@ -1,13 +1,93 @@
 import csv
-from typing import Callable, Iterable, Iterator, List
+from inspect import Signature, signature
+from typing import Callable, Iterable, Iterator, List, Type
 
 from attr import define
 from tqdm import tqdm
 from typing_extensions import TypeAlias
 
-from rxn.utilities.files import PathLike, count_lines
+from .files import PathLike, count_lines
 
 TransformationFunction: TypeAlias = Callable[[List[str]], List[str]]
+
+
+def _parameter_is_tuple(parameter_type: Type) -> bool:
+    return any(v in str(parameter_type) for v in ["Tuple", "tuple"])
+
+
+def _parameter_is_list(parameter_type: Type) -> bool:
+    return any(v in str(parameter_type) for v in ["List", "list"])
+
+
+def _parameter_is_list_or_tuple(parameter_type: Type) -> bool:
+    return _parameter_is_list(parameter_type) or _parameter_is_tuple(parameter_type)
+
+
+def _callback_handler(fn: Callable) -> TransformationFunction:
+    sig = signature(fn)
+    parameter_types = [p.annotation for p in sig.parameters.values()]
+    return_type = sig.return_annotation
+    if any(p is Signature.empty for p in parameter_types):
+        raise ValueError(
+            "Make sure that the function you provided is fully type-annotated."
+        )
+    if return_type is Signature.empty:
+        raise ValueError(
+            "Make sure that the function you provided has a return annotation."
+        )
+
+    return_is_str = return_type is str
+    parameters_are_strs = all(p is str for p in parameter_types)
+
+    if return_is_str and parameters_are_strs:
+
+        def new_fn(inputs: List[str]) -> List[str]:
+            return [fn(*inputs)]
+
+        return new_fn
+
+    return_is_list_or_tuple = _parameter_is_list_or_tuple(return_type)
+    if return_is_list_or_tuple and parameters_are_strs:
+
+        def new_fn(inputs: List[str]) -> List[str]:
+            return list(fn(*inputs))
+
+        return new_fn
+
+    parameters_is_list = len(parameter_types) == 1 and _parameter_is_list(
+        parameter_types[0]
+    )
+    if parameters_is_list and return_is_str:
+
+        def new_fn(inputs: List[str]) -> List[str]:
+            return [fn(inputs)]
+
+        return new_fn
+    parameters_is_tuple = len(parameter_types) == 1 and _parameter_is_tuple(
+        parameter_types[0]
+    )
+    if parameters_is_tuple and return_is_str:
+
+        def new_fn(inputs: List[str]) -> List[str]:
+            return [fn(tuple(inputs))]
+
+        return new_fn
+
+    if parameters_is_list and return_is_list_or_tuple:
+
+        def new_fn(inputs: List[str]) -> List[str]:
+            return list(fn(inputs))
+
+        return new_fn
+
+    if parameters_is_tuple and return_is_list_or_tuple:
+
+        def new_fn(inputs: List[str]) -> List[str]:
+            return list(fn(tuple(inputs)))
+
+        return new_fn
+
+    raise ValueError(f"Cannot process function with signature {sig}.")
 
 
 @define
@@ -84,7 +164,7 @@ class LightCsvEditor:
         self,
         columns_in: List[str],
         columns_out: List[str],
-        transformation: TransformationFunction,
+        transformation: Callable,
     ):
         """
         Args:
@@ -97,11 +177,11 @@ class LightCsvEditor:
         self.transformation = CsvTransformation(
             columns_in=columns_in,
             columns_out=columns_out,
-            fn=transformation,
+            fn=_callback_handler(transformation),
         )
 
     def process(
-        self, path_in: PathLike, path_out: PathLike, verbose: bool = True
+        self, path_in: PathLike, path_out: PathLike, verbose: bool = False
     ) -> None:
         """
         Process and edit a CSV file.
