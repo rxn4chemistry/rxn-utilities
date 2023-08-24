@@ -11,7 +11,7 @@ TransformationFunction: TypeAlias = Callable[[List[str]], List[str]]
 
 
 @define
-class Transformation:
+class CsvTransformation:
     columns_in: List[str]
     columns_out: List[str]
     fn: TransformationFunction
@@ -19,7 +19,7 @@ class Transformation:
     @classmethod
     def from_unary_function(cls, fn: Callable[[str], str]) -> TransformationFunction:
         """Convert a unary function, taking in a string and returning a string,
-        to a callable as expected by the Transformation object."""
+        to a callable as expected by the CsvTransformation object."""
 
         def new_fn(inputs: List[str]) -> List[str]:
             # Note: we don't check that there's really only one input
@@ -33,7 +33,7 @@ class _Helper:
     def __init__(
         self,
         columns: List[str],
-        transformation: Transformation,
+        transformation: CsvTransformation,
     ):
         self.columns = columns
 
@@ -74,7 +74,10 @@ class _Helper:
 
 class LightCsvEditor:
     """
-    Edit the content of a CSV without loading the whole file into memory.
+    Edit the content of a CSV with a specified transformation, line-by-line.
+
+    This class avoids loading the whole file into memory as would be done
+    with a pandas DataFrame.
     """
 
     def __init__(
@@ -83,7 +86,15 @@ class LightCsvEditor:
         columns_out: List[str],
         transformation: TransformationFunction,
     ):
-        self.transformation = Transformation(
+        """
+        Args:
+            columns_in: names for the columns acting as input for the transformation.
+            columns_out: names for the columns where to write the result of the
+                transformation.
+            transformation: function to call on the values from the input columns,
+                with the results being written to the output columns.
+        """
+        self.transformation = CsvTransformation(
             columns_in=columns_in,
             columns_out=columns_out,
             fn=transformation,
