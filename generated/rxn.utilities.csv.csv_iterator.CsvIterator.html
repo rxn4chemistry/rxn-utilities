@@ -98,35 +98,39 @@
 <h1>rxn.utilities.csv.csv_iterator.CsvIterator<a class="headerlink" href="#rxn-utilities-csv-csv-iterator-csviterator" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="rxn.utilities.csv.csv_iterator.CsvIterator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rxn.utilities.csv.csv_iterator.</span></span><span class="sig-name descname"><span class="pre">CsvIterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/csv_iterator.html#CsvIterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.csv_iterator.CsvIterator" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rxn.utilities.csv.csv_iterator.</span></span><span class="sig-name descname"><span class="pre">CsvIterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/csv_iterator.html#CsvIterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.csv_iterator.CsvIterator" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to easily iterate through CSV files while having easy
 access to the column names.</p>
+<p>Note: the choice to not handle the file opening/closing in this
+class is on purpose. This avoids issue with keeping track of
+which files are open and when to close them.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_iterator</span> <span class="o">=</span> <span class="n">CsvIterator</span><span class="p">(</span><span class="s2">&quot;some_file.csv&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">area_index</span> <span class="o">=</span> <span class="n">csv_iterator</span><span class="o">.</span><span class="n">column_index</span><span class="p">(</span><span class="s2">&quot;area&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">price_index</span> <span class="o">=</span> <span class="n">csv_iterator</span><span class="o">.</span><span class="n">column_index</span><span class="p">(</span><span class="s2">&quot;price&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_iterator</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">price</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">price_index</span><span class="p">]</span>
-<span class="gp">... </span>    <span class="n">area</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">area_index</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;some_file.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">csv_iterator</span> <span class="o">=</span> <span class="n">CsvIterator</span><span class="o">.</span><span class="n">from_stream</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">area_index</span> <span class="o">=</span> <span class="n">csv_iterator</span><span class="o">.</span><span class="n">column_index</span><span class="p">(</span><span class="s2">&quot;area&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">price_index</span> <span class="o">=</span> <span class="n">csv_iterator</span><span class="o">.</span><span class="n">column_index</span><span class="p">(</span><span class="s2">&quot;price&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_iterator</span><span class="o">.</span><span class="n">rows</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">price</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">price_index</span><span class="p">]</span>
+<span class="gp">... </span>        <span class="n">area</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">area_index</span><span class="p">]</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>csv_file</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>]) – </p></li>
-<li><p><strong>delimiter</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, default: <code class="docutils literal notranslate"><span class="pre">','</span></code>) – </p></li>
+<li><p><strong>columns</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – </p></li>
+<li><p><strong>rows</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]) – </p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="rxn.utilities.csv.csv_iterator.CsvIterator.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/csv_iterator.html#CsvIterator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.csv_iterator.CsvIterator.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/csv_iterator.html#CsvIterator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.csv_iterator.CsvIterator.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>csv_file</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>]) – </p></li>
-<li><p><strong>delimiter</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, default: <code class="docutils literal notranslate"><span class="pre">','</span></code>) – </p></li>
+<li><p><strong>columns</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – </p></li>
+<li><p><strong>rows</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -139,15 +143,25 @@ access to the column names.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rxn.utilities.csv.csv_iterator.CsvIterator.__init__" title="rxn.utilities.csv.csv_iterator.CsvIterator.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(csv_file[, delimiter])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rxn.utilities.csv.csv_iterator.CsvIterator.__init__" title="rxn.utilities.csv.csv_iterator.CsvIterator.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(columns, rows)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param csv_file</dt>
+<dt class="field-odd">param columns</dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#rxn.utilities.csv.csv_iterator.CsvIterator.column_index" title="rxn.utilities.csv.csv_iterator.CsvIterator.column_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">column_index</span></code></a>(column_name)</p></td>
 <td><p>Get the index corresponding to the given column.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rxn.utilities.csv.csv_iterator.CsvIterator.from_stream" title="rxn.utilities.csv.csv_iterator.CsvIterator.from_stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_stream</span></code></a>(stream[, delimiter])</p></td>
+<td><p>Instantiate from a stream or file object.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_stream</span></code>(file[, delimiter, line_terminator])</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param file</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
 </tr>
 </tbody>
 </table>
@@ -167,6 +181,24 @@ access to the column names.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the index for the given column.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rxn.utilities.csv.csv_iterator.CsvIterator.from_stream">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/csv_iterator.html#CsvIterator.from_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.csv_iterator.CsvIterator.from_stream" title="Permalink to this definition"></a></dt>
+<dd><p>Instantiate from a stream or file object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">TextIO</span></code>) – stream or file object to instantiate from.</p></li>
+<li><p><strong>delimiter</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, default: <code class="docutils literal notranslate"><span class="pre">','</span></code>) – CSV delimiter.</p></li>
+<li><p><strong>cls</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">_CsvIteratorT</span></code>, bound= <a class="reference internal" href="#rxn.utilities.csv.csv_iterator.CsvIterator" title="rxn.utilities.csv.csv_iterator.CsvIterator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsvIterator</span></code></a>)]) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">_CsvIteratorT</span></code>, bound= <a class="reference internal" href="#rxn.utilities.csv.csv_iterator.CsvIterator" title="rxn.utilities.csv.csv_iterator.CsvIterator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsvIterator</span></code></a>)</p>
 </dd>
 </dl>
 </dd></dl>

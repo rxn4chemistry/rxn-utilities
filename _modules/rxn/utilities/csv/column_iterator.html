@@ -94,9 +94,10 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        iterator through the values in the selected column.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">csv_iterator</span> <span class="o">=</span> <span class="n">CsvIterator</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">)</span>
-    <span class="n">column_index</span> <span class="o">=</span> <span class="n">csv_iterator</span><span class="o">.</span><span class="n">column_index</span><span class="p">(</span><span class="n">column_name</span><span class="o">=</span><span class="n">column</span><span class="p">)</span>
-    <span class="k">yield from</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">column_index</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_iterator</span><span class="p">)</span></div>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">csv_iterator</span> <span class="o">=</span> <span class="n">CsvIterator</span><span class="o">.</span><span class="n">from_stream</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">)</span>
+        <span class="n">column_index</span> <span class="o">=</span> <span class="n">csv_iterator</span><span class="o">.</span><span class="n">column_index</span><span class="p">(</span><span class="n">column_name</span><span class="o">=</span><span class="n">column</span><span class="p">)</span>
+        <span class="k">yield from</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">column_index</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_iterator</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

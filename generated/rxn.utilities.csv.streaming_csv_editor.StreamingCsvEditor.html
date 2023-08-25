@@ -169,14 +169,34 @@ The function should be annotated, and the following are admissible:</p>
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process" title="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process</span></code></a>(path_in, path_out[, verbose])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process" title="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process</span></code></a>(csv_iterator)</p></td>
+<td><p>Process and edit a CSV file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process_paths" title="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_paths</span></code></a>(path_in, path_out[, verbose])</p></td>
 <td><p>Process and edit a CSV file.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process">
-<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/streaming_csv_editor.html#StreamingCsvEditor.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_iterator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/streaming_csv_editor.html#StreamingCsvEditor.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process" title="Permalink to this definition"></a></dt>
+<dd><p>Process and edit a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>csv_iterator</strong> (<a class="reference internal" href="rxn.utilities.csv.csv_iterator.CsvIterator.html#rxn.utilities.csv.csv_iterator.CsvIterator" title="rxn.utilities.csv.csv_iterator.CsvIterator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsvIterator</span></code></a>) – Input CSV iterator.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="rxn.utilities.csv.csv_iterator.CsvIterator.html#rxn.utilities.csv.csv_iterator.CsvIterator" title="rxn.utilities.csv.csv_iterator.CsvIterator"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsvIterator</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>an edited instance of a CsvIterator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process_paths">
+<span class="sig-name descname"><span class="pre">process_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/streaming_csv_editor.html#StreamingCsvEditor.process_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process_paths" title="Permalink to this definition"></a></dt>
 <dd><p>Process and edit a CSV file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

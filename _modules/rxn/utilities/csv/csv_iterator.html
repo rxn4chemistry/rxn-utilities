@@ -68,28 +68,32 @@
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">TextIO</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span>
 
-<span class="kn">from</span> <span class="nn">..files</span> <span class="kn">import</span> <span class="n">PathLike</span>
+<span class="n">_CsvIteratorT</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;_CsvIteratorT&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;CsvIterator&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="CsvIterator"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.csv_iterator.CsvIterator.html#rxn.utilities.csv.csv_iterator.CsvIterator">[docs]</a><span class="k">class</span> <span class="nc">CsvIterator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to easily iterate through CSV files while having easy</span>
 <span class="sd">    access to the column names.</span>
 
+<span class="sd">    Note: the choice to not handle the file opening/closing in this</span>
+<span class="sd">    class is on purpose. This avoids issue with keeping track of</span>
+<span class="sd">    which files are open and when to close them.</span>
+
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; csv_iterator = CsvIterator(&quot;some_file.csv&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; area_index = csv_iterator.column_index(&quot;area&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; price_index = csv_iterator.column_index(&quot;price&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; for row in csv_iterator:</span>
-<span class="sd">        ...     price = row[price_index]</span>
-<span class="sd">        ...     area = row[area_index]</span>
+<span class="sd">        &gt;&gt;&gt; with open(&quot;some_file.csv&quot;, &quot;rt&quot;) as f:</span>
+<span class="sd">        ...     csv_iterator = CsvIterator.from_stream(f)</span>
+<span class="sd">        ...     area_index = csv_iterator.column_index(&quot;area&quot;)</span>
+<span class="sd">        ...     price_index = csv_iterator.column_index(&quot;price&quot;)</span>
+<span class="sd">        ...     for row in csv_iterator.rows:</span>
+<span class="sd">        ...         price = row[price_index]</span>
+<span class="sd">        ...         area = row[area_index]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CsvIterator.__init__"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.csv_iterator.CsvIterator.html#rxn.utilities.csv.csv_iterator.CsvIterator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="n">delimiter</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="n">csv_file</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_header</span><span class="p">()</span></div>
+<div class="viewcode-block" id="CsvIterator.__init__"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.csv_iterator.CsvIterator.html#rxn.utilities.csv.csv_iterator.CsvIterator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">rows</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rows</span> <span class="o">=</span> <span class="n">rows</span></div>
 
 <div class="viewcode-block" id="CsvIterator.column_index"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.csv_iterator.CsvIterator.html#rxn.utilities.csv.csv_iterator.CsvIterator.column_index">[docs]</a>    <span class="k">def</span> <span class="nf">column_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -107,28 +111,28 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span><span class="si">}</span><span class="s1">&quot; has no column &quot;</span><span class="si">{</span><span class="n">column_name</span><span class="si">}</span><span class="s1">&quot;.&#39;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Column &quot;</span><span class="si">{</span><span class="n">column_name</span><span class="si">}</span><span class="s1">&quot; not found in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Iterate through the rows of the CSV.</span>
+<div class="viewcode-block" id="CsvIterator.from_stream"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.csv_iterator.CsvIterator.html#rxn.utilities.csv.csv_iterator.CsvIterator.from_stream">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_stream</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">_CsvIteratorT</span><span class="p">],</span> <span class="n">stream</span><span class="p">:</span> <span class="n">TextIO</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_CsvIteratorT</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate from a stream or file object.</span>
 
-<span class="sd">        Yields:</span>
-<span class="sd">            list of strings for each row of the CSV.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            stream: stream or file object to instantiate from.</span>
+<span class="sd">            delimiter: CSV delimiter.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">reader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instantiate_reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="c1"># ignore the header</span>
-            <span class="n">_</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
-            <span class="c1"># yield from the remaining lines</span>
-            <span class="k">yield from</span> <span class="n">reader</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">)</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="n">reader</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_read_header</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_instantiate_reader</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">_instantiate_reader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">TextIO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="k">return</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">to_stream</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">TextIO</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">line_terminator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="n">line_terminator</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

@@ -18,6 +18,8 @@ rxn.utilities.csv.csv\_iterator.CsvIterator
    
       ~CsvIterator.__init__
       ~CsvIterator.column_index
+      ~CsvIterator.from_stream
+      ~CsvIterator.to_stream
    
    
 

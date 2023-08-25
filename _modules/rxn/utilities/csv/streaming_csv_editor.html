@@ -65,15 +65,15 @@
            <div itemprop="articleBody">
              
   <h1>Source code for rxn.utilities.csv.streaming_csv_editor</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">Signature</span><span class="p">,</span> <span class="n">signature</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">Signature</span><span class="p">,</span> <span class="n">signature</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">attr</span> <span class="kn">import</span> <span class="n">define</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">TypeAlias</span>
 
 <span class="kn">from</span> <span class="nn">..files</span> <span class="kn">import</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">count_lines</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">CsvIterator</span>
 
 <span class="c1"># Transformation function as actually used under the hood</span>
 <span class="n">_TransformationFunction</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
@@ -119,7 +119,24 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_terminator</span> <span class="o">=</span> <span class="n">line_terminator</span></div>
 
-<div class="viewcode-block" id="StreamingCsvEditor.process"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span>
+<div class="viewcode-block" id="StreamingCsvEditor.process"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_iterator</span><span class="p">:</span> <span class="n">CsvIterator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CsvIterator</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process and edit a CSV file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            csv_iterator: Input CSV iterator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            an edited instance of a CsvIterator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">helper</span> <span class="o">=</span> <span class="n">_Helper</span><span class="p">(</span><span class="n">csv_iterator</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">transformation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transformation</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">CsvIterator</span><span class="p">(</span>
+            <span class="n">columns</span><span class="o">=</span><span class="n">helper</span><span class="o">.</span><span class="n">output_columns</span><span class="p">,</span>
+            <span class="n">rows</span><span class="o">=</span><span class="p">(</span><span class="n">helper</span><span class="o">.</span><span class="n">process_line</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_iterator</span><span class="o">.</span><span class="n">rows</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamingCsvEditor.process_paths"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process_paths">[docs]</a>    <span class="k">def</span> <span class="nf">process_paths</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">path_in</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">path_out</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -130,39 +147,19 @@
 <span class="sd">            path_out: path to the edited CSV (to be saved).</span>
 <span class="sd">            verbose: whether to write the progress with tqdm.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">input_columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_header</span><span class="p">(</span><span class="n">path_in</span><span class="p">)</span>
-        <span class="n">content_iterator</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_content</span><span class="p">(</span><span class="n">path_in</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_in</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_in</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_out</span><span class="p">,</span> <span class="s2">&quot;wt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_out</span><span class="p">:</span>
+            <span class="n">input_iterator</span> <span class="o">=</span> <span class="n">CsvIterator</span><span class="o">.</span><span class="n">from_stream</span><span class="p">(</span><span class="n">f_in</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="n">row_count</span> <span class="o">=</span> <span class="n">count_lines</span><span class="p">(</span><span class="n">path_in</span><span class="p">)</span>
-            <span class="n">content_iterator</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">content_iterator</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">row_count</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="n">row_count</span> <span class="o">=</span> <span class="n">count_lines</span><span class="p">(</span><span class="n">path_in</span><span class="p">)</span>
+                <span class="n">input_iterator</span> <span class="o">=</span> <span class="n">CsvIterator</span><span class="p">(</span>
+                    <span class="n">input_iterator</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+                    <span class="n">rows</span><span class="o">=</span><span class="p">(</span><span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">input_iterator</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">row_count</span><span class="p">)),</span>
+                <span class="p">)</span>
 
-        <span class="n">helper</span> <span class="o">=</span> <span class="n">_Helper</span><span class="p">(</span><span class="n">input_columns</span><span class="p">,</span> <span class="n">transformation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transformation</span><span class="p">)</span>
-        <span class="n">output_iterator</span> <span class="o">=</span> <span class="p">(</span><span class="n">helper</span><span class="o">.</span><span class="n">process_line</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">content_iterator</span><span class="p">)</span>
+            <span class="n">output_iterator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">input_iterator</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_write_header</span><span class="p">(</span><span class="n">helper</span><span class="o">.</span><span class="n">output_columns</span><span class="p">,</span> <span class="n">path_out</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_write_content</span><span class="p">(</span><span class="n">output_iterator</span><span class="p">,</span> <span class="n">path_out</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_read_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_in</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_in</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">_read_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_in</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_in</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="c1"># ignore the header</span>
-            <span class="n">_</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
-            <span class="k">yield from</span> <span class="n">reader</span>
-
-    <span class="k">def</span> <span class="nf">_write_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">path_out</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_out</span><span class="p">,</span> <span class="s2">&quot;wt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_terminator</span><span class="p">)</span>
-            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_write_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">path_out</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_out</span><span class="p">,</span> <span class="s2">&quot;at&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_terminator</span><span class="p">)</span>
-            <span class="n">writer</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div>
+            <span class="n">output_iterator</span><span class="o">.</span><span class="n">to_stream</span><span class="p">(</span><span class="n">f_out</span><span class="p">,</span> <span class="n">line_terminator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line_terminator</span><span class="p">)</span></div></div>
 
 
 <span class="nd">@define</span>

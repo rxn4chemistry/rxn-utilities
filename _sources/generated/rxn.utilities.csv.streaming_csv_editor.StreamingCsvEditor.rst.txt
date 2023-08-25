@@ -18,6 +18,7 @@ rxn.utilities.csv.streaming\_csv\_editor.StreamingCsvEditor
    
       ~StreamingCsvEditor.__init__
       ~StreamingCsvEditor.process
+      ~StreamingCsvEditor.process_paths
    
    
 
