@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities.containers.all_identical &mdash; RXN utilities 0.1 documentation</title>
+  <title>rxn.utilities.containers.iterate_unique_values &mdash; RXN utilities 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.containers.chunker" href="rxn.utilities.containers.chunker.html" />
-    <link rel="prev" title="rxn.utilities.containers" href="rxn.utilities.containers.html" /> 
+    <link rel="next" title="rxn.utilities.containers.pairwise" href="rxn.utilities.containers.pairwise.html" />
+    <link rel="prev" title="rxn.utilities.containers.chunker" href="rxn.utilities.containers.chunker.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,9 +46,9 @@
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.basic.html">rxn.utilities.basic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.caching.html">rxn.utilities.caching</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.containers.html">rxn.utilities.containers</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.containers.all_identical</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.containers.all_identical.html">rxn.utilities.containers.all_identical</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.containers.chunker.html">rxn.utilities.containers.chunker</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.containers.iterate_unique_values.html">rxn.utilities.containers.iterate_unique_values</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.containers.iterate_unique_values</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.containers.pairwise.html">rxn.utilities.containers.pairwise</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.containers.remove_duplicates.html">rxn.utilities.containers.remove_duplicates</a></li>
 </ul>
@@ -85,9 +85,9 @@
           <li><a href="../api.html">API</a> &raquo;</li>
           <li><a href="rxn.utilities.html">rxn.utilities</a> &raquo;</li>
           <li><a href="rxn.utilities.containers.html">rxn.utilities.containers</a> &raquo;</li>
-      <li>rxn.utilities.containers.all_identical</li>
+      <li>rxn.utilities.containers.iterate_unique_values</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/rxn.utilities.containers.all_identical.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/rxn.utilities.containers.iterate_unique_values.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -95,18 +95,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rxn-utilities-containers-all-identical">
-<h1>rxn.utilities.containers.all_identical<a class="headerlink" href="#rxn-utilities-containers-all-identical" title="Permalink to this heading"></a></h1>
+  <section id="rxn-utilities-containers-iterate-unique-values">
+<h1>rxn.utilities.containers.iterate_unique_values<a class="headerlink" href="#rxn-utilities-containers-iterate-unique-values" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="rxn.utilities.containers.all_identical">
-<span class="sig-prename descclassname"><span class="pre">rxn.utilities.containers.</span></span><span class="sig-name descname"><span class="pre">all_identical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/containers.html#all_identical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.containers.all_identical" title="Permalink to this definition"></a></dt>
-<dd><p>Evaluates whether all the elements of a sequence are identical.</p>
+<dt class="sig sig-object py" id="rxn.utilities.containers.iterate_unique_values">
+<span class="sig-prename descclassname"><span class="pre">rxn.utilities.containers.</span></span><span class="sig-name descname"><span class="pre">iterate_unique_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/containers.html#iterate_unique_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.containers.iterate_unique_values" title="Permalink to this definition"></a></dt>
+<dd><p>Remove duplicates and preserve order.</p>
+<p>Adapted from <a class="reference external" href="https://stackoverflow.com/a/480227">https://stackoverflow.com/a/480227</a>.
+<code class="docutils literal notranslate"><span class="pre">remove_duplicates</span></code> is identical except that it returns a list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>sequence</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seq</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)]) – sequence to remove duplicates from.</p></li>
+<li><p><strong>key</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)], <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">V</span></code>)]], default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – what to base duplicates on, must be hashable.
+Defaults to the elements of seq.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p>the original values after removal of the duplicates</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -117,8 +126,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="rxn.utilities.containers.html" class="btn btn-neutral float-left" title="rxn.utilities.containers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.containers.chunker.html" class="btn btn-neutral float-right" title="rxn.utilities.containers.chunker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.containers.chunker.html" class="btn btn-neutral float-left" title="rxn.utilities.containers.chunker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn.utilities.containers.pairwise.html" class="btn btn-neutral float-right" title="rxn.utilities.containers.pairwise" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

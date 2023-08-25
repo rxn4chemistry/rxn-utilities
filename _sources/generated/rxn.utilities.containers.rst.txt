@@ -16,6 +16,7 @@ rxn.utilities.containers
    
       all_identical
       chunker
+      iterate_unique_values
       pairwise
       remove_duplicates
    

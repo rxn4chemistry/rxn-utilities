@@ -1,0 +1,6 @@
+rxn.utilities.containers.iterate\_unique\_values
+================================================
+
+.. currentmodule:: rxn.utilities.containers
+
+.. autofunction:: iterate_unique_values

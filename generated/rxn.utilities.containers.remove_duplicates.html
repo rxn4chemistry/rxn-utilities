@@ -48,6 +48,7 @@
 <li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.containers.html">rxn.utilities.containers</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.containers.all_identical.html">rxn.utilities.containers.all_identical</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.containers.chunker.html">rxn.utilities.containers.chunker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.containers.iterate_unique_values.html">rxn.utilities.containers.iterate_unique_values</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.containers.pairwise.html">rxn.utilities.containers.pairwise</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.containers.remove_duplicates</a></li>
 </ul>
@@ -100,7 +101,8 @@
 <dt class="sig sig-object py" id="rxn.utilities.containers.remove_duplicates">
 <span class="sig-prename descclassname"><span class="pre">rxn.utilities.containers.</span></span><span class="sig-name descname"><span class="pre">remove_duplicates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/containers.html#remove_duplicates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.containers.remove_duplicates" title="Permalink to this definition"></a></dt>
 <dd><p>Remove duplicates and preserve order.</p>
-<p>Adapted from <a class="reference external" href="https://stackoverflow.com/a/480227">https://stackoverflow.com/a/480227</a></p>
+<p>Relies on the function <code class="docutils literal notranslate"><span class="pre">iterate_unique_values</span></code>, only converts its
+output to a list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -111,6 +113,9 @@ Defaults to the elements of seq.</p></li>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a list without duplicates.</p>
 </dd>
 </dl>
 </dd></dl>
