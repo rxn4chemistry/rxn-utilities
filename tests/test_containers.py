@@ -1,6 +1,12 @@
 from typing import Iterable, Optional
 
-from rxn.utilities.containers import all_identical, chunker, pairwise, remove_duplicates
+from rxn.utilities.containers import (
+    all_identical,
+    chunker,
+    iterate_unique_values,
+    pairwise,
+    remove_duplicates,
+)
 
 
 def test_all_identical() -> None:
@@ -40,6 +46,42 @@ def test_remove_duplicates_with_key() -> None:
     li = [a1, a2, a3, a4, a5, a6]
 
     assert remove_duplicates(li, key=lambda x: x.b) == [a1, a2, a3, a6]
+
+
+def test_iterate_unique_values() -> None:
+    l_int = [2, 2, 5, 2, 6]
+    unique = iterate_unique_values(l_int)
+    assert next(unique) == 2
+    assert next(unique) == 5
+    assert next(unique) == 6
+    # should then be empty
+    assert list(unique) == []
+
+
+def test_iterate_unique_values_with_key() -> None:
+    class DummyStruct:
+        def __init__(self, a: int, b: int):
+            self.a = a
+            self.b = b
+
+    # we will remove duplicates based on the second value, i.e. only a1,
+    # a2, a3, a6 will remain.
+    a1 = DummyStruct(1, 5)
+    a2 = DummyStruct(2, 3)
+    a3 = DummyStruct(3, 4)
+    a4 = DummyStruct(4, 5)
+    a5 = DummyStruct(5, 3)
+    a6 = DummyStruct(6, 6)
+
+    li = [a1, a2, a3, a4, a5, a6]
+
+    unique = iterate_unique_values(li, key=lambda x: x.b)
+    assert next(unique) == a1
+    assert next(unique) == a2
+    assert next(unique) == a3
+    assert next(unique) == a6
+    # should then be empty
+    assert list(unique) == []
 
 
 def test_pairwise() -> None:

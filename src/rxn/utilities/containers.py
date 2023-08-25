@@ -27,12 +27,35 @@ def remove_duplicates(
 ) -> List[T]:
     """Remove duplicates and preserve order.
 
-    Adapted from https://stackoverflow.com/a/480227
+    Relies on the function ``iterate_unique_values``, only converts its
+    output to a list.
 
     Args:
         seq: sequence to remove duplicates from.
         key: what to base duplicates on, must be hashable.
             Defaults to the elements of seq.
+
+    Returns:
+        a list without duplicates.
+    """
+    return list(iterate_unique_values(seq, key))
+
+
+def iterate_unique_values(
+    seq: Iterable[T], key: Optional[Callable[[T], V]] = None
+) -> Iterator[T]:
+    """Remove duplicates and preserve order.
+
+    Adapted from https://stackoverflow.com/a/480227.
+    ``remove_duplicates`` is identical except that it returns a list.
+
+    Args:
+        seq: sequence to remove duplicates from.
+        key: what to base duplicates on, must be hashable.
+            Defaults to the elements of seq.
+
+    Yields:
+        the original values after removal of the duplicates
     """
     if key is None:
 
@@ -41,7 +64,7 @@ def remove_duplicates(
 
     seen: Set[V] = set()
     seen_add = seen.add
-    return [x for x in seq if not (key(x) in seen or seen_add(key(x)))]
+    yield from (x for x in seq if not (key(x) in seen or seen_add(key(x))))
 
 
 def pairwise(s: List[T]) -> Iterator[Tuple[T, T]]:
