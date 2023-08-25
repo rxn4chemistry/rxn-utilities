@@ -27,6 +27,7 @@ def iterate_csv_column(
     Returns:
         iterator through the values in the selected column.
     """
-    csv_iterator = CsvIterator(csv_file, delimiter=delimiter)
-    column_index = csv_iterator.column_index(column_name=column)
-    yield from (row[column_index] for row in csv_iterator)
+    with open(csv_file, "rt") as f:
+        csv_iterator = CsvIterator.from_stream(f, delimiter=delimiter)
+        column_index = csv_iterator.column_index(column_name=column)
+        yield from (row[column_index] for row in csv_iterator.rows)
