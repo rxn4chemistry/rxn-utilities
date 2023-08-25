@@ -272,7 +272,7 @@ def test_chaining() -> None:
 
     # Check the result (use a StringIO instead of a file)
     output_stream = io.StringIO()
-    final_iterator.to_file(output_stream)
+    final_iterator.to_stream(output_stream)
     assert output_stream.getvalue() == (
         "a,b,c,new,new2\n" + "first,line,FIRST,f,ff\n" + "second,line,SECOND,s,ss\n"
     )
