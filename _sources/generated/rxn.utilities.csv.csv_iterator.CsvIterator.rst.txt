@@ -1,0 +1,26 @@
+rxn.utilities.csv.csv\_iterator.CsvIterator
+===========================================
+
+.. currentmodule:: rxn.utilities.csv.csv_iterator
+
+.. autoclass:: CsvIterator
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CsvIterator.__init__
+      ~CsvIterator.column_index
+   
+   
+
+   
+   
+   

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities.csv.column_iterator &mdash; RXN utilities 0.1 documentation</title>
+  <title>rxn.utilities.csv.csv_iterator &mdash; RXN utilities 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.csv.column_iterator.iterate_csv_column" href="rxn.utilities.csv.column_iterator.iterate_csv_column.html" />
-    <link rel="prev" title="rxn.utilities.csv" href="rxn.utilities.csv.html" /> 
+    <link rel="next" title="rxn.utilities.csv.csv_iterator.CsvIterator" href="rxn.utilities.csv.csv_iterator.CsvIterator.html" />
+    <link rel="prev" title="rxn.utilities.csv.column_iterator.iterate_csv_column" href="rxn.utilities.csv.column_iterator.iterate_csv_column.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,8 +47,8 @@
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.caching.html">rxn.utilities.caching</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.containers.html">rxn.utilities.containers</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.csv.html">rxn.utilities.csv</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.csv.column_iterator</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.csv.csv_iterator.html">rxn.utilities.csv.csv_iterator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.csv.column_iterator.html">rxn.utilities.csv.column_iterator</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.csv.csv_iterator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.csv.streaming_csv_editor.html">rxn.utilities.csv.streaming_csv_editor</a></li>
 </ul>
 </li>
@@ -83,9 +83,9 @@
           <li><a href="../api.html">API</a> &raquo;</li>
           <li><a href="rxn.utilities.html">rxn.utilities</a> &raquo;</li>
           <li><a href="rxn.utilities.csv.html">rxn.utilities.csv</a> &raquo;</li>
-      <li>rxn.utilities.csv.column_iterator</li>
+      <li>rxn.utilities.csv.csv_iterator</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/rxn.utilities.csv.column_iterator.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/rxn.utilities.csv.csv_iterator.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -93,17 +93,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-rxn.utilities.csv.column_iterator">
-<span id="rxn-utilities-csv-column-iterator"></span><h1>rxn.utilities.csv.column_iterator<a class="headerlink" href="#module-rxn.utilities.csv.column_iterator" title="Permalink to this heading"></a></h1>
-<p class="rubric">Functions</p>
+  <section id="module-rxn.utilities.csv.csv_iterator">
+<span id="rxn-utilities-csv-csv-iterator"></span><h1>rxn.utilities.csv.csv_iterator<a class="headerlink" href="#module-rxn.utilities.csv.csv_iterator" title="Permalink to this heading"></a></h1>
+<p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.csv.column_iterator.iterate_csv_column.html#rxn.utilities.csv.column_iterator.iterate_csv_column" title="rxn.utilities.csv.column_iterator.iterate_csv_column"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterate_csv_column</span></code></a>(csv_file, column[, delimiter])</p></td>
-<td><p>Iterate through a specific column of a CSV file.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.csv.csv_iterator.CsvIterator.html#rxn.utilities.csv.csv_iterator.CsvIterator" title="rxn.utilities.csv.csv_iterator.CsvIterator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CsvIterator</span></code></a>(csv_file[, delimiter])</p></td>
+<td><p>Class to easily iterate through CSV files while having easy access to the column names.</p></td>
 </tr>
 </tbody>
 </table>
@@ -113,8 +113,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="rxn.utilities.csv.html" class="btn btn-neutral float-left" title="rxn.utilities.csv" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.csv.column_iterator.iterate_csv_column.html" class="btn btn-neutral float-right" title="rxn.utilities.csv.column_iterator.iterate_csv_column" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.csv.column_iterator.iterate_csv_column.html" class="btn btn-neutral float-left" title="rxn.utilities.csv.column_iterator.iterate_csv_column" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn.utilities.csv.csv_iterator.CsvIterator.html" class="btn btn-neutral float-right" title="rxn.utilities.csv.csv_iterator.CsvIterator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

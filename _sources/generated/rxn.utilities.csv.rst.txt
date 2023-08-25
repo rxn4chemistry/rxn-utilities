@@ -29,5 +29,6 @@ rxn.utilities.csv
    :recursive:
 
    rxn.utilities.csv.column_iterator
+   rxn.utilities.csv.csv_iterator
    rxn.utilities.csv.streaming_csv_editor
 
