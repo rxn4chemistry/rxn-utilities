@@ -81,7 +81,7 @@ class StreamingCsvEditor:
             verbose: whether to write the progress with tqdm.
         """
         with open(path_in, "rt") as f_in, open(path_out, "wt") as f_out:
-            input_iterator = CsvIterator.from_file(f_in)
+            input_iterator = CsvIterator.from_stream(f_in)
 
             if verbose:
                 row_count = count_lines(path_in)
@@ -92,7 +92,7 @@ class StreamingCsvEditor:
 
             output_iterator = self.process(input_iterator)
 
-            output_iterator.to_file(f_out, line_terminator=self.line_terminator)
+            output_iterator.to_stream(f_out, line_terminator=self.line_terminator)
 
 
 @define

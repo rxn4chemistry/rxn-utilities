@@ -1,3 +1,4 @@
+import io
 from pathlib import Path
 from typing import Iterator
 
@@ -26,7 +27,7 @@ def tmp_path() -> Iterator[Path]:
 
 def test_columns(tmp_path: Path) -> None:
     with open(tmp_path, "rt") as f:
-        csv_iterator = CsvIterator.from_file(f)
+        csv_iterator = CsvIterator.from_stream(f)
 
         # a few checks on the column
         assert csv_iterator.columns == ["A", "B", "C", "D:DD", "E"]
@@ -38,7 +39,7 @@ def test_columns(tmp_path: Path) -> None:
 
 def test_use_with_next(tmp_path: Path) -> None:
     with open(tmp_path, "rt") as f:
-        csv_iterator = CsvIterator.from_file(f)
+        csv_iterator = CsvIterator.from_stream(f)
 
         b_index = csv_iterator.column_index("B")
 
@@ -50,7 +51,7 @@ def test_use_with_next(tmp_path: Path) -> None:
 
 def test_direct_iteration(tmp_path: Path) -> None:
     with open(tmp_path, "rt") as f:
-        csv_iterator = CsvIterator.from_file(f)
+        csv_iterator = CsvIterator.from_stream(f)
         b_index = csv_iterator.column_index("B")
 
         assert [row[b_index] for row in csv_iterator.rows] == ["b1", "", "b3", "b4"]
@@ -58,7 +59,7 @@ def test_direct_iteration(tmp_path: Path) -> None:
 
 def test_different_delimiter(tmp_path: Path) -> None:
     with open(tmp_path, "rt") as f:
-        csv_iterator = CsvIterator.from_file(f, delimiter=":")
+        csv_iterator = CsvIterator.from_stream(f, delimiter=":")
 
         # a few checks on the column
         assert csv_iterator.columns == ["A,B,C,D", "DD,E"]
@@ -67,3 +68,11 @@ def test_different_delimiter(tmp_path: Path) -> None:
             _ = csv_iterator.column_index("A")
 
         assert [row[1] for row in csv_iterator.rows] == ["41,1", "42,2", "43,3", "44,4"]
+
+
+def test_instantiate_from_stream() -> None:
+    csv_iterator = CsvIterator.from_stream(
+        io.StringIO("a,b,c\nfirst,line,1\nsecond,line,2")
+    )
+    assert csv_iterator.columns == ["a", "b", "c"]
+    assert list(csv_iterator.rows) == [["first", "line", "1"], ["second", "line", "2"]]

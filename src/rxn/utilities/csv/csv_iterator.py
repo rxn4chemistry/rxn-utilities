@@ -10,9 +10,13 @@ class CsvIterator:
     """Class to easily iterate through CSV files while having easy
     access to the column names.
 
+    Note: the choice to not handle the file opening/closing in this
+    class is on purpose. This avoids issue with keeping track of
+    which files are open and when to close them.
+
     Examples:
         >>> with open("some_file.csv", "rt") as f:
-        ...     csv_iterator = CsvIterator.from_file(f)
+        ...     csv_iterator = CsvIterator.from_stream(f)
         ...     area_index = csv_iterator.column_index("area")
         ...     price_index = csv_iterator.column_index("price")
         ...     for row in csv_iterator.rows:
@@ -43,14 +47,20 @@ class CsvIterator:
             raise ValueError(f'Column "{column_name}" not found in {self.columns}.')
 
     @classmethod
-    def from_file(
-        cls: Type[_CsvIteratorT], file: TextIO, delimiter: str = ","
+    def from_stream(
+        cls: Type[_CsvIteratorT], stream: TextIO, delimiter: str = ","
     ) -> _CsvIteratorT:
-        reader = csv.reader(file, delimiter=delimiter)
+        """Instantiate from a stream or file object.
+
+        Args:
+            stream: stream or file object to instantiate from.
+            delimiter: CSV delimiter.
+        """
+        reader = csv.reader(stream, delimiter=delimiter)
         header = next(reader)
         return cls(columns=header, rows=reader)
 
-    def to_file(
+    def to_stream(
         self, file: TextIO, delimiter: str = ",", line_terminator: str = "\n"
     ) -> None:
         writer = csv.writer(file, delimiter=delimiter, lineterminator=line_terminator)

@@ -1,3 +1,4 @@
+import io
 from pathlib import Path
 from typing import Any, Callable, Iterator, List, Tuple
 
@@ -5,6 +6,7 @@ import pytest
 from attr import define
 
 from rxn.utilities.containers import all_identical
+from rxn.utilities.csv import CsvIterator
 from rxn.utilities.csv.streaming_csv_editor import StreamingCsvEditor
 from rxn.utilities.files import (
     PathLike,
@@ -241,3 +243,36 @@ def test_raises_for_unsupported_annotations() -> None:
             return a[0] + b
 
         _ = StreamingCsvEditor(["a", "b"], ["a"], fn2)
+
+
+def test_chaining() -> None:
+    # We test the successive application of two functions, without saving to a
+    # file in between.
+
+    # Initial input
+    input_iterator = CsvIterator.from_stream(
+        io.StringIO("a,b,c\nfirst,line,1\nsecond,line,2\n")
+    )
+
+    # 1) First transformation
+    # return uppercase, and then the first letter
+    def fn_1(v: str) -> Tuple[str, str]:
+        return v.upper(), v[0]
+
+    csv_editor_1 = StreamingCsvEditor(["a"], ["c", "new"], fn_1)
+    mid_iterator = csv_editor_1.process(input_iterator)
+
+    # 2) Second transformation
+    # double the content
+    def fn_2(v: str) -> str:
+        return v + v
+
+    csv_editor_2 = StreamingCsvEditor(["new"], ["new2"], fn_2)
+    final_iterator = csv_editor_2.process(mid_iterator)
+
+    # Check the result (use a StringIO instead of a file)
+    output_stream = io.StringIO()
+    final_iterator.to_file(output_stream)
+    assert output_stream.getvalue() == (
+        "a,b,c,new,new2\n" + "first,line,FIRST,f,ff\n" + "second,line,SECOND,s,ss\n"
+    )

@@ -28,6 +28,6 @@ def iterate_csv_column(
         iterator through the values in the selected column.
     """
     with open(csv_file, "rt") as f:
-        csv_iterator = CsvIterator.from_file(f, delimiter=delimiter)
+        csv_iterator = CsvIterator.from_stream(f, delimiter=delimiter)
         column_index = csv_iterator.column_index(column_name=column)
         yield from (row[column_index] for row in csv_iterator.rows)
