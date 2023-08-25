@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import csv
-from typing import Iterator, List, TextIO
+from typing import Iterator, List, TextIO, Type, TypeVar
 
-from ..files import PathLike
+_CsvIteratorT = TypeVar("_CsvIteratorT", bound="CsvIterator")
 
 
 class CsvIterator:
@@ -11,18 +11,18 @@ class CsvIterator:
     access to the column names.
 
     Examples:
-        >>> csv_iterator = CsvIterator("some_file.csv")
-        >>> area_index = csv_iterator.column_index("area")
-        >>> price_index = csv_iterator.column_index("price")
-        >>> for row in csv_iterator:
-        ...     price = row[price_index]
-        ...     area = row[area_index]
+        >>> with open("some_file.csv", "rt") as f:
+        ...     csv_iterator = CsvIterator.from_file(f)
+        ...     area_index = csv_iterator.column_index("area")
+        ...     price_index = csv_iterator.column_index("price")
+        ...     for row in csv_iterator.rows:
+        ...         price = row[price_index]
+        ...         area = row[area_index]
     """
 
-    def __init__(self, csv_file: PathLike, delimiter: str = ","):
-        self.delimiter = delimiter
-        self.csv_file = csv_file
-        self.columns = self._read_header()
+    def __init__(self, columns: List[str], rows: Iterator[List[str]]):
+        self.columns = columns
+        self.rows = rows
 
     def column_index(self, column_name: str) -> int:
         """
@@ -40,25 +40,19 @@ class CsvIterator:
         try:
             return self.columns.index(column_name)
         except ValueError:
-            raise ValueError(f'"{self.csv_file}" has no column "{column_name}".')
+            raise ValueError(f'Column "{column_name}" not found in {self.columns}.')
 
-    def __iter__(self) -> Iterator[List[str]]:
-        """
-        Iterate through the rows of the CSV.
+    @classmethod
+    def from_file(
+        cls: Type[_CsvIteratorT], file: TextIO, delimiter: str = ","
+    ) -> _CsvIteratorT:
+        reader = csv.reader(file, delimiter=delimiter)
+        header = next(reader)
+        return cls(columns=header, rows=reader)
 
-        Yields:
-            list of strings for each row of the CSV.
-        """
-        with open(self.csv_file, "rt") as f:
-            reader = self._instantiate_reader(f)
-            # ignore the header
-            _ = next(reader)
-            # yield from the remaining lines
-            yield from reader
-
-    def _read_header(self) -> List[str]:
-        with open(self.csv_file, "rt") as f:
-            return next(self._instantiate_reader(f))
-
-    def _instantiate_reader(self, file: TextIO) -> Iterator[List[str]]:
-        return csv.reader(file, delimiter=self.delimiter)
+    def to_file(
+        self, file: TextIO, delimiter: str = ",", line_terminator: str = "\n"
+    ) -> None:
+        writer = csv.writer(file, delimiter=delimiter, lineterminator=line_terminator)
+        writer.writerow(self.columns)
+        writer.writerows(self.rows)
