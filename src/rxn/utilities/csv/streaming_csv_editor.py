@@ -1,12 +1,12 @@
-import csv
 from inspect import Signature, signature
-from typing import Any, Callable, Iterable, Iterator, List, Tuple, Type, Union
+from typing import Any, Callable, List, Tuple, Type, Union
 
 from attr import define
 from tqdm import tqdm
 from typing_extensions import TypeAlias
 
 from ..files import PathLike, count_lines
+from . import CsvIterator
 
 # Transformation function as actually used under the hood
 _TransformationFunction: TypeAlias = Callable[[List[str]], List[str]]
@@ -63,39 +63,23 @@ class StreamingCsvEditor:
             path_out: path to the edited CSV (to be saved).
             verbose: whether to write the progress with tqdm.
         """
-        input_columns = self._read_header(path_in)
-        content_iterator: Iterable[List[str]] = self._read_content(path_in)
+        with open(path_in, "rt") as f_in, open(path_out, "wt") as f_out:
+            input_iterator = CsvIterator.from_file(f_in)
 
-        if verbose:
-            row_count = count_lines(path_in)
-            content_iterator = tqdm(content_iterator, total=row_count)
+            if verbose:
+                row_count = count_lines(path_in)
+                input_iterator = CsvIterator(
+                    input_iterator.columns,
+                    rows=(row for row in tqdm(input_iterator.rows, total=row_count)),
+                )
 
-        helper = _Helper(input_columns, transformation=self.transformation)
-        output_iterator = (helper.process_line(row) for row in content_iterator)
+            helper = _Helper(input_iterator.columns, transformation=self.transformation)
+            output_iterator = CsvIterator(
+                columns=helper.output_columns,
+                rows=(helper.process_line(row) for row in input_iterator.rows),
+            )
 
-        self._write_header(helper.output_columns, path_out)
-        self._write_content(output_iterator, path_out)
-
-    def _read_header(self, path_in: PathLike) -> List[str]:
-        with open(path_in, "rt") as f:
-            return next(csv.reader(f))
-
-    def _read_content(self, path_in: PathLike) -> Iterator[List[str]]:
-        with open(path_in, "rt") as f:
-            reader = csv.reader(f)
-            # ignore the header
-            _ = next(reader)
-            yield from reader
-
-    def _write_header(self, header: List[str], path_out: PathLike) -> None:
-        with open(path_out, "wt") as f:
-            writer = csv.writer(f, lineterminator=self.line_terminator)
-            writer.writerow(header)
-
-    def _write_content(self, content: Iterable[List[str]], path_out: PathLike) -> None:
-        with open(path_out, "at") as f:
-            writer = csv.writer(f, lineterminator=self.line_terminator)
-            writer.writerows(content)
+            output_iterator.to_file(f_out, line_terminator=self.line_terminator)
 
 
 @define
