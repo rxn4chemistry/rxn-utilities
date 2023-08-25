@@ -32,14 +32,14 @@ def test_iterate_csv_column() -> None:
         ]
         assert list(iterate_csv_column(path, "E")) == ["1", "2", "3", "4"]
 
-        with pytest.raises(RuntimeError):
+        with pytest.raises(ValueError):
             _ = list(iterate_csv_column(path, "F"))
 
         with pytest.raises(FileNotFoundError):
             _ = list(iterate_csv_column("invalid_file.csv", "A"))
 
         # Use ":" as delimiter instead of ",". Now the columns are "A,B,C,D" and "DD,E".
-        with pytest.raises(RuntimeError):
+        with pytest.raises(ValueError):
             _ = list(iterate_csv_column(path, "A", delimiter=":"))
         assert list(iterate_csv_column(path, "DD,E", delimiter=":")) == [
             "41,1",
