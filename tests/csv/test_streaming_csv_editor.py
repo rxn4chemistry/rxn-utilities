@@ -5,13 +5,13 @@ import pytest
 from attr import define
 
 from rxn.utilities.containers import all_identical
+from rxn.utilities.csv.streaming_csv_editor import StreamingCsvEditor
 from rxn.utilities.files import (
     PathLike,
     dump_list_to_file,
     load_list_from_file,
     named_temporary_directory,
 )
-from rxn.utilities.streaming_csv_editor import StreamingCsvEditor
 
 
 @define

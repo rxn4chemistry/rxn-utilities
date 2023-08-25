@@ -6,7 +6,7 @@ from attr import define
 from tqdm import tqdm
 from typing_extensions import TypeAlias
 
-from .files import PathLike, count_lines
+from ..files import PathLike, count_lines
 
 # Transformation function as actually used under the hood
 _TransformationFunction: TypeAlias = Callable[[List[str]], List[str]]

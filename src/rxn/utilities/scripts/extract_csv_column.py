@@ -2,7 +2,8 @@ from pathlib import Path
 
 import click
 
-from ..files import dump_list_to_file, iterate_csv_column
+from ..csv import iterate_csv_column
+from ..files import dump_list_to_file
 
 
 @click.command(context_settings=dict(show_default=True))
