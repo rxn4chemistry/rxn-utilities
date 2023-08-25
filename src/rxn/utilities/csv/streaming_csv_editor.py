@@ -52,7 +52,24 @@ class StreamingCsvEditor:
         )
         self.line_terminator = line_terminator
 
-    def process(
+    def process(self, csv_iterator: CsvIterator) -> CsvIterator:
+        """
+        Process and edit a CSV file.
+
+        Args:
+            csv_iterator: Input CSV iterator.
+
+        Returns:
+            an edited instance of a CsvIterator.
+        """
+
+        helper = _Helper(csv_iterator.columns, transformation=self.transformation)
+        return CsvIterator(
+            columns=helper.output_columns,
+            rows=(helper.process_line(row) for row in csv_iterator.rows),
+        )
+
+    def process_paths(
         self, path_in: PathLike, path_out: PathLike, verbose: bool = False
     ) -> None:
         """
@@ -73,11 +90,7 @@ class StreamingCsvEditor:
                     rows=(row for row in tqdm(input_iterator.rows, total=row_count)),
                 )
 
-            helper = _Helper(input_iterator.columns, transformation=self.transformation)
-            output_iterator = CsvIterator(
-                columns=helper.output_columns,
-                rows=(helper.process_line(row) for row in input_iterator.rows),
-            )
+            output_iterator = self.process(input_iterator)
 
             output_iterator.to_file(f_out, line_terminator=self.line_terminator)
 

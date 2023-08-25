@@ -50,7 +50,7 @@ def test_identity_on_one_column(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
     csv_editor = StreamingCsvEditor(["a"], ["a"], identity_str)
-    csv_editor.process(files.in_, files.out)
+    csv_editor.process_paths(files.in_, files.out)
 
     assert_files_identical(files.out, files.in_)
 
@@ -59,7 +59,7 @@ def test_identity_on_multiple_columns(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
     csv_editor = StreamingCsvEditor(["a", "c"], ["a", "c"], identity_list)
-    csv_editor.process(files.in_, files.out)
+    csv_editor.process_paths(files.in_, files.out)
 
     assert_files_identical(files.out, files.in_)
 
@@ -68,7 +68,7 @@ def test_identity_replacing_another_column(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
     csv_editor = StreamingCsvEditor(["a"], ["c"], identity_list)
-    csv_editor.process(files.in_, files.out)
+    csv_editor.process_paths(files.in_, files.out)
 
     dump_list_to_file(
         ["a,b,c", "first,line,first", "second,line,second"], files.expected
@@ -80,7 +80,7 @@ def test_identity_adding_a_new_column(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
     csv_editor = StreamingCsvEditor(["a"], ["new"], identity_str)
-    csv_editor.process(files.in_, files.out)
+    csv_editor.process_paths(files.in_, files.out)
 
     dump_list_to_file(
         ["a,b,c,new", "first,line,1,first", "second,line,2,second"], files.expected
@@ -96,7 +96,7 @@ def test_overwrite_one_column(files: FileTriplet) -> None:
 
     csv_editor = StreamingCsvEditor(["a"], ["a"], fn)
 
-    csv_editor.process(files.in_, files.out)
+    csv_editor.process_paths(files.in_, files.out)
 
     dump_list_to_file(["a,b,c", "FIRST,line,1", "SECOND,line,2"], files.expected)
     assert_files_identical(files.out, files.expected)
@@ -112,7 +112,7 @@ def test_overwrite_one_and_add_one(files: FileTriplet) -> None:
 
     csv_editor = StreamingCsvEditor(["a"], ["c", "new"], fn)
 
-    csv_editor.process(files.in_, files.out)
+    csv_editor.process_paths(files.in_, files.out)
 
     dump_list_to_file(
         ["a,b,c,new", "first,line,FIRST,f", "second,line,SECOND,s"], files.expected
@@ -201,7 +201,7 @@ def test_different_callback_formulations(files: FileTriplet) -> None:
         for i, fn in enumerate(functions_to_compare):
             csv_editor = StreamingCsvEditor(columns_in, columns_out, fn)
             file_i = files.directory / f"out_{i}"
-            csv_editor.process(files.in_, file_i)
+            csv_editor.process_paths(files.in_, file_i)
             files_to_compare.append(file_i)
 
         assert_files_identical(*files_to_compare)
