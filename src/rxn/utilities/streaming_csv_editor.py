@@ -12,7 +12,7 @@ from .files import PathLike, count_lines
 _TransformationFunction: TypeAlias = Callable[[List[str]], List[str]]
 
 
-class LightCsvEditor:
+class StreamingCsvEditor:
     """
     Edit the content of a CSV with a specified transformation, line-by-line.
 
@@ -25,7 +25,7 @@ class LightCsvEditor:
         columns_in: List[str],
         columns_out: List[str],
         transformation: Callable[..., Any],
-            line_terminator: str = "\n"
+        line_terminator: str = "\n",
     ):
         """
         Args:

@@ -11,7 +11,7 @@ from rxn.utilities.files import (
     load_list_from_file,
     named_temporary_directory,
 )
-from rxn.utilities.light_csv_editor import LightCsvEditor
+from rxn.utilities.streaming_csv_editor import StreamingCsvEditor
 
 
 @define
@@ -49,7 +49,7 @@ def assert_files_identical(*files: PathLike) -> None:
 def test_identity_on_one_column(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
-    csv_editor = LightCsvEditor(["a"], ["a"], identity_str)
+    csv_editor = StreamingCsvEditor(["a"], ["a"], identity_str)
     csv_editor.process(files.in_, files.out)
 
     assert_files_identical(files.out, files.in_)
@@ -58,7 +58,7 @@ def test_identity_on_one_column(files: FileTriplet) -> None:
 def test_identity_on_multiple_columns(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
-    csv_editor = LightCsvEditor(["a", "c"], ["a", "c"], identity_list)
+    csv_editor = StreamingCsvEditor(["a", "c"], ["a", "c"], identity_list)
     csv_editor.process(files.in_, files.out)
 
     assert_files_identical(files.out, files.in_)
@@ -67,7 +67,7 @@ def test_identity_on_multiple_columns(files: FileTriplet) -> None:
 def test_identity_replacing_another_column(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
-    csv_editor = LightCsvEditor(["a"], ["c"], identity_list)
+    csv_editor = StreamingCsvEditor(["a"], ["c"], identity_list)
     csv_editor.process(files.in_, files.out)
 
     dump_list_to_file(
@@ -79,7 +79,7 @@ def test_identity_replacing_another_column(files: FileTriplet) -> None:
 def test_identity_adding_a_new_column(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
-    csv_editor = LightCsvEditor(["a"], ["new"], identity_str)
+    csv_editor = StreamingCsvEditor(["a"], ["new"], identity_str)
     csv_editor.process(files.in_, files.out)
 
     dump_list_to_file(
@@ -94,7 +94,7 @@ def test_overwrite_one_column(files: FileTriplet) -> None:
     def fn(v: str) -> str:
         return v.upper()
 
-    csv_editor = LightCsvEditor(["a"], ["a"], fn)
+    csv_editor = StreamingCsvEditor(["a"], ["a"], fn)
 
     csv_editor.process(files.in_, files.out)
 
@@ -110,7 +110,7 @@ def test_overwrite_one_and_add_one(files: FileTriplet) -> None:
     def fn(value: str) -> List[str]:
         return [value.upper(), value[0]]
 
-    csv_editor = LightCsvEditor(["a"], ["c", "new"], fn)
+    csv_editor = StreamingCsvEditor(["a"], ["c", "new"], fn)
 
     csv_editor.process(files.in_, files.out)
 
@@ -124,7 +124,7 @@ def test_different_callback_formulations(files: FileTriplet) -> None:
     dump_list_to_file(["a,b,c", "first,line,1", "second,line,2"], files.in_)
 
     # We define multiple functions that should have identical behavior, to test
-    # the flexibility of callables given to the LightCsvEditor.
+    # the flexibility of callables given to the StreamingCsvEditor.
     # The first digit is the number of inputs, the second is the number of outputs,
     # the letter indicates the variant (functions differing only in the letter
     # have identical behavior).
@@ -199,7 +199,7 @@ def test_different_callback_formulations(files: FileTriplet) -> None:
     for functions_to_compare, columns_in, columns_out in all_functions_to_compare:
         files_to_compare: List[Path] = []
         for i, fn in enumerate(functions_to_compare):
-            csv_editor = LightCsvEditor(columns_in, columns_out, fn)
+            csv_editor = StreamingCsvEditor(columns_in, columns_out, fn)
             file_i = files.directory / f"out_{i}"
             csv_editor.process(files.in_, file_i)
             files_to_compare.append(file_i)
@@ -214,7 +214,7 @@ def test_raises_if_function_not_annotated() -> None:
         def fn1(a) -> str:  # type: ignore[no-untyped-def]
             return a  # type: ignore[no-any-return]
 
-        _ = LightCsvEditor(["a"], ["a"], fn1)
+        _ = StreamingCsvEditor(["a"], ["a"], fn1)
 
     # return type not annotated
     with pytest.raises(ValueError):
@@ -222,7 +222,7 @@ def test_raises_if_function_not_annotated() -> None:
         def fn2(a: str):  # type: ignore[no-untyped-def]
             return a
 
-        _ = LightCsvEditor(["a"], ["a"], fn2)
+        _ = StreamingCsvEditor(["a"], ["a"], fn2)
 
 
 def test_raises_for_unsupported_annotations() -> None:
@@ -232,7 +232,7 @@ def test_raises_for_unsupported_annotations() -> None:
         def fn1(a: str, b: int) -> str:
             return a + str(b)
 
-        _ = LightCsvEditor(["a", "b"], ["a"], fn1)
+        _ = StreamingCsvEditor(["a", "b"], ["a"], fn1)
 
     # combination of List and str
     with pytest.raises(ValueError):
@@ -240,4 +240,4 @@ def test_raises_for_unsupported_annotations() -> None:
         def fn2(a: List[str], b: str) -> str:
             return a[0] + b
 
-        _ = LightCsvEditor(["a", "b"], ["a"], fn2)
+        _ = StreamingCsvEditor(["a", "b"], ["a"], fn2)
