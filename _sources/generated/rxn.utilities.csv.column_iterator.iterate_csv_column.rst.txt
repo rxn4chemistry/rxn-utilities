@@ -1,0 +1,6 @@
+rxn.utilities.csv.column\_iterator.iterate\_csv\_column
+=======================================================
+
+.. currentmodule:: rxn.utilities.csv.column_iterator
+
+.. autofunction:: iterate_csv_column

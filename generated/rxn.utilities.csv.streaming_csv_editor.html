@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities.caching.cached_on_disk &mdash; RXN utilities 0.1 documentation</title>
+  <title>rxn.utilities.csv.streaming_csv_editor &mdash; RXN utilities 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.containers" href="rxn.utilities.containers.html" />
-    <link rel="prev" title="rxn.utilities.caching" href="rxn.utilities.caching.html" /> 
+    <link rel="next" title="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor" href="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.html" />
+    <link rel="prev" title="rxn.utilities.csv.column_iterator.iterate_csv_column" href="rxn.utilities.csv.column_iterator.iterate_csv_column.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,12 +44,13 @@
 <li class="toctree-l2 current"><a class="reference internal" href="rxn.utilities.html">rxn.utilities</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.attrs.html">rxn.utilities.attrs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.basic.html">rxn.utilities.basic</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.caching.html">rxn.utilities.caching</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.caching.cached_on_disk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.caching.html">rxn.utilities.caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.containers.html">rxn.utilities.containers</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.csv.html">rxn.utilities.csv</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.csv.column_iterator.html">rxn.utilities.csv.column_iterator</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.csv.streaming_csv_editor</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.containers.html">rxn.utilities.containers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rxn.utilities.csv.html">rxn.utilities.csv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.databases.html">rxn.utilities.databases</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.files.html">rxn.utilities.files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.logging.html">rxn.utilities.logging</a></li>
@@ -80,10 +81,10 @@
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../api.html">API</a> &raquo;</li>
           <li><a href="rxn.utilities.html">rxn.utilities</a> &raquo;</li>
-          <li><a href="rxn.utilities.caching.html">rxn.utilities.caching</a> &raquo;</li>
-      <li>rxn.utilities.caching.cached_on_disk</li>
+          <li><a href="rxn.utilities.csv.html">rxn.utilities.csv</a> &raquo;</li>
+      <li>rxn.utilities.csv.streaming_csv_editor</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/rxn.utilities.caching.cached_on_disk.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/rxn.utilities.csv.streaming_csv_editor.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -91,42 +92,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rxn-utilities-caching-cached-on-disk">
-<h1>rxn.utilities.caching.cached_on_disk<a class="headerlink" href="#rxn-utilities-caching-cached-on-disk" title="Permalink to this heading"></a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="rxn.utilities.caching.cached_on_disk">
-<span class="sig-prename descclassname"><span class="pre">rxn.utilities.caching.</span></span><span class="sig-name descname"><span class="pre">cached_on_disk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/caching.html#cached_on_disk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.caching.cached_on_disk" title="Permalink to this definition"></a></dt>
-<dd><p>Decorator for function cache relying on the disk.</p>
-<p>Useful when functools.cache() or functools.lru_cache() cannot be used
-because of threads (especially in celery workers).</p>
-<p>Simplifies the syntax compared to relying on diskcache only.</p>
-<p>Note that diskcache makes a difference between args and kwargs, i.e. calling
-a function one time by argument and one time by keyword argument will lead
-to the wrapped function body being executed two times.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@cached_on_disk</span>
-<span class="gp">... </span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="c1"># ...</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>func</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ParamSpec</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">ReturnType</span></code>)]) – </p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ParamSpec</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">ReturnType</span></code>)]</p>
-</dd>
-</dl>
-</dd></dl>
-
+  <section id="module-rxn.utilities.csv.streaming_csv_editor">
+<span id="rxn-utilities-csv-streaming-csv-editor"></span><h1>rxn.utilities.csv.streaming_csv_editor<a class="headerlink" href="#module-rxn.utilities.csv.streaming_csv_editor" title="Permalink to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor" title="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamingCsvEditor</span></code></a>(columns_in, columns_out, ...)</p></td>
+<td><p>Edit the content of a CSV with a specified transformation, line-by-line.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="rxn.utilities.caching.html" class="btn btn-neutral float-left" title="rxn.utilities.caching" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.containers.html" class="btn btn-neutral float-right" title="rxn.utilities.containers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.csv.column_iterator.iterate_csv_column.html" class="btn btn-neutral float-left" title="rxn.utilities.csv.column_iterator.iterate_csv_column" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.html" class="btn btn-neutral float-right" title="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

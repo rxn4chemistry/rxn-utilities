@@ -1,7 +1,7 @@
-rxn.utilities.streaming\_csv\_editor
-====================================
+rxn.utilities.csv.streaming\_csv\_editor
+========================================
 
-.. automodule:: rxn.utilities.streaming_csv_editor
+.. automodule:: rxn.utilities.csv.streaming_csv_editor
 
    
    

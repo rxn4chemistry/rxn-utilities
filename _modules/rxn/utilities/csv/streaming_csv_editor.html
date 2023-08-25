@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities.streaming_csv_editor &mdash; RXN utilities 0.1 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <title>rxn.utilities.csv.streaming_csv_editor &mdash; RXN utilities 0.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -25,10 +25,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> RXN utilities
+            <a href="../../../../index.html" class="icon icon-home"> RXN utilities
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -36,8 +36,8 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../README.html">README</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../README.html">README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">Python API</a></li>
 </ul>
 
         </div>
@@ -46,16 +46,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">RXN utilities</a>
+          <a href="../../../../index.html">RXN utilities</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>rxn.utilities.streaming_csv_editor</li>
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>rxn.utilities.csv.streaming_csv_editor</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -64,7 +64,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for rxn.utilities.streaming_csv_editor</h1><div class="highlight"><pre>
+  <h1>Source code for rxn.utilities.csv.streaming_csv_editor</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">Signature</span><span class="p">,</span> <span class="n">signature</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span>
@@ -73,13 +73,13 @@
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">TypeAlias</span>
 
-<span class="kn">from</span> <span class="nn">.files</span> <span class="kn">import</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">count_lines</span>
+<span class="kn">from</span> <span class="nn">..files</span> <span class="kn">import</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">count_lines</span>
 
 <span class="c1"># Transformation function as actually used under the hood</span>
 <span class="n">_TransformationFunction</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
 
 
-<div class="viewcode-block" id="StreamingCsvEditor"><a class="viewcode-back" href="../../../generated/rxn.utilities.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.streaming_csv_editor.StreamingCsvEditor">[docs]</a><span class="k">class</span> <span class="nc">StreamingCsvEditor</span><span class="p">:</span>
+<div class="viewcode-block" id="StreamingCsvEditor"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor">[docs]</a><span class="k">class</span> <span class="nc">StreamingCsvEditor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Edit the content of a CSV with a specified transformation, line-by-line.</span>
 
@@ -87,7 +87,7 @@
 <span class="sd">    with a pandas DataFrame.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="StreamingCsvEditor.__init__"><a class="viewcode-back" href="../../../generated/rxn.utilities.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.streaming_csv_editor.StreamingCsvEditor.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="StreamingCsvEditor.__init__"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">columns_in</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">columns_out</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
@@ -119,7 +119,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_terminator</span> <span class="o">=</span> <span class="n">line_terminator</span></div>
 
-<div class="viewcode-block" id="StreamingCsvEditor.process"><a class="viewcode-back" href="../../../generated/rxn.utilities.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.streaming_csv_editor.StreamingCsvEditor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span>
+<div class="viewcode-block" id="StreamingCsvEditor.process"><a class="viewcode-back" href="../../../../generated/rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.html#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">path_in</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">path_out</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

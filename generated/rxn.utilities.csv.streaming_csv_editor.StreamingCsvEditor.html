@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities.streaming_csv_editor.StreamingCsvEditor &mdash; RXN utilities 0.1 documentation</title>
+  <title>rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor &mdash; RXN utilities 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.strings" href="rxn.utilities.strings.html" />
-    <link rel="prev" title="rxn.utilities.streaming_csv_editor" href="rxn.utilities.streaming_csv_editor.html" /> 
+    <link rel="next" title="rxn.utilities.databases" href="rxn.utilities.databases.html" />
+    <link rel="prev" title="rxn.utilities.csv.streaming_csv_editor" href="rxn.utilities.csv.streaming_csv_editor.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,16 +46,17 @@
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.basic.html">rxn.utilities.basic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.caching.html">rxn.utilities.caching</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.containers.html">rxn.utilities.containers</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.csv.html">rxn.utilities.csv</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.csv.column_iterator.html">rxn.utilities.csv.column_iterator</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="rxn.utilities.csv.streaming_csv_editor.html">rxn.utilities.csv.streaming_csv_editor</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.databases.html">rxn.utilities.databases</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.files.html">rxn.utilities.files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.logging.html">rxn.utilities.logging</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.misc.html">rxn.utilities.misc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.regex.html">rxn.utilities.regex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.scripts.html">rxn.utilities.scripts</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.streaming_csv_editor.html">rxn.utilities.streaming_csv_editor</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.streaming_csv_editor.StreamingCsvEditor</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.strings.html">rxn.utilities.strings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.types.html">rxn.utilities.types</a></li>
 </ul>
@@ -80,10 +81,11 @@
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../api.html">API</a> &raquo;</li>
           <li><a href="rxn.utilities.html">rxn.utilities</a> &raquo;</li>
-          <li><a href="rxn.utilities.streaming_csv_editor.html">rxn.utilities.streaming_csv_editor</a> &raquo;</li>
-      <li>rxn.utilities.streaming_csv_editor.StreamingCsvEditor</li>
+          <li><a href="rxn.utilities.csv.html">rxn.utilities.csv</a> &raquo;</li>
+          <li><a href="rxn.utilities.csv.streaming_csv_editor.html">rxn.utilities.csv.streaming_csv_editor</a> &raquo;</li>
+      <li>rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/rxn.utilities.streaming_csv_editor.StreamingCsvEditor.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -91,11 +93,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rxn-utilities-streaming-csv-editor-streamingcsveditor">
-<h1>rxn.utilities.streaming_csv_editor.StreamingCsvEditor<a class="headerlink" href="#rxn-utilities-streaming-csv-editor-streamingcsveditor" title="Permalink to this heading"></a></h1>
+  <section id="rxn-utilities-csv-streaming-csv-editor-streamingcsveditor">
+<h1>rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor<a class="headerlink" href="#rxn-utilities-csv-streaming-csv-editor-streamingcsveditor" title="Permalink to this heading"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="rxn.utilities.streaming_csv_editor.StreamingCsvEditor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rxn.utilities.streaming_csv_editor.</span></span><span class="sig-name descname"><span class="pre">StreamingCsvEditor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_terminator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\n'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/streaming_csv_editor.html#StreamingCsvEditor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.streaming_csv_editor.StreamingCsvEditor" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rxn.utilities.csv.streaming_csv_editor.</span></span><span class="sig-name descname"><span class="pre">StreamingCsvEditor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_terminator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\n'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/streaming_csv_editor.html#StreamingCsvEditor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Edit the content of a CSV with a specified transformation, line-by-line.</p>
 <p>This class avoids loading the whole file into memory as would be done
@@ -111,8 +113,8 @@ with a pandas DataFrame.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="rxn.utilities.streaming_csv_editor.StreamingCsvEditor.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_terminator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\n'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/streaming_csv_editor.html#StreamingCsvEditor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.streaming_csv_editor.StreamingCsvEditor.__init__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_terminator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\\n'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/streaming_csv_editor.html#StreamingCsvEditor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -158,7 +160,7 @@ The function should be annotated, and the following are admissible:</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rxn.utilities.streaming_csv_editor.StreamingCsvEditor.__init__" title="rxn.utilities.streaming_csv_editor.StreamingCsvEditor.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(columns_in, columns_out, transformation)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.__init__" title="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(columns_in, columns_out, transformation)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">type columns_in</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
@@ -166,14 +168,14 @@ The function should be annotated, and the following are admissible:</p>
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rxn.utilities.streaming_csv_editor.StreamingCsvEditor.process" title="rxn.utilities.streaming_csv_editor.StreamingCsvEditor.process"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process</span></code></a>(path_in, path_out[, verbose])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process" title="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process</span></code></a>(path_in, path_out[, verbose])</p></td>
 <td><p>Process and edit a CSV file.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
-<dt class="sig sig-object py" id="rxn.utilities.streaming_csv_editor.StreamingCsvEditor.process">
-<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/streaming_csv_editor.html#StreamingCsvEditor.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.streaming_csv_editor.StreamingCsvEditor.process" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/csv/streaming_csv_editor.html#StreamingCsvEditor.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.csv.streaming_csv_editor.StreamingCsvEditor.process" title="Permalink to this definition"></a></dt>
 <dd><p>Process and edit a CSV file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -197,8 +199,8 @@ The function should be annotated, and the following are admissible:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="rxn.utilities.streaming_csv_editor.html" class="btn btn-neutral float-left" title="rxn.utilities.streaming_csv_editor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.strings.html" class="btn btn-neutral float-right" title="rxn.utilities.strings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.csv.streaming_csv_editor.html" class="btn btn-neutral float-left" title="rxn.utilities.csv.streaming_csv_editor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn.utilities.databases.html" class="btn btn-neutral float-right" title="rxn.utilities.databases" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
