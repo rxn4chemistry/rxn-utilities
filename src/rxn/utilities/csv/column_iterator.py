@@ -1,7 +1,7 @@
-import csv
 from typing import Iterator
 
 from ..files import PathLike
+from .csv_iterator import CsvIterator
 
 
 def iterate_csv_column(
@@ -21,19 +21,12 @@ def iterate_csv_column(
     Raises:
         FileNotFoundError: if the file does not exist. Note: the exception is raised not
             raised if the iterator is not consumed.
-        RuntimeError: if the column is not valid. Note: the exception is raised not
+        ValueError: if the column is not valid. Note: the exception is raised not
             raised if the iterator is not consumed.
 
     Returns:
         iterator through the values in the selected column.
     """
-    with open(csv_file, "rt") as f:
-        reader = csv.reader(f, delimiter=delimiter)
-
-        header = next(reader)
-        try:
-            column_index = header.index(column)
-        except ValueError:
-            raise RuntimeError(f'"{csv_file}" has no column "{column}".')
-
-        yield from (row[column_index] for row in reader)
+    csv_iterator = CsvIterator(csv_file, delimiter=delimiter)
+    column_index = csv_iterator.column_index(column_name=column)
+    yield from (row[column_index] for row in csv_iterator)
