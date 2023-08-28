@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.files.count_lines" href="rxn.utilities.files.count_lines.html" />
+    <link rel="next" title="rxn.utilities.files.append_to_file" href="rxn.utilities.files.append_to_file.html" />
     <link rel="prev" title="rxn.utilities.databases" href="rxn.utilities.databases.html" /> 
 </head>
 
@@ -49,6 +49,7 @@
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.csv.html">rxn.utilities.csv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.databases.html">rxn.utilities.databases</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">rxn.utilities.files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.append_to_file.html">rxn.utilities.files.append_to_file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.count_lines.html">rxn.utilities.files.count_lines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.dump_list_to_file.html">rxn.utilities.files.dump_list_to_file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.dump_tuples_to_files.html">rxn.utilities.files.dump_tuples_to_files</a></li>
@@ -113,65 +114,64 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.count_lines.html#rxn.utilities.files.count_lines" title="rxn.utilities.files.count_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">count_lines</span></code></a>(filename)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.append_to_file.html#rxn.utilities.files.append_to_file" title="rxn.utilities.files.append_to_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">append_to_file</span></code></a>(values, filename)</p></td>
+<td><p>Append an iterable of strings to a file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.count_lines.html#rxn.utilities.files.count_lines" title="rxn.utilities.files.count_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">count_lines</span></code></a>(filename)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">param filename</dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.dump_list_to_file.html#rxn.utilities.files.dump_list_to_file" title="rxn.utilities.files.dump_list_to_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump_list_to_file</span></code></a>(values, filename)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">param values</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
-</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.dump_list_to_file.html#rxn.utilities.files.dump_list_to_file" title="rxn.utilities.files.dump_list_to_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump_list_to_file</span></code></a>(values, filename)</p></td>
+<td><p>Write an iterable of strings to a file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.dump_tuples_to_files.html#rxn.utilities.files.dump_tuples_to_files" title="rxn.utilities.files.dump_tuples_to_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump_tuples_to_files</span></code></a>(values, filenames)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.dump_tuples_to_files.html#rxn.utilities.files.dump_tuples_to_files" title="rxn.utilities.files.dump_tuples_to_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump_tuples_to_files</span></code></a>(values, filenames)</p></td>
 <td><p>Write tuples to multiple files (1st tuple value ends up in 1st file, etc.).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.ensure_directory_exists_and_is_empty.html#rxn.utilities.files.ensure_directory_exists_and_is_empty" title="rxn.utilities.files.ensure_directory_exists_and_is_empty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_directory_exists_and_is_empty</span></code></a>(directory)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.ensure_directory_exists_and_is_empty.html#rxn.utilities.files.ensure_directory_exists_and_is_empty" title="rxn.utilities.files.ensure_directory_exists_and_is_empty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_directory_exists_and_is_empty</span></code></a>(directory)</p></td>
 <td><p>Create a directory if it does not exist already, and raise if not empty.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.is_path_creatable.html#rxn.utilities.files.is_path_creatable" title="rxn.utilities.files.is_path_creatable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_path_creatable</span></code></a>(pathname)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.is_path_creatable.html#rxn.utilities.files.is_path_creatable" title="rxn.utilities.files.is_path_creatable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_path_creatable</span></code></a>(pathname)</p></td>
 <td><p><cite>True</cite> if the current user has sufficient permissions to create the passed pathname; <cite>False</cite> otherwise.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.is_path_exists_or_creatable.html#rxn.utilities.files.is_path_exists_or_creatable" title="rxn.utilities.files.is_path_exists_or_creatable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_path_exists_or_creatable</span></code></a>(pathname)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.is_path_exists_or_creatable.html#rxn.utilities.files.is_path_exists_or_creatable" title="rxn.utilities.files.is_path_exists_or_creatable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_path_exists_or_creatable</span></code></a>(pathname)</p></td>
 <td><p><cite>True</cite> if the passed pathname is a valid pathname for the current OS _and_ either currently exists or is hypothetically creatable; <cite>False</cite> otherwise.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.is_pathname_valid.html#rxn.utilities.files.is_pathname_valid" title="rxn.utilities.files.is_pathname_valid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_pathname_valid</span></code></a>(pathname)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.is_pathname_valid.html#rxn.utilities.files.is_pathname_valid" title="rxn.utilities.files.is_pathname_valid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_pathname_valid</span></code></a>(pathname)</p></td>
 <td><p><cite>True</cite> if the passed pathname is a valid pathname for the current OS; <cite>False</cite> otherwise.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.iterate_lines_from_file.html#rxn.utilities.files.iterate_lines_from_file" title="rxn.utilities.files.iterate_lines_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterate_lines_from_file</span></code></a>(filename)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.iterate_lines_from_file.html#rxn.utilities.files.iterate_lines_from_file" title="rxn.utilities.files.iterate_lines_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterate_lines_from_file</span></code></a>(filename)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">param filename</dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.iterate_tuples_from_files.html#rxn.utilities.files.iterate_tuples_from_files" title="rxn.utilities.files.iterate_tuples_from_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterate_tuples_from_files</span></code></a>(filenames)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.iterate_tuples_from_files.html#rxn.utilities.files.iterate_tuples_from_files" title="rxn.utilities.files.iterate_tuples_from_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterate_tuples_from_files</span></code></a>(filenames)</p></td>
 <td><p>Read from several files at once, and put the values from the same lines numbers into tuples.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.load_list_from_file.html#rxn.utilities.files.load_list_from_file" title="rxn.utilities.files.load_list_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_list_from_file</span></code></a>(filename)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.load_list_from_file.html#rxn.utilities.files.load_list_from_file" title="rxn.utilities.files.load_list_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_list_from_file</span></code></a>(filename)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">param filename</dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.named_temporary_directory.html#rxn.utilities.files.named_temporary_directory" title="rxn.utilities.files.named_temporary_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">named_temporary_directory</span></code></a>([delete])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.named_temporary_directory.html#rxn.utilities.files.named_temporary_directory" title="rxn.utilities.files.named_temporary_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">named_temporary_directory</span></code></a>([delete])</p></td>
 <td><p>Get the path for a temporary directory and create it.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.named_temporary_path.html#rxn.utilities.files.named_temporary_path" title="rxn.utilities.files.named_temporary_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">named_temporary_path</span></code></a>([delete])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.named_temporary_path.html#rxn.utilities.files.named_temporary_path" title="rxn.utilities.files.named_temporary_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">named_temporary_path</span></code></a>([delete])</p></td>
 <td><p>Get the path for a temporary file or directory, without creating it (can be especially useful in tests).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.paths_are_identical.html#rxn.utilities.files.paths_are_identical" title="rxn.utilities.files.paths_are_identical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paths_are_identical</span></code></a>(*paths)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.paths_are_identical.html#rxn.utilities.files.paths_are_identical" title="rxn.utilities.files.paths_are_identical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paths_are_identical</span></code></a>(*paths)</p></td>
 <td><p>Whether paths, possibly given in a mix of absolute and relative formats, point to the same file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.raise_if_paths_are_identical.html#rxn.utilities.files.raise_if_paths_are_identical" title="rxn.utilities.files.raise_if_paths_are_identical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">raise_if_paths_are_identical</span></code></a>(*paths)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.raise_if_paths_are_identical.html#rxn.utilities.files.raise_if_paths_are_identical" title="rxn.utilities.files.raise_if_paths_are_identical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">raise_if_paths_are_identical</span></code></a>(*paths)</p></td>
 <td><p>Raise an exception if input and output paths point to the same file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="rxn.utilities.files.stable_shuffle.html#rxn.utilities.files.stable_shuffle" title="rxn.utilities.files.stable_shuffle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stable_shuffle</span></code></a>(input_file, output_file, seed)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="rxn.utilities.files.stable_shuffle.html#rxn.utilities.files.stable_shuffle" title="rxn.utilities.files.stable_shuffle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stable_shuffle</span></code></a>(input_file, output_file, seed)</p></td>
 <td><p>Shuffle a file in a deterministic order (the same seed always reorders files of the same number of lines identically).</p></td>
 </tr>
 </tbody>
@@ -183,7 +183,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="rxn.utilities.databases.html" class="btn btn-neutral float-left" title="rxn.utilities.databases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.files.count_lines.html" class="btn btn-neutral float-right" title="rxn.utilities.files.count_lines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.files.append_to_file.html" class="btn btn-neutral float-right" title="rxn.utilities.files.append_to_file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rxn.utilities.files.is_pathname_valid &mdash; RXN utilities 0.1 documentation</title>
+  <title>rxn.utilities.files.append_to_file &mdash; RXN utilities 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="rxn.utilities.files.iterate_lines_from_file" href="rxn.utilities.files.iterate_lines_from_file.html" />
-    <link rel="prev" title="rxn.utilities.files.is_path_exists_or_creatable" href="rxn.utilities.files.is_path_exists_or_creatable.html" /> 
+    <link rel="next" title="rxn.utilities.files.count_lines" href="rxn.utilities.files.count_lines.html" />
+    <link rel="prev" title="rxn.utilities.files" href="rxn.utilities.files.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,14 +49,14 @@
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.csv.html">rxn.utilities.csv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rxn.utilities.databases.html">rxn.utilities.databases</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="rxn.utilities.files.html">rxn.utilities.files</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.append_to_file.html">rxn.utilities.files.append_to_file</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.files.append_to_file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.count_lines.html">rxn.utilities.files.count_lines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.dump_list_to_file.html">rxn.utilities.files.dump_list_to_file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.dump_tuples_to_files.html">rxn.utilities.files.dump_tuples_to_files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.ensure_directory_exists_and_is_empty.html">rxn.utilities.files.ensure_directory_exists_and_is_empty</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.is_path_creatable.html">rxn.utilities.files.is_path_creatable</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.is_path_exists_or_creatable.html">rxn.utilities.files.is_path_exists_or_creatable</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">rxn.utilities.files.is_pathname_valid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.is_pathname_valid.html">rxn.utilities.files.is_pathname_valid</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.iterate_lines_from_file.html">rxn.utilities.files.iterate_lines_from_file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.iterate_tuples_from_files.html">rxn.utilities.files.iterate_tuples_from_files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rxn.utilities.files.load_list_from_file.html">rxn.utilities.files.load_list_from_file</a></li>
@@ -96,9 +96,9 @@
           <li><a href="../api.html">API</a> &raquo;</li>
           <li><a href="rxn.utilities.html">rxn.utilities</a> &raquo;</li>
           <li><a href="rxn.utilities.files.html">rxn.utilities.files</a> &raquo;</li>
-      <li>rxn.utilities.files.is_pathname_valid</li>
+      <li>rxn.utilities.files.append_to_file</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/rxn.utilities.files.is_pathname_valid.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/rxn.utilities.files.append_to_file.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -106,20 +106,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rxn-utilities-files-is-pathname-valid">
-<h1>rxn.utilities.files.is_pathname_valid<a class="headerlink" href="#rxn-utilities-files-is-pathname-valid" title="Permalink to this heading"></a></h1>
+  <section id="rxn-utilities-files-append-to-file">
+<h1>rxn.utilities.files.append_to_file<a class="headerlink" href="#rxn-utilities-files-append-to-file" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="rxn.utilities.files.is_pathname_valid">
-<span class="sig-prename descclassname"><span class="pre">rxn.utilities.files.</span></span><span class="sig-name descname"><span class="pre">is_pathname_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/files.html#is_pathname_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.files.is_pathname_valid" title="Permalink to this definition"></a></dt>
-<dd><p><cite>True</cite> if the passed pathname is a valid pathname for the current OS;
-<cite>False</cite> otherwise.</p>
-<p>Copied from <a class="reference external" href="https://stackoverflow.com/a/34102855">https://stackoverflow.com/a/34102855</a>. More details there.</p>
+<dt class="sig sig-object py" id="rxn.utilities.files.append_to_file">
+<span class="sig-prename descclassname"><span class="pre">rxn.utilities.files.</span></span><span class="sig-name descname"><span class="pre">append_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/rxn/utilities/files.html#append_to_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rxn.utilities.files.append_to_file" title="Permalink to this definition"></a></dt>
+<dd><p>Append an iterable of strings to a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>pathname</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>]) – </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – values to append to the file.</p></li>
+<li><p><strong>filename</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>]) – file to append to.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -130,8 +131,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="rxn.utilities.files.is_path_exists_or_creatable.html" class="btn btn-neutral float-left" title="rxn.utilities.files.is_path_exists_or_creatable" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rxn.utilities.files.iterate_lines_from_file.html" class="btn btn-neutral float-right" title="rxn.utilities.files.iterate_lines_from_file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rxn.utilities.files.html" class="btn btn-neutral float-left" title="rxn.utilities.files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn.utilities.files.count_lines.html" class="btn btn-neutral float-right" title="rxn.utilities.files.count_lines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

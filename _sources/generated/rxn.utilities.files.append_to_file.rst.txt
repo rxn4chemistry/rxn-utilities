@@ -1,0 +1,6 @@
+rxn.utilities.files.append\_to\_file
+====================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: append_to_file

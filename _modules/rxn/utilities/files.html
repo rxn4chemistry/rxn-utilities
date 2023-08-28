@@ -94,7 +94,25 @@
 
 
 <div class="viewcode-block" id="dump_list_to_file"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.dump_list_to_file.html#rxn.utilities.files.dump_list_to_file">[docs]</a><span class="k">def</span> <span class="nf">dump_list_to_file</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">filename</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write an iterable of strings to a file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        values: values to write to the file.</span>
+<span class="sd">        filename: file to write to. Will be overwritten if it exists already.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="append_to_file"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.append_to_file.html#rxn.utilities.files.append_to_file">[docs]</a><span class="k">def</span> <span class="nf">append_to_file</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">filename</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append an iterable of strings to a file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        values: values to append to the file.</span>
+<span class="sd">        filename: file to append to.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;at&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
@@ -154,19 +172,37 @@
                 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="stable_shuffle"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.stable_shuffle.html#rxn.utilities.files.stable_shuffle">[docs]</a><span class="k">def</span> <span class="nf">stable_shuffle</span><span class="p">(</span><span class="n">input_file</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">output_file</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="stable_shuffle"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.stable_shuffle.html#rxn.utilities.files.stable_shuffle">[docs]</a><span class="k">def</span> <span class="nf">stable_shuffle</span><span class="p">(</span>
+    <span class="n">input_file</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">output_file</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">is_csv</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Shuffle a file in a deterministic order (the same seed always reorders</span>
 <span class="sd">    files of the same number of lines identically).</span>
 
 <span class="sd">    Useful, as an example, to shuffle a source and target files identically.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
 
+<span class="sd">    Args:</span>
+<span class="sd">        input_file: file to shuffle.</span>
+<span class="sd">        output_file: where to save the shuffled file.</span>
+<span class="sd">        is_csv: if True, the first line will not be shuffled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Note we use the context manager to avoid side effects of setting the seed.</span>
     <span class="k">with</span> <span class="n">temporary_random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="n">load_list_from_file</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
+        <span class="n">line_iterator</span> <span class="o">=</span> <span class="n">iterate_lines_from_file</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
+
+        <span class="c1"># Get the header, if it&#39;s a CSV. We store it as a list, which will have 0 or 1 element.</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">is_csv</span><span class="p">:</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">line_iterator</span><span class="p">)]</span>
+
+        <span class="c1"># Get actual content and shuffle it</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">line_iterator</span><span class="p">)</span>
         <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
-        <span class="n">dump_list_to_file</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">output_file</span><span class="p">)</span></div>
+
+        <span class="c1"># Write header (if there is no header, it will empty the file)</span>
+        <span class="n">dump_list_to_file</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">output_file</span><span class="p">)</span>
+        <span class="c1"># Write the shuffled lines</span>
+        <span class="n">append_to_file</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">output_file</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="named_temporary_path"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.named_temporary_path.html#rxn.utilities.files.named_temporary_path">[docs]</a><span class="nd">@contextmanager</span>
