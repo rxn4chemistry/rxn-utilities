@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 
 from rxn.utilities.files import (
+    append_to_file,
     count_lines,
     dump_list_to_file,
     dump_tuples_to_files,
@@ -112,6 +113,27 @@ def test_dump_and_load_list() -> None:
         assert loaded_list == original_list
 
 
+def test_append_to_file() -> None:
+    # dummy strings:
+    l1 = "a b c d"
+    l2 = "ijkl"
+    l3 = "MNOP QRST"
+    l4 = "x  y  z"
+
+    with named_temporary_path() as tmp_path:
+        # append to non-existing file
+        append_to_file([l1, l2], tmp_path)
+        assert load_list_from_file(tmp_path) == [l1, l2]
+
+        # appending does not overwrite, just adds to the end
+        append_to_file([l3], tmp_path)
+        assert load_list_from_file(tmp_path) == [l1, l2, l3]
+
+        # dumping overwrites the file
+        dump_list_to_file([l4, l1], tmp_path)
+        assert load_list_from_file(tmp_path) == [l4, l1]
+
+
 def test_dump_and_load_tuples() -> None:
     original_tuples = [
         ("a1", "b1", "c1"),
@@ -196,6 +218,35 @@ def test_stable_shuffle() -> None:
         stable_shuffle(p2, p2, 43)
         stable_shuffle(p3, p3, 44)
         loaded_tuples = list(iterate_tuples_from_files([p1, p2, p3]))
+        assert set(loaded_tuples) != set(original_tuples)
+
+
+def test_stable_shuffle_for_csv() -> None:
+    # Same approach as above for testing, this time for shuffling CSV files.
+    header_tuple = ("ha1,ha2", "hb", "hc1,hc2,hc3")
+    original_tuples = [header_tuple] + [
+        (f"a{i}", f"b{i}", f"c{i}") for i in range(1, 21)
+    ]
+    with named_temporary_path() as p1, named_temporary_path() as p2, named_temporary_path() as p3:
+        dump_tuples_to_files(original_tuples, [p1, p2, p3])
+
+        # we shuffle the files in-place with the same seed
+        stable_shuffle(p1, p1, 42, is_csv=True)
+        stable_shuffle(p2, p2, 42, is_csv=True)
+        stable_shuffle(p3, p3, 42, is_csv=True)
+        loaded_tuples = list(iterate_tuples_from_files([p1, p2, p3]))
+        # The first lines should be identical (header)
+        assert loaded_tuples[0] == header_tuple
+        # The lists must be different, but their set identical
+        assert loaded_tuples != original_tuples
+        assert set(loaded_tuples) == set(original_tuples)
+
+        # Control: re-shuffle but with different seeds -> the tuples will be mixed
+        stable_shuffle(p1, p1, 42, is_csv=True)
+        stable_shuffle(p2, p2, 43, is_csv=True)
+        stable_shuffle(p3, p3, 44, is_csv=True)
+        loaded_tuples = list(iterate_tuples_from_files([p1, p2, p3]))
+        assert loaded_tuples[0] == header_tuple
         assert set(loaded_tuples) != set(original_tuples)
 
 

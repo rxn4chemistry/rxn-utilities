@@ -27,7 +27,25 @@ def iterate_lines_from_file(filename: PathLike) -> Iterator[str]:
 
 
 def dump_list_to_file(values: Iterable[str], filename: PathLike) -> None:
+    """Write an iterable of strings to a file.
+
+    Args:
+        values: values to write to the file.
+        filename: file to write to. Will be overwritten if it exists already.
+    """
     with open(filename, "wt") as f:
+        for v in values:
+            f.write(f"{v}\n")
+
+
+def append_to_file(values: Iterable[str], filename: PathLike) -> None:
+    """Append an iterable of strings to a file.
+
+    Args:
+        values: values to append to the file.
+        filename: file to append to.
+    """
+    with open(filename, "at") as f:
         for v in values:
             f.write(f"{v}\n")
 
@@ -87,19 +105,37 @@ def dump_tuples_to_files(
                 f.write(f"{value}\n")
 
 
-def stable_shuffle(input_file: PathLike, output_file: PathLike, seed: int) -> None:
+def stable_shuffle(
+    input_file: PathLike, output_file: PathLike, seed: int, is_csv: bool = False
+) -> None:
     """
     Shuffle a file in a deterministic order (the same seed always reorders
     files of the same number of lines identically).
 
     Useful, as an example, to shuffle a source and target files identically.
-    """
 
+    Args:
+        input_file: file to shuffle.
+        output_file: where to save the shuffled file.
+        is_csv: if True, the first line will not be shuffled.
+    """
     # Note we use the context manager to avoid side effects of setting the seed.
     with temporary_random_seed(seed):
-        lines = load_list_from_file(input_file)
+        line_iterator = iterate_lines_from_file(input_file)
+
+        # Get the header, if it's a CSV. We store it as a list, which will have 0 or 1 element.
+        header = []
+        if is_csv:
+            header = [next(line_iterator)]
+
+        # Get actual content and shuffle it
+        lines = list(line_iterator)
         random.shuffle(lines)
-        dump_list_to_file(lines, output_file)
+
+        # Write header (if there is no header, it will empty the file)
+        dump_list_to_file(header, output_file)
+        # Write the shuffled lines
+        append_to_file(lines, output_file)
 
 
 @contextmanager
