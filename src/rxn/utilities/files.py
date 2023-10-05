@@ -289,3 +289,35 @@ def ensure_directory_exists_and_is_empty(directory: Path) -> None:
     directory_contains_files = any(directory.iterdir())
     if directory_contains_files:
         raise RuntimeError(f'The directory "{directory}" is required to be empty.')
+
+
+def get_file_size_as_string(file: PathLike) -> str:
+    """Get the file size as a readable string.
+
+    Adapted from https://stackoverflow.com/a/39988702.
+
+    Args:
+        file: File to get the size for.
+
+    Raises:
+        ValueError: if the given path is not a file.
+
+    Returns:
+        Readable string for the file size (such as "1000.0 bytes",
+        "2.3 KB", or "1.1 MB").
+    """
+    if not isinstance(file, Path):
+        file = Path(file)
+
+    if file.is_dir():
+        raise ValueError(f'"{file} should be a file, but it is a directory.')
+
+    # Get the size in bytes
+    size: Union[int, float] = file.stat().st_size
+
+    for unit in ["bytes", "KB", "MB", "GB", "TB"]:
+        if size < 1024.0:
+            return f"{size:3.1f} {unit}"
+        size /= 1024.0
+
+    raise RuntimeError(f'The file "{file}" is too big to determine the size.')

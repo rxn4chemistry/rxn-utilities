@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import pytest
@@ -8,6 +9,7 @@ from rxn.utilities.files import (
     dump_list_to_file,
     dump_tuples_to_files,
     ensure_directory_exists_and_is_empty,
+    get_file_size_as_string,
     is_path_creatable,
     iterate_tuples_from_files,
     load_list_from_file,
@@ -290,3 +292,27 @@ def test_ensure_directory_exists_and_is_empty() -> None:
         (path / "foo").touch()
         with pytest.raises(RuntimeError):
             ensure_directory_exists_and_is_empty(path)
+
+
+def test_get_file_size_as_string() -> None:
+    # We test the function by creating random files of predefined size.
+    # Adapted from https://stackoverflow.com/a/14276423.
+
+    def assert_size(size_in_bytes: int, expected_string: str) -> None:
+        """Helper function to avoid code duplication."""
+        with named_temporary_path() as path:
+            with open(path, "wb") as f:
+                f.write(os.urandom(size_in_bytes))
+            assert get_file_size_as_string(path) == expected_string
+
+    assert_size(1000, "1000.0 bytes")
+    assert_size(1024, "1.0 KB")
+    assert_size(2345, "2.3 KB")
+    assert_size(1000000, "976.6 KB")
+    assert_size(1048576, "1.0 MB")
+    assert_size(1111111, "1.1 MB")
+
+    # Test on a directory
+    with named_temporary_directory() as directory:
+        with pytest.raises(ValueError):
+            _ = get_file_size_as_string(directory)
