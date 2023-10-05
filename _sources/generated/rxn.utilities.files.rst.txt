@@ -19,6 +19,7 @@ rxn.utilities.files
       dump_list_to_file
       dump_tuples_to_files
       ensure_directory_exists_and_is_empty
+      get_file_size_as_string
       is_path_creatable
       is_path_exists_or_creatable
       is_pathname_valid

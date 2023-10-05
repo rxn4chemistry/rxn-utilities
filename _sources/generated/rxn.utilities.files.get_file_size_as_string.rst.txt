@@ -1,0 +1,6 @@
+rxn.utilities.files.get\_file\_size\_as\_string
+===============================================
+
+.. currentmodule:: rxn.utilities.files
+
+.. autofunction:: get_file_size_as_string

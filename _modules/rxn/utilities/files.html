@@ -356,6 +356,38 @@
     <span class="n">directory_contains_files</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">directory</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">directory_contains_files</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The directory &quot;</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s1">&quot; is required to be empty.&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_file_size_as_string"><a class="viewcode-back" href="../../../generated/rxn.utilities.files.get_file_size_as_string.html#rxn.utilities.files.get_file_size_as_string">[docs]</a><span class="k">def</span> <span class="nf">get_file_size_as_string</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the file size as a readable string.</span>
+
+<span class="sd">    Adapted from https://stackoverflow.com/a/39988702.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file: File to get the size for.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: if the given path is not a file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Readable string for the file size (such as &quot;1000.0 bytes&quot;,</span>
+<span class="sd">        &quot;2.3 KB&quot;, or &quot;1.1 MB&quot;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s1"> should be a file, but it is a directory.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Get the size in bytes</span>
+    <span class="n">size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span>
+
+    <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bytes&quot;</span><span class="p">,</span> <span class="s2">&quot;KB&quot;</span><span class="p">,</span> <span class="s2">&quot;MB&quot;</span><span class="p">,</span> <span class="s2">&quot;GB&quot;</span><span class="p">,</span> <span class="s2">&quot;TB&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="mf">1024.0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">size</span><span class="si">:</span><span class="s2">3.1f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">size</span> <span class="o">/=</span> <span class="mf">1024.0</span>
+
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The file &quot;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s1">&quot; is too big to determine the size.&#39;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
