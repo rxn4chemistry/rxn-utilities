@@ -96,7 +96,6 @@ It also does so in a memory-efficient way.
 * A custom, more general enum class, [`RxnEnum`](./src/rxn/utilities/types.py).
 * [`remove_prefix`](./src/rxn/utilities/strings.py), [`remove_postfix`](./src/rxn/utilities/strings.py).
 * Initialization of loggers, in a `logging`-compatible way: [`logging.py`](./src/rxn/utilities/logging.py).
-* Initialization of loggers, in a `logging`-compatible way: [`logging.py`](./src/rxn/utilities/logging.py).
 * [`sandboxed_random_context`](./src/rxn/utilities/basic.py) and [`temporary_random_seed`](./src/rxn/utilities/basic.py), to create a context with a specific random state that will not have side effects. 
   Especially useful for testing purposes (unit tests).
 * ... and others.
