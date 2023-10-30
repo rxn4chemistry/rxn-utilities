@@ -42,6 +42,15 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">README</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation-guide">Installation guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#package-highlights">Package highlights</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#file-related-utilities">File-related utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#csv-related-functionality">CSV-related functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stable-shuffling">Stable shuffling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chunker-and-remove-duplicates"><code class="docutils literal notranslate"><span class="pre">chunker</span></code> and <code class="docutils literal notranslate"><span class="pre">remove_duplicates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#regex-utilities">Regex utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#others">Others</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Python API</a></li>
@@ -102,6 +111,77 @@ It has been tested on the following systems:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
 </pre></div>
 </div>
+</section>
+<section id="package-highlights">
+<h2>Package highlights<a class="headerlink" href="#package-highlights" title="Permalink to this heading"></a></h2>
+<section id="file-related-utilities">
+<h3>File-related utilities<a class="headerlink" href="#file-related-utilities" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">load_list_from_file</span></code></span>: read a files into a list of strings.</p></li>
+<li><p><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">iterate_lines_from_file</span></code></span>: same as <code class="docutils literal notranslate"><span class="pre">load_list_from_file</span></code>, but produces an iterator instead of a list. This can be much more memory-efficient.</p></li>
+<li><p><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">dump_list_to_file</span></code></span> and <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">append_to_file</span></code></span>: Write an iterable of strings to a file (one per line).</p></li>
+<li><p><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">named_temporary_path</span></code></span> and <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">named_temporary_directory</span></code></span>: provide a context with a file or directory that will be deleted when the context closes. Useful for unit tests.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">named_temporary_path</span><span class="p">()</span> <span class="k">as</span> <span class="n">temporary_path</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c1"># do something on the temporary path.</span>
+<span class="gp">... </span>    <span class="c1"># The file or directory at that path will be deleted at the</span>
+<span class="gp">... </span>    <span class="c1"># end of the context, except if delete=False.</span>
+</pre></div>
+</div>
+</li>
+<li><p>… and others.</p></li>
+</ul>
+</section>
+<section id="csv-related-functionality">
+<h3>CSV-related functionality<a class="headerlink" href="#csv-related-functionality" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>The function <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">iterate_csv_column</span></code></span> and the related executable <code class="docutils literal notranslate"><span class="pre">rxn-extract-csv-column</span></code> provide an easy way to extract one single column from a CSV file.</p></li>
+<li><p>The <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">StreamingCsvEditor</span></code></span> allows for doing a series of operations onto a CSV file without loading it fully in the memory.
+This is for instance used in <a class="reference external" href="https://github.com/rxn4chemistry/rxn-reaction-preprocessing"><code class="docutils literal notranslate"><span class="pre">rxn-reaction-preprocessing</span></code></a>.
+See a few examples in the <span class="xref myst">unit tests</span>.</p></li>
+</ul>
+</section>
+<section id="stable-shuffling">
+<h3>Stable shuffling<a class="headerlink" href="#stable-shuffling" title="Permalink to this heading"></a></h3>
+<p>For reproducible shuffling, or for shuffling two files of identical length so that the same permutation is obtained, one can use the <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">stable_shuffle</span></code></span> function.
+The executable <code class="docutils literal notranslate"><span class="pre">rxn-stable-shuffle</span></code> is also provided for this purpose.</p>
+<p>Both also work with CSV files if the appropriate flag is provided.</p>
+</section>
+<section id="chunker-and-remove-duplicates">
+<h3><code class="docutils literal notranslate"><span class="pre">chunker</span></code> and <code class="docutils literal notranslate"><span class="pre">remove_duplicates</span></code><a class="headerlink" href="#chunker-and-remove-duplicates" title="Permalink to this heading"></a></h3>
+<p>For batching an iterable into lists of a specified size, <code class="docutils literal notranslate"><span class="pre">chunker</span></code> comes in handy.
+It also does so in a memory-efficient way.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rxn.utilities.containers</span> <span class="kn">import</span> <span class="n">chunker</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunker</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<span class="go">[1, 2, 3, 4]</span>
+<span class="go">[5, 6, 7, 8]</span>
+<span class="go">[9]</span>
+</pre></div>
+</div>
+<p><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">remove_duplicates</span></code></span> (or <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">iterate_unique_values</span></code></span>, its memory-efficient variant) removes duplicates from a container, possibly based on a callable instead of the values:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rxn.utilities.containers</span> <span class="kn">import</span> <span class="n">remove_duplicates</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remove_duplicates</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="go">[3, 6, 9, 2, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remove_duplicates</span><span class="p">([</span><span class="s2">&quot;ab&quot;</span><span class="p">,</span> <span class="s2">&quot;cd&quot;</span><span class="p">,</span> <span class="s2">&quot;efg&quot;</span><span class="p">,</span> <span class="s2">&quot;hijk&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;lmn&quot;</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="go">[&#39;ab&#39;, &#39;efg&#39;, &#39;hijk&#39;, &#39;&#39;]</span>
+</pre></div>
+</div>
+</section>
+<section id="regex-utilities">
+<h3>Regex utilities<a class="headerlink" href="#regex-utilities" title="Permalink to this heading"></a></h3>
+<p><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">regex.py</span></code></span> provides a few functions that make it easier to build regex strings (considering whether segments should be optional, capturing, etc.).</p>
+</section>
+<section id="others">
+<h3>Others<a class="headerlink" href="#others" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>A custom, more general enum class, <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">RxnEnum</span></code></span>.</p></li>
+<li><p><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">remove_prefix</span></code></span>, <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">remove_postfix</span></code></span>.</p></li>
+<li><p>Initialization of loggers, in a <code class="docutils literal notranslate"><span class="pre">logging</span></code>-compatible way: <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">logging.py</span></code></span>.</p></li>
+<li><p><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">sandboxed_random_context</span></code></span> and <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">temporary_random_seed</span></code></span>, to create a context with a specific random state that will not have side effects.
+Especially useful for testing purposes (unit tests).</p></li>
+<li><p>… and others.</p></li>
+</ul>
+</section>
 </section>
 </section>
 
