@@ -1,0 +1,63 @@
+rxn.utilities.databases.pymongo.PyMongoSettings
+===============================================
+
+.. currentmodule:: rxn.utilities.databases.pymongo
+
+.. autoclass:: PyMongoSettings
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PyMongoSettings.__init__
+      ~PyMongoSettings.construct
+      ~PyMongoSettings.copy
+      ~PyMongoSettings.dict
+      ~PyMongoSettings.from_orm
+      ~PyMongoSettings.get_client
+      ~PyMongoSettings.instantiate_client
+      ~PyMongoSettings.json
+      ~PyMongoSettings.model_construct
+      ~PyMongoSettings.model_copy
+      ~PyMongoSettings.model_dump
+      ~PyMongoSettings.model_dump_json
+      ~PyMongoSettings.model_json_schema
+      ~PyMongoSettings.model_parametrized_name
+      ~PyMongoSettings.model_post_init
+      ~PyMongoSettings.model_rebuild
+      ~PyMongoSettings.model_validate
+      ~PyMongoSettings.model_validate_json
+      ~PyMongoSettings.model_validate_strings
+      ~PyMongoSettings.parse_file
+      ~PyMongoSettings.parse_obj
+      ~PyMongoSettings.parse_raw
+      ~PyMongoSettings.schema
+      ~PyMongoSettings.schema_json
+      ~PyMongoSettings.settings_customise_sources
+      ~PyMongoSettings.update_forward_refs
+      ~PyMongoSettings.validate
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PyMongoSettings.model_computed_fields
+      ~PyMongoSettings.model_config
+      ~PyMongoSettings.model_extra
+      ~PyMongoSettings.model_fields
+      ~PyMongoSettings.model_fields_set
+      ~PyMongoSettings.mongo_uri
+      ~PyMongoSettings.tls_ca_certificate_path
+   
+   

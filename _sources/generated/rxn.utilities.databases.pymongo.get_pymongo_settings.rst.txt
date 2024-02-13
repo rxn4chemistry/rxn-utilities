@@ -1,0 +1,6 @@
+rxn.utilities.databases.pymongo.get\_pymongo\_settings
+======================================================
+
+.. currentmodule:: rxn.utilities.databases.pymongo
+
+.. autofunction:: get_pymongo_settings

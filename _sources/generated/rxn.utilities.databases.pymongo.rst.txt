@@ -1,0 +1,38 @@
+rxn.utilities.databases.pymongo
+===============================
+
+.. automodule:: rxn.utilities.databases.pymongo
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      get_pymongo_settings
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+   
+      PyMongoSettings
+   
+   
+
+   
+   
+   
+
+
+
