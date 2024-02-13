@@ -1,4 +1,5 @@
 """PyMongo-related utilities."""
+
 import os
 from functools import lru_cache
 from typing import Any, Dict, Optional

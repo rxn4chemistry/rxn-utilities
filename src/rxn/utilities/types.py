@@ -1,4 +1,5 @@
 """Custom types used in RXN projects."""
+
 from enum import Enum
 from typing import Any, Type, TypeVar
 

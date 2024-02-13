@@ -13,7 +13,7 @@ jobs:
       with:
         python-version: 3.9
     - name: Install Dependencies
-      run: pip install -e .[dev]
+      run: pip install -e ".[dev, modeling]"
     - name: Install additional dependencies (for pydantic>2)
       run: pip install pydantic_settings
     - name: Check black
